@@ -5,13 +5,14 @@ import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 export const App = () => {
     return (
         <MuiThemeProvider theme={createMuiTheme()}>
-            <div style={{width: "250px", height: "500px", display: "flex"}}>
+            <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center"}}>
                 <div
                     style={{
-                        height: "100%", 
+                        height: "100%",
                         minWidth: "300px",
                         display: "flex",
-                        flexDirection: "column"
+                        flexDirection: "column",
+                        justifyContent: "center"
                     }}>
                     <CoCoChatWindow
                         name="test"
@@ -22,5 +23,3 @@ export const App = () => {
         </MuiThemeProvider>
     );
 };
-
-export default App;

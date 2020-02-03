@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/wp-content/plugins/coco-bot/build/static/css/main.498d002a.chunk.css",
+    "main.js": "/wp-content/plugins/coco-bot/build/static/js/main.d9d6c702.chunk.js",
+    "main.js.map": "/wp-content/plugins/coco-bot/build/static/js/main.d9d6c702.chunk.js.map",
+    "runtime-main.js": "/wp-content/plugins/coco-bot/build/static/js/runtime-main.0cb38e19.js",
+    "runtime-main.js.map": "/wp-content/plugins/coco-bot/build/static/js/runtime-main.0cb38e19.js.map",
+    "static/js/2.6abde3b6.chunk.js": "/wp-content/plugins/coco-bot/build/static/js/2.6abde3b6.chunk.js",
+    "static/js/2.6abde3b6.chunk.js.map": "/wp-content/plugins/coco-bot/build/static/js/2.6abde3b6.chunk.js.map",
+    "index.html": "/wp-content/plugins/coco-bot/build/index.html",
+    "precache-manifest.387d7250786d362cd744d304887e4e57.js": "/wp-content/plugins/coco-bot/build/precache-manifest.387d7250786d362cd744d304887e4e57.js",
+    "service-worker.js": "/wp-content/plugins/coco-bot/build/service-worker.js",
+    "static/css/main.498d002a.chunk.css.map": "/wp-content/plugins/coco-bot/build/static/css/main.498d002a.chunk.css.map",
+    "static/js/2.6abde3b6.chunk.js.LICENSE": "/wp-content/plugins/coco-bot/build/static/js/2.6abde3b6.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0cb38e19.js",
+    "static/js/2.6abde3b6.chunk.js",
+    "static/css/main.498d002a.chunk.css",
+    "static/js/main.d9d6c702.chunk.js"
+  ]
+}

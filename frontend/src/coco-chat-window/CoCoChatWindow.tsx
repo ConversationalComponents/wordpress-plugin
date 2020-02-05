@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  ComponentProperty,
-  BubbleParams,
-  CocoResponse,
-  CoCoChatWindowParams
-} from "./types";
+import { BubbleParams, CoCoChatWindowParams } from "./types";
 import { FooterStateful } from "./footer/FooterStateful";
 import { observable, autorun } from "mobx";
 import { CoCoBubble } from "./coco-bubbles/CoCoBubble";
-import { HeaderControl } from "./header/HeaderControls";
 import { uuid } from "../utils/uuid";
 import { ReplyDetailsDialog } from "./ReplyDetailsDialog";
 import { useServerReply } from "./hooks/useServerReply";
@@ -134,7 +128,15 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   );
 
   const [isVoice, setIsVoice] = useState(chatState.isVoice);
-  useEffect(() => autorun(() => setIsVoice(chatState.isVoice)), []);
+  useEffect(
+    () =>
+      autorun(() => {
+        chatState.isVoice &&
+          navigator.mediaDevices.getUserMedia({ audio: true });
+        setIsVoice(chatState.isVoice);
+      }),
+    []
+  );
 
   useVoiceNarrator(lastBotMessage, isVoice);
 

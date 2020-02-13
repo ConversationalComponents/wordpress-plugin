@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/wp-content/plugins/coco-bot/build/precache-manifest.387d7250786d362cd744d304887e4e57.js"
+  "/wp-content/plugins/coco-bot/build/precache-manifest.da259c24852dccd14ca97657ffcdc92c.js"
 );
 
 self.addEventListener('message', (event) => {

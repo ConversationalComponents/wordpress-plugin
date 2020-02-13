@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BubbleParams, CoCoChatWindowParams } from "./types";
 import { FooterStateful } from "./footer/FooterStateful";
 import { observable, autorun } from "mobx";
@@ -16,8 +16,37 @@ import {
 } from "@conversationalcomponents/chat-window";
 import { ChatEntry } from "@conversationalcomponents/chat-window/types";
 import { CoCoHeader } from "./header/CoCoHeader";
+import { Fab, makeStyles, Theme } from "@material-ui/core";
+import { ChatIcon } from "./ChatIcon";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  chatFab: {
+    position: "fixed",
+    right: theme.spacing(1),
+    bottom: theme.spacing(1),
+    zIndex: 10
+  },
+  chatWindowOpen: {
+    height: "100%",
+    transition: "all 0.3s",
+    overflow: "hidden"
+  },
+  chatWindowClosed: {
+    height: "0%",
+    transition: "all 0.3s",
+    overflow: "hidden"
+  }
+}));
+
+const defaultHeight = 500;
+const defaultWidth = 300;
 
 export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
+  const classes = useStyles();
+
+  const height = `${p.height || defaultHeight}px`;
+  const width = `${p.width || defaultWidth}px`;
+
   const [componentId, setComponentId] = useState(p.humanIdOrUrl);
   useEffect(() => setComponentId(p.humanIdOrUrl), [p.humanIdOrUrl]);
 
@@ -141,7 +170,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   useVoiceNarrator(lastBotMessage, isVoice);
 
   const onSubmit = (value: string) => {
-    console.log(`botGreeting is ${botGreeting}`);
     setLastBotMessage("");
     setLastInputValue(value);
     setLastUnsubmittedInput("");
@@ -163,43 +191,74 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   };
 
   const [onVoiceDown, onVoiceConfirm] = useVoiceRecorder(onChange, onSubmit);
+  const [isChatOpen, setIsChatOpen] = useState(p.isFabless);
+  const fabRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <>
-      <ChatWindow
-        {...{
-          title: componentName,
-          header: (
-            <CoCoHeader
-              {...{
-                title: componentName,
-                state: chatState
-              }}
-            />
-          ),
-          bubbleExtraParams: chatState,
-          bubble: CoCoBubble,
-          content,
-          footer: (
-            <FooterStateful
-              {...{
-                onVoiceDown,
-                onVoiceConfirm,
-                isFailed,
-                onChange,
-                isSucceeded,
-                onReset,
-                onSubmit,
-                state: chatState,
-                disabled: !isBotDoneTyping
-              }}
-            />
-          )
-        }}
-      />
+      <div
+        className={
+          isChatOpen ? classes.chatWindowOpen : classes.chatWindowClosed
+        }
+        style={
+          fabRef.current
+            ? {
+                position: fabRef.current ? "fixed" : "relative",
+                bottom: fabRef.current.clientTop + fabRef.current.clientHeight,
+                right: fabRef.current.clientLeft + fabRef.current.clientWidth,
+                height: isChatOpen ? height : "0px",
+                width: isChatOpen ? width : "0px",
+                transition: "all 0.3s",
+                overflow: "hidden"
+              }
+            : {}
+        }
+      >
+        <ChatWindow
+          {...{
+            title: componentName,
+            header: (
+              <CoCoHeader
+                {...{
+                  title: componentName,
+                  state: chatState
+                }}
+              />
+            ),
+            bubbleExtraParams: chatState,
+            bubble: CoCoBubble,
+            content,
+            footer: (
+              <FooterStateful
+                {...{
+                  onVoiceDown,
+                  onVoiceConfirm,
+                  isFailed,
+                  onChange,
+                  isSucceeded,
+                  onReset,
+                  onSubmit,
+                  state: chatState,
+                  disabled: !isBotDoneTyping
+                }}
+              />
+            )
+          }}
+        />
+      </div>
       <ReplyDetailsDialog
         {...{ data: replyDetails, onClose: () => setReplyDetails(undefined) }}
       />
+      {p.isFabless ? null : (
+        <Fab
+          ref={fabRef}
+          color={!isChatOpen ? "primary" : "default"}
+          className={classes.chatFab}
+          onClick={() => setIsChatOpen(!isChatOpen)}
+        >
+          <ChatIcon />
+        </Fab>
+      )}
     </>
   );
 };

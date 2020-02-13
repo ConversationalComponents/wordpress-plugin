@@ -1,5 +1,13 @@
 ## CoCo WordPress ChatWindow Plugin
 
+##### Quickstart
+```bash
+./build.sh
+```
+This will create coco-bot.zip file. This is the built plugin, upload it to a wordpress installation.
+
+Use with the shortcode [erw-widget]
+
 ##### ChatWindow API:
 
 Chat window is added to a DOM element called "erw-root"

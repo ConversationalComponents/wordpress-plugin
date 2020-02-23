@@ -16,9 +16,9 @@ export const ChatTest = (p: {humanId: string}) => {
                     justifyContent: "center"
                 }}>
                 <CoCoChatWindow
-                    humanIdOrUrl={componentId}
+                    human_id_or_url={componentId}
                     name={componentId}
-                    botGreeting="Hi, I'll be your bot today"
+                    bot_greeting="Hi, I'll be your bot today"
                 />
             </div>
         </div>

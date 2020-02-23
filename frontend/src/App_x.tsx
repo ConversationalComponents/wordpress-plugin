@@ -24,7 +24,7 @@ export const App = () => {
         >
           <CoCoChatWindow
             name="test"
-            humanIdOrUrl="https://marketplace.conversationalcomponents.com/api/exchange/namer_vp3"
+            human_id_or_url="https://marketplace.conversationalcomponents.com/api/exchange/namer_vp3"
           />
         </div>
       </div>

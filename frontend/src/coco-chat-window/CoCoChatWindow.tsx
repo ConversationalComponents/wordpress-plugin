@@ -47,21 +47,25 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const height = `${p.height || defaultHeight}px`;
   const width = `${p.width || defaultWidth}px`;
 
-  const [componentId, setComponentId] = useState(p.humanIdOrUrl);
-  useEffect(() => setComponentId(p.humanIdOrUrl), [p.humanIdOrUrl]);
+  console.log(`humanIdOrUrl: ${p.human_id_or_url}`);
+  const [componentId, setComponentId] = useState(p.human_id_or_url);
+  useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
 
-  const [inputParams, setInputParams] = useState(p.inputParameters || []);
-  useEffect(() => setInputParams(p.inputParameters || []), [p.inputParameters]);
+  console.log(`inputParameters: ${p.input_parameters}`);
+  const [inputParams, setInputParams] = useState(p.input_parameters || []);
+  useEffect(() => setInputParams(p.input_parameters || []), [p.input_parameters]);
+  console.log(`name: ${p.name}`);
 
   const [componentName, setComponentName] = useState(p.name);
   useEffect(() => setComponentName(p.name), [p.name]);
 
+  console.log(`botGreeting: ${p.bot_greeting}`);
   const [botGreeting, setBotGreeting] = useState(
-    p.botGreeting || "Type anything to get started!"
+    p.bot_greeting || "Type anything to get started!"
   );
   useEffect(() => {
-    setBotGreeting(p.botGreeting || "Type anything to get started!");
-  }, [p.botGreeting]);
+    setBotGreeting(p.bot_greeting || "Type anything to get started!");
+  }, [p.bot_greeting]);
 
   const [content, setContent] = useState<ChatEntry[]>([]);
   const [lastInputValue, setLastInputValue] = useState("");
@@ -187,11 +191,11 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     setLastBotMessage("");
     setLastInputValue("");
     setLastUnsubmittedInput("");
-    setBotGreeting(p.botGreeting || "");
+    setBotGreeting(p.bot_greeting || "");
   };
 
   const [onVoiceDown, onVoiceConfirm] = useVoiceRecorder(onChange, onSubmit);
-  const [isChatOpen, setIsChatOpen] = useState(p.isFabless);
+  const [isChatOpen, setIsChatOpen] = useState(p.is_fabless);
   const fabRef = useRef<HTMLButtonElement | null>(null);
 
   return (
@@ -249,7 +253,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       <ReplyDetailsDialog
         {...{ data: replyDetails, onClose: () => setReplyDetails(undefined) }}
       />
-      {p.isFabless ? null : (
+      {p.is_fabless ? null : (
         <Fab
           ref={fabRef}
           color={!isChatOpen ? "primary" : "default"}

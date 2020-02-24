@@ -1,11 +1,11 @@
 export type CoCoChatWindowParams = {
   name: string;
-  humanIdOrUrl: string;
-  botGreeting?: string;
-  isFabless?: boolean;
+  human_id_or_url: string;
+  bot_greeting?: string;
+  is_fabless?: boolean;
   height?: number;
   width?: number;
-  inputParameters?: {
+  input_parameters?: {
     type: ComponentPropertyType;
     value: string | number | Date;
     name: string;

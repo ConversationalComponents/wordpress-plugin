@@ -19,17 +19,22 @@ import { CoCoHeader } from "./header/CoCoHeader";
 import { Fab, makeStyles, Theme } from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
 
+import {isMobile} from 'react-device-detect'
+
 const useStyles = makeStyles((theme: Theme) => ({
   chatFab: {
     position: "fixed",
-    right: theme.spacing(1),
-    bottom: theme.spacing(1),
+    right: theme.spacing(2),
+    bottom: theme.spacing(2),
     zIndex: 10
   },
   chatWindowOpen: {
     height: "100%",
     transition: "all 0.3s",
-    overflow: "hidden"
+    overflow: "hidden",
+    boxShadow:"0 0 5px 2px rgba(0,0,0,0.3)",
+    borderRadius : "10px",
+    zIndex:10000
   },
   chatWindowClosed: {
     height: "0%",
@@ -38,31 +43,28 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const defaultHeight = 500;
-const defaultWidth = 300;
-
 export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const classes = useStyles();
 
-  const height = `${p.height || defaultHeight}px`;
-  const width = `${p.width || defaultWidth}px`;
+  const defaultHeight = 500;
+  const defaultWidth = 300;
 
-  console.log(`humanIdOrUrl: ${p.human_id_or_url}`);
+  const height = isMobile ? window.innerHeight : `${p.height || defaultHeight}px`;
+  const width = isMobile ? window.innerWidth : `${p.width || defaultWidth}px`;
+
   const [componentId, setComponentId] = useState(p.human_id_or_url);
-  useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
-
-  console.log(`inputParameters: ${p.input_parameters}`);
   const [inputParams, setInputParams] = useState(p.input_parameters || []);
-  useEffect(() => setInputParams(p.input_parameters || []), [p.input_parameters]);
-  console.log(`name: ${p.name}`);
-
   const [componentName, setComponentName] = useState(p.name);
-  useEffect(() => setComponentName(p.name), [p.name]);
-
-  console.log(`botGreeting: ${p.bot_greeting}`);
   const [botGreeting, setBotGreeting] = useState(
     p.bot_greeting || "Type anything to get started!"
   );
+
+
+  useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
+  useEffect(() => setInputParams(p.input_parameters || []), [p.input_parameters]);
+  useEffect(() => setComponentName(p.name), [p.name]);
+
+
   useEffect(() => {
     setBotGreeting(p.bot_greeting || "Type anything to get started!");
   }, [p.bot_greeting]);
@@ -80,17 +82,17 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   useUserTyping(content, setContent, lastUnsubmittedInput, lastInputValue);
 
-  const isBotDoneTyping = useBotTyping(
-    content,
-    setContent,
-    lastInputValue || botGreeting
-  );
+    const isBotDoneTyping = useBotTyping(
+      content,
+      setContent,
+      lastInputValue || botGreeting
+    );
 
-  const [serverReply, setServerReply] = useServerReply(
-    componentId,
-    inputParams || [],
-    lastInputValue
-  );
+    const [serverReply, setServerReply] = useServerReply(
+      componentId,
+      inputParams || [],
+      lastInputValue
+    );
 
   useEffect(() => {
     if (botGreeting && isBotDoneTyping) {
@@ -120,12 +122,16 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   }, [serverReply, isBotDoneTyping]);
 
   useEffect(() => {
+
     if (!lastBotMessage) return;
     const lastEntry = content.length ? content[content.length - 1] : undefined;
+
     if (!lastEntry || lastEntry.isUser || !lastEntry.isLoading) return;
+
     lastEntry.isLoading = false;
     lastEntry.message = lastBotMessage;
     const lastContext = lastResultData.updated_context || {};
+
     chatState.params = [
       ...chatState.params,
       ...Object.keys(lastContext).reduce((acc, cur) => {
@@ -138,10 +144,12 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         return acc;
       }, [] as BubbleParams[])
     ];
+
     chatState.rawRepliesData.push({
       messageId: lastEntry.id,
       data: lastResultData
     });
+
   }, [lastBotMessage, content, lastResultData]);
 
   const showDetails = (id: string) => {
@@ -194,6 +202,10 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     setBotGreeting(p.bot_greeting || "");
   };
 
+  const toggleChat = () : void => {
+    setIsChatOpen(!isChatOpen)
+  }
+
   const [onVoiceDown, onVoiceConfirm] = useVoiceRecorder(onChange, onSubmit);
   const [isChatOpen, setIsChatOpen] = useState(p.is_fabless);
   const fabRef = useRef<HTMLButtonElement | null>(null);
@@ -208,8 +220,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
           fabRef.current
             ? {
                 position: fabRef.current ? "fixed" : "relative",
-                bottom: fabRef.current.clientTop + fabRef.current.clientHeight,
-                right: fabRef.current.clientLeft + fabRef.current.clientWidth,
+                bottom: isMobile ? 0 : fabRef.current.clientTop + fabRef.current.clientHeight,
+                right: isMobile ? 0 : fabRef.current.clientLeft + fabRef.current.clientWidth,
                 height: isChatOpen ? height : "0px",
                 width: isChatOpen ? width : "0px",
                 transition: "all 0.3s",
@@ -223,10 +235,12 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
             title: componentName,
             header: (
               <CoCoHeader
+              
                 {...{
-                  title: componentName,
-                  state: chatState
-                }}
+                  title: componentName,    
+                  state: chatState,  
+                  closeChat : toggleChat
+                }}     
               />
             ),
             bubbleExtraParams: chatState,
@@ -258,7 +272,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
           ref={fabRef}
           color={!isChatOpen ? "primary" : "default"}
           className={classes.chatFab}
-          onClick={() => setIsChatOpen(!isChatOpen)}
+          onClick={toggleChat}
         >
           <ChatIcon />
         </Fab>

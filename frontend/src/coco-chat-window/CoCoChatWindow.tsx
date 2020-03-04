@@ -20,7 +20,6 @@ import { Fab, makeStyles, Theme, useTheme } from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
 
 import {isMobile} from 'react-device-detect'
-import { callbackify } from "util";
 
 const useStyles = makeStyles((theme: Theme) => ({
   chatFabMobile: {
@@ -90,17 +89,17 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   useUserTyping(content, setContent, lastUnsubmittedInput, lastInputValue);
 
-    const isBotDoneTyping = useBotTyping(
-      content,
-      setContent,
-      lastInputValue || botGreeting
-    );
+  const isBotDoneTyping = useBotTyping(
+    content,
+    setContent,
+    lastInputValue || botGreeting
+  );
 
-    const [serverReply, setServerReply] = useServerReply(
-      componentId,
-      inputParams || [],
-      lastInputValue
-    );
+  const [serverReply, setServerReply] = useServerReply(
+    componentId,
+    inputParams || [],
+    lastInputValue
+  );
 
   useEffect(() => {
     if (botGreeting && isBotDoneTyping) {

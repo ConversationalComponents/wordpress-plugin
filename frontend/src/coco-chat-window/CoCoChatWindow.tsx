@@ -16,17 +16,25 @@ import {
 } from "@conversationalcomponents/chat-window";
 import { ChatEntry } from "@conversationalcomponents/chat-window/types";
 import { CoCoHeader } from "./header/CoCoHeader";
-import { Fab, makeStyles, Theme } from "@material-ui/core";
+import { Fab, makeStyles, Theme, useTheme } from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
 
 import {isMobile} from 'react-device-detect'
+import { callbackify } from "util";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  chatFab: {
+  chatFabMobile: {
     position: "fixed",
     right: theme.spacing(2),
     bottom: theme.spacing(2),
     zIndex: 10
+  },
+  chatFab : {
+    position: "fixed",
+    right: theme.spacing(5),
+    bottom: theme.spacing(8),
+    zIndex: 10,
+    scale : isMobile ? 1 : 1.4
   },
   chatWindowOpen: {
     height: "100%",
@@ -45,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const classes = useStyles();
-
+   const theme= useTheme()
   const defaultHeight = 500;
   const defaultWidth = 300;
 
@@ -59,11 +67,10 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     p.bot_greeting || "Type anything to get started!"
   );
 
-
   useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
   useEffect(() => setInputParams(p.input_parameters || []), [p.input_parameters]);
   useEffect(() => setComponentName(p.name), [p.name]);
-
+  useEffect(() => {if(!isMobile) toggleChat()},[])
 
   useEffect(() => {
     setBotGreeting(p.bot_greeting || "Type anything to get started!");
@@ -79,6 +86,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const [replyDetails, setReplyDetails] = useState<Object | undefined>(
     undefined
   );
+  const [isShowFab, setIsShowFab] =useState<boolean>(true)
 
   useUserTyping(content, setContent, lastUnsubmittedInput, lastInputValue);
 
@@ -204,6 +212,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   const toggleChat = () : void => {
     setIsChatOpen(!isChatOpen)
+    setIsShowFab(!isShowFab)
   }
 
   const [onVoiceDown, onVoiceConfirm] = useVoiceRecorder(onChange, onSubmit);
@@ -220,8 +229,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
           fabRef.current
             ? {
                 position: fabRef.current ? "fixed" : "relative",
-                bottom: isMobile ? 0 : fabRef.current.clientTop + fabRef.current.clientHeight,
-                right: isMobile ? 0 : fabRef.current.clientLeft + fabRef.current.clientWidth,
+                bottom: isMobile ? 0 : theme.spacing(8),
+                right: isMobile ? 0 : theme.spacing(5),
                 height: isChatOpen ? height : "0px",
                 width: isChatOpen ? width : "0px",
                 transition: "all 0.3s",
@@ -271,8 +280,10 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         <Fab
           ref={fabRef}
           color={!isChatOpen ? "primary" : "default"}
-          className={classes.chatFab}
+          className={isMobile  ? classes.chatFabMobile : classes.chatFab}
           onClick={toggleChat}
+          style={{display : isShowFab ? "flex" : "none"}}
+          
         >
           <ChatIcon />
         </Fab>

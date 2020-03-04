@@ -9,7 +9,8 @@ type CoCoHeader = {
   state : {
     isShowingJson: boolean,
     isVoice: boolean,
-  }
+  },
+    closeChat : () => void
 }
 
 
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme:Theme) => ({
     backgroundColor: "#01a6e0",
     color: "#fff",
     fill: "#fff",
-    height: "56px", 
+    height: isMobile ? "40px" : "56px", 
     display:"flex",
     alignItems:"center",
     justifyContent:"space-between",

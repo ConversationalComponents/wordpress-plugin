@@ -43,6 +43,9 @@ export const FooterStateful = (p: FooterStatefulParams) => {
   } else {
     return (
       <FooterInput
+        maxRows={1}
+        maxHeight={56}
+        minHeight={56}
         actionButton={
           isVoiceOn ? (
             <MicButton

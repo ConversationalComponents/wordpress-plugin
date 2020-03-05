@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BubbleParams, CoCoChatWindowParams } from "./types";
-import { FooterStateful } from "./footer/FooterStateful";
 import { observable, autorun } from "mobx";
 import { CoCoBubble } from "./coco-bubbles/CoCoBubble";
 import { uuid } from "../utils/uuid";
@@ -74,6 +73,19 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     p.bot_greeting || "Type anything to get started!"
   );
 
+  const [is_showing_last_component, setIs_showing_last_component] = useState(
+    !p.is_not_showing_last_component ||
+      p.is_not_showing_last_component === "false"
+  );
+
+  useEffect(
+    () =>
+      setIs_showing_last_component(
+        !p.is_not_showing_last_component ||
+          p.is_not_showing_last_component === "false"
+      ),
+    [p.is_not_showing_last_component]
+  );
   useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
   useEffect(() => setInputParams(p.input_parameters || []), [
     p.input_parameters
@@ -144,6 +156,9 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     lastEntry.isLoading = false;
     lastEntry.message = lastBotMessage;
     const lastContext = lastResultData.updated_context || {};
+    is_showing_last_component &&
+      (chatState.vp3_last_handler_called =
+        lastResultData.vp3_last_handler_called || "");
 
     chatState.params = [
       ...chatState.params,
@@ -162,7 +177,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       messageId: lastEntry.id,
       data: lastResultData
     });
-  }, [lastBotMessage, content, lastResultData]);
+  }, [lastBotMessage, content, lastResultData, is_showing_last_component]);
 
   const showDetails = (id: string) => {
     const entry = chatState.rawRepliesData.find(rrd => rrd.messageId === id);
@@ -176,7 +191,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       isVoice: false,
       params: [] as BubbleParams[],
       rawRepliesData: [] as { messageId: string; data: Object }[],
-      showDetails
+      showDetails,
+      vp3_last_handler_called: ""
     })
   );
 

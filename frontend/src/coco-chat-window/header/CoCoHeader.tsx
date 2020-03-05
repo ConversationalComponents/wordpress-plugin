@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HeaderParams } from "@conversationalcomponents/chat-window/types";
-import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography, makeStyles, Theme, Paper } from "@material-ui/core";
 import { autorun } from "mobx";
 import { ToggleSwitch } from "./ToggleSwitch";
 import { isMobile } from "react-device-detect";
@@ -9,6 +9,7 @@ export type CoCoHeaderParams = {
   state: {
     isShowingJson: boolean;
     isVoice: boolean;
+    vp3_last_handler_called: string;
   };
   closeChat: () => void;
 };
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "100%"
+    width: "100%",
+    zIndex: 1000
   },
   titleWrapper: {
     display: "flex",
@@ -69,6 +71,9 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
   const [title, setTitle] = useState(p.title);
   const [isShowJsonOn, setIsShowJsonOn] = useState(p.state.isShowingJson);
   const [isVoiceOn, setIsVoiceOn] = useState(p.state.isVoice);
+  const [vp3_last_handler_called, setVp3_last_handler_called] = useState(
+    p.state.vp3_last_handler_called
+  );
 
   useEffect(() => {
     setTitle(p.title);
@@ -76,12 +81,37 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
 
   useEffect(() => autorun(() => setIsShowJsonOn(p.state.isShowingJson)), []);
   useEffect(() => autorun(() => setIsVoiceOn(p.state.isVoice)), []);
-  return (
-    <div className={classes.headerWrapper}>
-      <div className={classes.titleWrapper}>
-        <Typography>{title}</Typography>
-      </div>
+  useEffect(
+    () =>
+      autorun(() =>
+        setVp3_last_handler_called(p.state.vp3_last_handler_called)
+      ),
+    []
+  );
+  const headerRef = useRef<HTMLDivElement>(null);
+  const componentIdRef = useRef<HTMLDivElement>(null);
+  const [componentIdStyle, setComponentIdStyle] = useState({});
+  useEffect(() => {
+    setComponentIdStyle({
+      transition: "all 0.3s",
+      opacity: vp3_last_handler_called ? 1 : 0,
+      position: "absolute" as "absolute",
+      top:
+        vp3_last_handler_called && headerRef.current && componentIdRef.current
+          ? `${headerRef.current.clientHeight -
+              componentIdRef.current.clientHeight / 2}px`
+          : "0px",
+      left: componentIdRef.current
+        ? `calc(50% - ${componentIdRef.current.clientWidth / 2}px)`
+        : "0px"
+    });
+  }, [vp3_last_handler_called, componentIdRef.current, headerRef.current]);
 
+  return (
+    <div ref={headerRef} className={classes.headerWrapper}>
+      <div className={classes.titleWrapper}>
+        <Typography style={{ fontSize: "1.1rem" }}>{title}</Typography>
+      </div>
       <div className={classes.switchesWrapper}>
         <ToggleSwitch
           onToggle={() => (p.state.isShowingJson = !p.state.isShowingJson)}
@@ -99,6 +129,19 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
           <span>—</span>
         </div>
       </div>
+      <Paper ref={componentIdRef} style={{ ...componentIdStyle }}>
+        <Typography
+          variant="caption"
+          style={{
+            paddingLeft: "8px",
+            paddingRight: "8px",
+            paddingTop: "4px",
+            paddingBottom: "4px"
+          }}
+        >
+          component: {vp3_last_handler_called}
+        </Typography>
+      </Paper>
     </div>
   );
 };

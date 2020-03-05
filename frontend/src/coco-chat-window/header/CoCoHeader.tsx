@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   titleWrapper: {
     display: "flex",
     alignItems: "center",
-    fontSize: "1.1rem",
-    paddingLeft: "0.5rem",
+    paddingLeft: "8px",
     height: "100%"
   },
   switchesWrapper: {
@@ -79,7 +78,7 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
   return (
     <div className={classes.headerWrapper}>
       <div className={classes.titleWrapper}>
-        <Typography>{title}</Typography>
+        <Typography style={{fontSize:"18px"}}>{title}</Typography>
       </div>
 
       <div className={classes.switchesWrapper}>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HeaderParams } from "@conversationalcomponents/chat-window/types";
-import { Typography, makeStyles, Theme, Paper } from "@material-ui/core";
-import { autorun } from "mobx";
+import { Typography, makeStyles, Theme } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
 
 export type CoCoHeaderParams = {
@@ -21,7 +20,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    zIndex: 1000
+    zIndex: 1000,
+    position : isMobile ? "fixed" : "relative"
   },
   titleWrapper: {
     display: "flex",
@@ -65,39 +65,12 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
   const classes = useStyles();
 
   const [title, setTitle] = useState(p.title);
-  const [vp3_last_handler_called, setVp3_last_handler_called] = useState(
-    p.state.vp3_last_handler_called
-  );
 
   useEffect(() => {
     setTitle(p.title);
   }, [p.title]);
 
-  useEffect(
-    () =>
-      autorun(() =>
-        setVp3_last_handler_called(p.state.vp3_last_handler_called)
-      ),
-    []
-  );
   const headerRef = useRef<HTMLDivElement>(null);
-  const componentIdRef = useRef<HTMLDivElement>(null);
-  const [componentIdStyle, setComponentIdStyle] = useState({});
-  useEffect(() => {
-    setComponentIdStyle({
-      transition: "all 0.3s",
-      opacity: vp3_last_handler_called ? 1 : 0,
-      position: "absolute" as "absolute",
-      top:
-        vp3_last_handler_called && headerRef.current && componentIdRef.current
-          ? `${headerRef.current.clientHeight -
-              componentIdRef.current.clientHeight / 2}px`
-          : "0px",
-      left: componentIdRef.current
-        ? `calc(50% - ${componentIdRef.current.clientWidth / 2}px)`
-        : "0px"
-    });
-  }, [vp3_last_handler_called, componentIdRef.current, headerRef.current]);
 
   return (
     <div ref={headerRef} className={classes.headerWrapper}>
@@ -109,20 +82,6 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
           <span>—</span>
         </div>
       </div>
-      <Paper ref={componentIdRef} style={{ ...componentIdStyle }}>
-        <Typography
-          variant="caption"
-          style={{
-            paddingLeft: "8px",
-            paddingRight: "8px",
-            paddingTop: "4px",
-            paddingBottom: "4px",
-            fontSize: "12px"
-          }}
-        >
-          component: {vp3_last_handler_called}
-        </Typography>
-      </Paper>
     </div>
   );
 };

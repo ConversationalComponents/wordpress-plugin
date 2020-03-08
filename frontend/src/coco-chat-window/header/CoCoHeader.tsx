@@ -2,13 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { HeaderParams } from "@conversationalcomponents/chat-window/types";
 import { Typography, makeStyles, Theme, Paper } from "@material-ui/core";
 import { autorun } from "mobx";
-import { ToggleSwitch } from "./ToggleSwitch";
 import { isMobile } from "react-device-detect";
 
 export type CoCoHeaderParams = {
   state: {
-    isShowingJson: boolean;
-    isVoice: boolean;
     vp3_last_handler_called: string;
   };
   closeChat: () => void;
@@ -19,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: "#01a6e0",
     color: "#fff",
     fill: "#fff",
-    height: isMobile ? "40px" : "56px",
+    height: "56px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -68,8 +65,6 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
   const classes = useStyles();
 
   const [title, setTitle] = useState(p.title);
-  const [isShowJsonOn, setIsShowJsonOn] = useState(p.state.isShowingJson);
-  const [isVoiceOn, setIsVoiceOn] = useState(p.state.isVoice);
   const [vp3_last_handler_called, setVp3_last_handler_called] = useState(
     p.state.vp3_last_handler_called
   );
@@ -78,8 +73,6 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
     setTitle(p.title);
   }, [p.title]);
 
-  useEffect(() => autorun(() => setIsShowJsonOn(p.state.isShowingJson)), []);
-  useEffect(() => autorun(() => setIsVoiceOn(p.state.isVoice)), []);
   useEffect(
     () =>
       autorun(() =>
@@ -110,18 +103,6 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
     <div ref={headerRef} className={classes.headerWrapper}>
       <div className={classes.titleWrapper}>
         <Typography style={{ fontSize: "18px" }}>{title}</Typography>
-      </div>
-      <div className={classes.switchesWrapper}>
-        <ToggleSwitch
-          onToggle={() => (p.state.isShowingJson = !p.state.isShowingJson)}
-          isOn={isShowJsonOn}
-          title="code"
-        />
-        <ToggleSwitch
-          onToggle={() => (p.state.isVoice = !p.state.isVoice)}
-          isOn={isVoiceOn}
-          title="voice"
-        />
       </div>
       <div className={classes.closeButtonWrapper}>
         <div className={classes.closebutton} onClick={p.closeChat}>

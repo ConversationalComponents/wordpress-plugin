@@ -10,10 +10,10 @@ class CoCoBotSettings {
 
 	public function coco_bot_settings_add_plugin_page() {
 		add_options_page(
-			'CoCo Bot Settings', // page_title
-			'CoCo Bot Settings', // menu_title
+			'CoCoHub Chatbot Settings', // page_title
+			'CoCoHub Bot', // menu_title
 			'manage_options', // capability
-			'coco-bot-settings', // menu_slug
+			'cocohub-bot-settings', // menu_slug
 			array( $this, 'coco_bot_settings_create_admin_page' ) // function
 		);
 	}
@@ -22,8 +22,9 @@ class CoCoBotSettings {
 		$this->coco_bot_settings_options = get_option( 'coco_bot_settings_option_name' ); ?>
 
 		<div class="wrap">
-			<h2>CoCo Bot Settings</h2>
-			<p>Short code: <code>[erw_widget]</code></p>
+			<h2>CoCoHub Chatbot Settings</h2>
+			<p>Use shortcode: <code>[cocobot]</code> to add the chat-window to your page</p>
+			<p>Get a chatbot url(component_id) for your bot at <a href="https://cocohub.ai" target="_blank">cocohub.ai</a> </p>
 			<?php settings_errors(); ?>
 
 			<form method="post" action="options.php">
@@ -60,7 +61,7 @@ class CoCoBotSettings {
 
 		add_settings_field(
 			'humanidorurl_1', // id
-			'Human Id or Url (required)', // title
+			'component_id or url (required)', // title
 			array( $this, 'humanidorurl_1_callback' ), // callback
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section

@@ -3,7 +3,7 @@
 
 defined( 'ABSPATH' ) or die( 'Direct script access disallowed.' );
 
-add_shortcode( 'erw_widget', function ( $atts ) {
+add_shortcode( 'cocobot', function ( $atts ) {
 	$default_atts = array();
 	$args         = shortcode_atts( $default_atts, $atts );
 
@@ -15,5 +15,5 @@ add_shortcode( 'erw_widget', function ( $atts ) {
 	$params       .= ( ! empty( $coco_bot['height_4'] ) ) ? 'height="'.$coco_bot['height_4'].'"' : '';
 	$params       .= ( ! empty( $coco_bot['width_5'] ) ) ? 'width="'.$coco_bot['width_5'].'"' : '';
 
-	return '<div id="erw-root" ' . $params . '></div>';
+	return '<div id="cocobot" ' . $params . '></div>';
 } );

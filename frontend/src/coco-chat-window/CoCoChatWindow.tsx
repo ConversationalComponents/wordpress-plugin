@@ -272,7 +272,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         <ChatWindow
           {...{
             title: componentName,
-            header,
+            header: is_fabless ? undefined : header,
             bubbleExtraParams: chatState,
             bubble: CoCoBubble,
             content,

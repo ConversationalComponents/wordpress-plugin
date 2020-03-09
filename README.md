@@ -6,7 +6,7 @@
 ```
 This will create coco-bot.zip file. This is the built plugin, upload it to a wordpress installation.
 
-Use with the shortcode [erw-widget]
+Use with the shortcode [cocobot]
 
 ##### ChatWindow API:
 

@@ -1,15 +1,16 @@
 <?php
 /**
-*@package CoCo-Example-Bot
+*@package CoCoHub
 */
 /* 
-Plugin Name: CoCo-Example-Bot
-Plugin URI: https://cocohub.ai
-Description: <strong>CoCo-Hub Example Chat Bot<strong>
+Plugin Name: CoCoHub
+Plugin URI: https://cocohub.ai/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
+Description: The first repository for chatbot conversational components. Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 Version: 1.0.0
-Author: <a href="https://cocohub.ai">Cocohub.ai</a>
-License: GPLv2 or later
-Text Domain: Coco hub Plugin
+Author: CoCoHub.ai
+Author URI: https://cocohub.ai/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
+License: MIT
+Text Domain: cocohub
 */ 
 
 defined( 'ABSPATH' ) or die( 'Direct script access disallowed.' );
@@ -26,7 +27,7 @@ add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'coco_add_plugin_pa
 
 function coco_add_plugin_page_settings_link( $links ) {
 	$links[] = '<a href="' .
-		admin_url( 'options-general.php?page=coco-bot-settings' ) .
+		admin_url( 'options-general.php?page=cocohub-bot-settings' ) .
 		'">' . __('Settings') . '</a>';
 	return $links;
 }

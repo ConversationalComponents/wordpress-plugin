@@ -84,6 +84,14 @@ class CoCoBotSettings {
 		);
 
 		add_settings_field(
+			'defaultopen_6', // id
+			'Chat-window is open by default', // title
+			array( $this, 'defaultopen_6_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'height_4', // id
 			'Height', // title
 			array( $this, 'height_4_callback' ), // callback
@@ -126,6 +134,10 @@ class CoCoBotSettings {
 			$sanitary_values['width_5'] = sanitize_text_field( $input['width_5'] );
 		}
 
+		if ( isset( $input['defaultopen_6'] ) ) {
+			$sanitary_values['defaultopen_6'] = sanitize_text_field( $input['defaultopen_6'] );
+		}
+
 		return $sanitary_values;
 	}
 
@@ -156,7 +168,7 @@ class CoCoBotSettings {
 
 	public function isfabless_3_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="%s"><span> 0 - false, anything else - true',
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="%s"><span> true / false',
 			isset( $this->coco_bot_settings_options['isfabless_3'] ) ? esc_attr( $this->coco_bot_settings_options['isfabless_3']) : ''
 		);
 	}
@@ -172,6 +184,13 @@ class CoCoBotSettings {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[width_5]" id="width_5" value="%s">',
 			isset( $this->coco_bot_settings_options['width_5'] ) ? esc_attr( $this->coco_bot_settings_options['width_5']) : ''
+		);
+	}
+
+	public function defaultopen_6_callback() {
+		printf(
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="%s"><span> true / false',
+			isset( $this->coco_bot_settings_options['defaultopen_6'] ) ? esc_attr( $this->coco_bot_settings_options['defaultopen_6']) : ''
 		);
 	}
 

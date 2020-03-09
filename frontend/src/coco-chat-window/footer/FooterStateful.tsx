@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FooterFailed } from "./FooterFailed";
 import { FooterSucceeded } from "./FooterSucceeded";
 import { autorun } from "mobx";
-import { MicButton } from "./MicButton";
 import { FooterInput } from "@conversationalcomponents/chat-window";
 
 export type FooterStatefulParams = {
@@ -11,12 +10,6 @@ export type FooterStatefulParams = {
   onSubmit: (value: string) => void;
   onReset: () => void;
   onChange: (value: string) => void;
-  onVoiceDown: () => void;
-  onVoiceConfirm: () => void;
-  state: {
-    isShowingJson: boolean;
-    isVoice: boolean;
-  };
   disabled: boolean;
 };
 
@@ -33,8 +26,7 @@ export const FooterStateful = (p: FooterStatefulParams) => {
   useEffect(() => {
     setIsSucceeded(p.isSucceeded);
   }, [p.isSucceeded]);
-  const [isVoiceOn, setIsVoiceOn] = useState(p.state.isVoice);
-  useEffect(() => autorun(() => setIsVoiceOn(p.state.isVoice)), []);
+
 
   if (isFailed) {
     return <FooterFailed {...p} />;
@@ -46,15 +38,7 @@ export const FooterStateful = (p: FooterStatefulParams) => {
         maxRows={1}
         maxHeight={56}
         minHeight={56}
-        actionButton={
-          isVoiceOn ? (
-            <MicButton
-              {...{ onDown: p.onVoiceDown, onUp: p.onVoiceConfirm, disabled }}
-            />
-          ) : (
-            undefined
-          )
-        }
+        actionButton={undefined}
         onChange={p.onChange}
         onSubmit={p.onSubmit}
         inputPlaceholder="Type the message..."

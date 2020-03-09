@@ -5,8 +5,6 @@ import { CoCoBubble } from "./coco-bubbles/CoCoBubble";
 import { uuid } from "../utils/uuid";
 import { ReplyDetailsDialog } from "./ReplyDetailsDialog";
 import { useServerReply } from "./hooks/useServerReply";
-import { useVoiceRecorder } from "./hooks/useVoiceRecorder";
-import { useVoiceNarrator } from "./hooks/useVoiceNarrator";
 import { resetSession } from "../utils/chatComm";
 import {
   ChatWindow,
@@ -187,27 +185,12 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   const [chatState] = useState(
     observable({
-      isShowingJson: true,
-      isVoice: false,
       params: [] as BubbleParams[],
       rawRepliesData: [] as { messageId: string; data: Object }[],
       showDetails,
       vp3_last_handler_called: ""
     })
   );
-
-  const [isVoice, setIsVoice] = useState(chatState.isVoice);
-  useEffect(
-    () =>
-      autorun(() => {
-        chatState.isVoice &&
-          navigator.mediaDevices.getUserMedia({ audio: true });
-        setIsVoice(chatState.isVoice);
-      }),
-    []
-  );
-
-  useVoiceNarrator(lastBotMessage, isVoice);
 
   const onSubmit = (value: string) => {
     setLastBotMessage("");
@@ -230,7 +213,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     setBotGreeting(p.bot_greeting || "");
   };
 
-  const [onVoiceDown, onVoiceConfirm] = useVoiceRecorder(onChange, onSubmit);
   const [isChatOpen, setIsChatOpen] = useState(
     Boolean(p.is_fabless || !isMobile)
   );
@@ -249,14 +231,11 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const fabRef = useRef<HTMLButtonElement | null>(null);
 
   const footer = useFooter({
-    onVoiceDown,
-    onVoiceConfirm,
     isFailed,
     onChange,
     isSucceeded,
     onReset,
     onSubmit,
-    state: chatState,
     disabled: !isBotDoneTyping
   });
 

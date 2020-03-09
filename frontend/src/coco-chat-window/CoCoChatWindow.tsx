@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BubbleParams, CoCoChatWindowParams } from "./types";
-import { observable, autorun } from "mobx";
+import { observable } from "mobx";
 import { CoCoBubble } from "./coco-bubbles/CoCoBubble";
 import { uuid } from "../utils/uuid";
 import { ReplyDetailsDialog } from "./ReplyDetailsDialog";
@@ -54,6 +54,9 @@ const defaultWidth = 300;
 export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  const [is_open_on_start] = useState(p.is_open_on_start === "true");
+  const [is_fabless] = useState(p.is_fabless === "true");
 
   const [height] = useState(
     isMobile ? window.innerHeight : `${p.height || defaultHeight}px`
@@ -214,19 +217,15 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   };
 
   const [isChatOpen, setIsChatOpen] = useState(
-    Boolean(p.is_fabless || !isMobile)
+    Boolean(is_fabless || (!isMobile && is_open_on_start))
   );
-  const [isShowFab, setIsShowFab] = useState(
-    p.is_fabless ? false : !isChatOpen
-  );
+  const [isShowFab, setIsShowFab] = useState(is_fabless ? false : !isChatOpen);
 
   const toggleChat = useCallback((): void => {
     setIsChatOpen(!isChatOpen);
   }, [isChatOpen]);
 
-  useEffect(() => setIsShowFab(p.is_fabless ? false : !isChatOpen), [
-    isChatOpen
-  ]);
+  useEffect(() => setIsShowFab(is_fabless ? false : !isChatOpen), [isChatOpen]);
 
   const fabRef = useRef<HTMLButtonElement | null>(null);
 
@@ -251,15 +250,24 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         className={
           isChatOpen ? classes.chatWindowOpen : classes.chatWindowClosed
         }
-        style={{
-          position: fabRef.current ? "fixed" : "relative",
-          bottom: isMobile ? 0 : theme.spacing(8),
-          right: isMobile ? 0 : theme.spacing(5),
-          height: isChatOpen ? height : "0px",
-          width: isChatOpen ? width : "0px",
-          transition: "all 0.3s",
-          overflow: "hidden"
-        }}
+        style={
+          is_fabless
+            ? {
+                height: isChatOpen ? height : "0px",
+                width: isChatOpen ? width : "0px",
+                transition: "all 0.3s",
+                overflow: "hidden"
+              }
+            : {
+                position: fabRef.current ? "fixed" : "relative",
+                bottom: isMobile ? 0 : theme.spacing(8),
+                right: isMobile ? 0 : theme.spacing(5),
+                height: isChatOpen ? height : "0px",
+                width: isChatOpen ? width : "0px",
+                transition: "all 0.3s",
+                overflow: "hidden"
+              }
+        }
       >
         <ChatWindow
           {...{
@@ -275,7 +283,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       <ReplyDetailsDialog
         {...{ data: replyDetails, onClose: () => setReplyDetails(undefined) }}
       />
-      {p.is_fabless ? null : (
+      {is_fabless ? null : (
         <Fab
           ref={fabRef}
           color={!isChatOpen ? "primary" : "default"}

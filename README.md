@@ -17,10 +17,10 @@ It accepts the following parameters:
 ```js
 {
     name: string; // name to appear in header
-    humanIdOrUrl: string; // full url for exchange or ID of bot
-    botGreeting?: string; // what the bot should say before chat begins, defaults to "Type anything to get started!"
-    isFabless?: boolean; // when false/undefined, window is attached to a button, fixed in lower right corner. Otherwise it'll be placed under the root component
-    is_open_on_start?: boolean; // on desktop start open
+    human_id_or_url: string; // full url for exchange or ID of bot
+    bot_greeting?: string; // what the bot should say before chat begins, defaults to "Type anything to get started!"
+    is_fabless?: "false" | "true"; // when false/undefined, window is attached to a button, fixed in lower right corner. Otherwise it'll be placed under the root component
+    is_open_on_start?: "false" | "true"; // on desktop start open
     height?: number; // desired height, defaults to 500
     width?: number; // desired width, defaults to 300
 }

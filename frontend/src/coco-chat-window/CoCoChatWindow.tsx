@@ -283,7 +283,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     title: componentName,
     state: chatState,
     height : headerHeight,
-    closeChat: toggleChat
+    closeChat: toggleChat,
+    isFabless : is_fabless
   });
 
   return (

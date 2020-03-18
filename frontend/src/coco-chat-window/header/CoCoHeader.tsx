@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HeaderParams } from "@conversationalcomponents/chat-window/types";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
-import { isMobile } from "react-device-detect";
 
 export type CoCoHeaderParams = {
   state: {
@@ -15,13 +14,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: "#01a6e0",
     color: "#fff",
     fill: "#fff",
-    height: "56px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
     zIndex: 1000,
-    position : isMobile ? "fixed" : "relative"
+    position : "relative"
   },
   titleWrapper: {
     display: "flex",
@@ -70,16 +68,14 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
     setTitle(p.title);
   }, [p.title]);
 
-  const headerRef = useRef<HTMLDivElement>(null);
-
   return (
-    <div ref={headerRef} className={classes.headerWrapper}>
+    <div className={classes.headerWrapper} style={{height:`${p.height}px`}}>
       <div className={classes.titleWrapper}>
         <Typography style={{ fontSize: "18px" }}>{title}</Typography>
       </div>
       <div className={classes.closeButtonWrapper}>
         <div className={classes.closebutton} onClick={p.closeChat}>
-          <span>—</span>
+          <strong>&mdash;</strong>
         </div>
       </div>
     </div>

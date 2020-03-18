@@ -17,7 +17,6 @@ class CoCoBotSettings {
 			array( $this, 'coco_bot_settings_create_admin_page' ) // function
 		);
 	}
-
 	public function coco_bot_settings_create_admin_page() {
 		$this->coco_bot_settings_options = get_option( 'coco_bot_settings_option_name' ); ?>
 
@@ -112,7 +111,7 @@ class CoCoBotSettings {
 		$sanitary_values = array();
 		if ( isset( $input['name_0'] ) ) {
 			$sanitary_values['name_0'] = sanitize_text_field( $input['name_0'] );
-		}
+		} 
 
 		if ( isset( $input['humanidorurl_1'] ) ) {
 			$sanitary_values['humanidorurl_1'] = sanitize_text_field( $input['humanidorurl_1'] );
@@ -148,49 +147,51 @@ class CoCoBotSettings {
 	public function name_0_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[name_0]" id="name_0" value="%s" required>',
-			isset( $this->coco_bot_settings_options['name_0'] ) ? esc_attr( $this->coco_bot_settings_options['name_0']) : ''
+			 $default = esc_attr( $this->coco_bot_settings_options['name_0']) ? esc_attr( $this->coco_bot_settings_options['name_0']) : 'CoCoHub Demo Bot'
 		);
 	}
 
 	public function humanidorurl_1_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[humanidorurl_1]" id="humanidorurl_1" value="%s" required>',
-			isset( $this->coco_bot_settings_options['humanidorurl_1'] ) ? esc_attr( $this->coco_bot_settings_options['humanidorurl_1']) : ''
+			$default = esc_attr( $this->coco_bot_settings_options['humanidorurl_1'])  ? esc_attr( $this->coco_bot_settings_options['humanidorurl_1'])  : 'coco_bot_vp3'
 		);
 	}
 
 	public function botgreeting_2_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[botgreeting_2]" id="botgreeting_2" value="%s">',
-			isset( $this->coco_bot_settings_options['botgreeting_2'] ) ? esc_attr( $this->coco_bot_settings_options['botgreeting_2']) : ''
+			$default = esc_attr( $this->coco_bot_settings_options['botgreeting_2']) ? esc_attr( $this->coco_bot_settings_options['botgreeting_2'])  : 'Hello'
 		);
 	}
 
-	public function isfabless_3_callback() {
+	public function isfabless_3_callback() {		 
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="%s"><span> true / false',
-			isset( $this->coco_bot_settings_options['isfabless_3'] ) ? esc_attr( $this->coco_bot_settings_options['isfabless_3']) : ''
+			$default = esc_attr( $this->coco_bot_settings_options['isfabless_3']) ? esc_attr( $this->coco_bot_settings_options['isfabless_3']) : "false"
 		);
 	}
 
 	public function height_4_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[height_4]" id="height_4" value="%s">',
-			isset( $this->coco_bot_settings_options['height_4'] ) ? esc_attr( $this->coco_bot_settings_options['height_4']) : ''
+			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[height_4]" id="height_4" value="%u">',
+			$default = esc_attr( $this->coco_bot_settings_options['height_4'])  ? esc_attr( $this->coco_bot_settings_options['height_4'])  : 500
 		);
 	}
 
 	public function width_5_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[width_5]" id="width_5" value="%s">',
-			isset( $this->coco_bot_settings_options['width_5'] ) ? esc_attr( $this->coco_bot_settings_options['width_5']) : ''
+			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[width_5]" id="width_5" value="%u">',
+			$default = esc_attr( $this->coco_bot_settings_options['width_5'])  ? esc_attr( $this->coco_bot_settings_options['width_5']) : 300
 		);
 	}
 
 	public function defaultopen_6_callback() {
 		printf(
+
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="%s"><span> true / false',
-			isset( $this->coco_bot_settings_options['defaultopen_6'] ) ? esc_attr( $this->coco_bot_settings_options['defaultopen_6']) : ''
+			$deafult = esc_attr( $this->coco_bot_settings_options['defaultopen_6']) ? esc_attr( $this->coco_bot_settings_options['defaultopen_6']) : "true"
+			
 		);
 	}
 

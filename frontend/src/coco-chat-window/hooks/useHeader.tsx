@@ -7,7 +7,7 @@ export function useHeader(p: HeaderParams & CoCoHeaderParams) {
 
   useEffect(() => {
     setHeader(<CoCoHeader {...p} />);
-  }, [p.title, p.state, p.closeChat]);
+  }, [p.title, p.state, p.closeChat, p.height]);
 
   return header;
 }

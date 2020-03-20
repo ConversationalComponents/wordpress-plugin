@@ -3,24 +3,29 @@ Contributors: cbuskilla
 Tags: cocohub, chatbots, chat-window, conversational components
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: MIT
 
-CoCoHub is an invaluable complementary tool for chatbot developers, offering pre-built, customizable & tested conversational components which enhance bot capabilities and eliminate the need for writing and maintaining AI conversation boilerplates or low-level conversation logic. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
-
-CoCoHub Wordpress plugin features:
-
-* Connect any component/bot to your website.
-* Build your bot on the popular platform you choose and add it to your website using the component interface.
-* Mix and match existing components to build your bot, customize them to give it personality.
+Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 
 == Description ==
+
+CoCoHub builder let you drag and drop components to build your bot.
+
+CoCoHub is an invaluable complementary tool for chatbot developers, offering pre-built, customizable & tested conversational components which enhance bot capabilities and eliminate the need for writing and maintaining AI conversation boilerplates or low-level conversation logic. 
+Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 
 Our growing hub of shareable, modular conversational components is the first of its kind and represents a paradigm shift in how we design and interact with conversational AI.
 
 Pre-built Conversational components incorporated into your bot framework make it flexible, maintain contextual flow throughout conversations and deliver the goals you require faster.
 
 You can also customize your components or repurpose them to cut down development costs, improve the quality of conversations, and facilitate faster bot deployment.
+
+CoCoHub Wordpress plugin features:
+
+* Connect any component/bot to your website.
+* Build your bot on the popular platform you choose and add it to your website using the component interface.
+* Mix and match existing components to build your bot, customize them to give it personality.
 
 == Installation ==
 

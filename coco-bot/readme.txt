@@ -6,14 +6,13 @@ Tested up to: 5.3
 Stable tag: 1.0.1
 License: MIT
 
-Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
+Create advanced chatbots and connect them to your Wordpress website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 
 == Description ==
 
-CoCoHub builder let you drag and drop components to build your bot.
+With CoCoHub builder you can build your bot with simple drag & drop components.
 
 CoCoHub is an invaluable complementary tool for chatbot developers, offering pre-built, customizable & tested conversational components which enhance bot capabilities and eliminate the need for writing and maintaining AI conversation boilerplates or low-level conversation logic. 
-Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 
 Our growing hub of shareable, modular conversational components is the first of its kind and represents a paradigm shift in how we design and interact with conversational AI.
 

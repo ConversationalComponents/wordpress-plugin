@@ -1,3 +1,5 @@
+import { MessageContent } from "@conversationalcomponents/chat-window/types";
+
 export type CoCoChatWindowParams = {
   name: string;
   is_not_showing_last_component?: string;
@@ -25,7 +27,8 @@ export type BubbleParams = {
 
 export type CocoResponse = {
   action_name?: string;
-  response: string;
+  response?: string;
+  responses: MessageContent[] | string;
   component_done: boolean;
   component_failed: boolean;
   updated_context: { [key: string]: any };

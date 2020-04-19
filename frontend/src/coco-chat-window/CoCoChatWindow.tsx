@@ -11,23 +11,26 @@ import {
   useUserTyping,
   useBotTyping
 } from "@conversationalcomponents/chat-window";
-import { ChatEntry } from "@conversationalcomponents/chat-window/types";
+import {
+  ChatEntry,
+  MessageContent
+} from "@conversationalcomponents/chat-window/types";
+
 import { Fab, makeStyles, Theme, useTheme } from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
-import { disableBodyScroll,clearAllBodyScrollLocks } from "body-scroll-lock";
-import { isMobile,isTablet } from "react-device-detect";
+import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
+import { isMobile, isTablet } from "react-device-detect";
 import { useFooter } from "./hooks/useFooter";
 import { useHeader } from "./hooks/useHeader";
 
 const useStyles = makeStyles((theme: Theme) => ({
   chatFab: {
     position: "fixed",
-    right:isMobile ?  theme.spacing(2) : theme.spacing(5),
-    bottom: isMobile ?  theme.spacing(2) : theme.spacing(8),
+    right: isMobile ? theme.spacing(2) : theme.spacing(5),
+    bottom: isMobile ? theme.spacing(2) : theme.spacing(6),
     zIndex: 10,
-    fontSize:"24px",
-    transform: isMobile ? "scale(1)" : "scale(1.5)" ,
-
+    fontSize: "24px",
+    transform: isMobile ? "scale(1)" : "scale(1.5)"
   },
 
   chatWindowOpen: {
@@ -44,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     transition: "all 0.3s",
     overflow: "hidden"
   }
-
 }));
 
 export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
@@ -52,29 +54,52 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const theme = useTheme();
 
   // deafult settings
-  const [height,setHeight] = useState<string>(isMobile && !p.is_fabless ? `${window.innerHeight}px` : `${p.height ? p.height : 500}px`);
-  const [width,setWidth] = useState<string>(isMobile ? "100%" : `${p.width ? p.width : 300}px`);
-  const [componentId, setComponentId] = useState(p.human_id_or_url || "coco_bot_vp3");
+  const [height, setHeight] = useState<string>(
+    isMobile && !p.is_fabless
+      ? `${window.innerHeight}px`
+      : `${p.height ? p.height : 500}px`
+  );
+  const [width, setWidth] = useState<string>(
+    isMobile ? "100%" : `${p.width ? p.width : 300}px`
+  );
+  const [componentId, setComponentId] = useState(
+    p.human_id_or_url || "coco_bot_vp3"
+  );
   const [inputParams, setInputParams] = useState(p.input_parameters || []);
-  const [componentName, setComponentName] = useState(p.name || "CoCoHub Demo Bot");
+  const [componentName, setComponentName] = useState(
+    p.name || "CoCoHub Demo Bot"
+  );
   const [is_open_on_start] = useState(p.is_open_on_start === "true");
   const [is_fabless] = useState(p.is_fabless === "true");
-  const [botGreeting, setBotGreeting] = useState(p.bot_greeting || "Type anything to get started!");
+  const [botGreeting, setBotGreeting] = useState(
+    p.bot_greeting || "Type anything to get started!"
+  );
   // deafult settings
 
   const [content, setContent] = useState<ChatEntry[]>([]);
-  const [lastInputValue, setLastInputValue] = useState("");
+  const [lastInputValue, setLastInputValue] = useState<
+    MessageContent[] | string
+  >();
   const [lastUnsubmittedInput, setLastUnsubmittedInput] = useState("");
-  const [lastBotMessage, setLastBotMessage] = useState("");
+  const [lastBotMessage, setLastBotMessage] = useState<
+    MessageContent[] | string
+  >();
   const [lastResultData, setLastResultData] = useState<any>({});
-  const [replyDetails, setReplyDetails] = useState<Object | undefined>(undefined);
-  const [headerHeight,setHeaderHeight] = useState<number>(56);
-  const [windowYPosition,setWindowYPosition] = useState<number>();
-  const [windowHeight,setWindowHeight] = useState<number>();
+  const [replyDetails, setReplyDetails] = useState<Object | undefined>(
+    undefined
+  );
+  const [headerHeight, setHeaderHeight] = useState<number>(56);
+  const [windowYPosition, setWindowYPosition] = useState<number>();
+  const [windowHeight, setWindowHeight] = useState<number>();
 
-  const [isChatOpen, setIsChatOpen] = useState(Boolean(is_fabless || (!isMobile && is_open_on_start)));
+  const [isChatOpen, setIsChatOpen] = useState(
+    Boolean(is_fabless || (!isMobile && is_open_on_start))
+  );
   const [isShowFab, setIsShowFab] = useState(is_fabless ? false : !isChatOpen);
-  const [is_showing_last_component, setIs_showing_last_component] = useState(!p.is_not_showing_last_component || p.is_not_showing_last_component === "false");
+  const [is_showing_last_component, setIs_showing_last_component] = useState(
+    !p.is_not_showing_last_component ||
+      p.is_not_showing_last_component === "false"
+  );
 
   const fabRef = useRef<HTMLButtonElement | null>(null);
 
@@ -86,29 +111,28 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   // toggle chat - toggler is disabled when "hiding fab" feature is active
   const toggleChat = useCallback((): void => {
-    if(!is_fabless){
+    if (!is_fabless) {
       setIsChatOpen(!isChatOpen);
-      if(isMobile){
+      if (isMobile) {
         /* on mobile -       
         on open  -  when chat opens window will scroll to the bottom of the page to get window.innerHeight correct and will lock body scroll
         on close -  will return to the same place it was opened and will release all body scroll locks
         */
-        if(!isChatOpen){
-          setWindowYPosition(window.pageYOffset)
-          window.scrollTo(0,document.body.clientHeight);
+        if (!isChatOpen) {
+          setWindowYPosition(window.pageYOffset);
+          window.scrollTo(0, document.body.clientHeight);
         } else {
-          clearAllBodyScrollLocks()
-          window.scrollTo(0,windowYPosition as number);
+          clearAllBodyScrollLocks();
+          window.scrollTo(0, windowYPosition as number);
         }
       }
-    } 
-
+    }
   }, [isChatOpen]);
 
   // get current window height
   const getCurrentWindowHeight = () => {
-    return window.innerHeight
-  }
+    return window.innerHeight;
+  };
 
   const [chatState] = useState(
     observable({
@@ -118,17 +142,16 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       vp3_last_handler_called: ""
     })
   );
-  
+
   // did mount
   useEffect(() => {
     setWindowHeight(window.innerHeight);
     // set default height for tablet size
-    if(isTablet){
+    if (isTablet) {
       setHeight("400px");
       setWidth("250px");
     }
-    
-  },[])
+  }, []);
 
   ///// ***** /////
 
@@ -140,27 +163,35 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       ),
     [p.is_not_showing_last_component]
   );
-  
+
   useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
   useEffect(() => setIsShowFab(is_fabless ? false : !isChatOpen), [isChatOpen]);
-  useEffect(() => setInputParams(p.input_parameters || []), [p.input_parameters]);
+  useEffect(() => setInputParams(p.input_parameters || []), [
+    p.input_parameters
+  ]);
   useEffect(() => setComponentName(p.name), [p.name]);
-  useEffect(() => {setBotGreeting(p.bot_greeting || "Type anything to get started!");}, [p.bot_greeting]);
+  useEffect(() => {
+    setBotGreeting(p.bot_greeting || "Type anything to get started!");
+  }, [p.bot_greeting]);
 
-  useUserTyping(content, setContent, lastUnsubmittedInput, lastInputValue);
+  useUserTyping(
+    content,
+    setContent,
+    lastUnsubmittedInput as MessageContent[] | string,
+    lastInputValue as MessageContent[]
+  );
 
   const isBotDoneTyping = useBotTyping(
     content,
     setContent,
-    lastInputValue || botGreeting
+    (lastInputValue as MessageContent[] | string) || botGreeting
   );
 
   const [serverReply, setServerReply] = useServerReply(
     componentId,
     inputParams || [],
-    lastInputValue
+    lastInputValue as string
   );
-
 
   useEffect(() => {
     if (botGreeting && isBotDoneTyping) {
@@ -168,6 +199,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         action_name: "greeting",
         response: botGreeting,
         component_done: false,
+        responses: [],
         component_failed: false,
         updated_context: {},
         confidence: 1,
@@ -180,7 +212,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   useEffect(() => {
     if (isBotDoneTyping && serverReply) {
       setBotGreeting("");
-      setLastBotMessage(serverReply.response);
+      setLastBotMessage(serverReply.responses || " ");
       setLastResultData({ ...serverReply });
       setLastInputValue("");
       setServerReply(undefined);
@@ -194,7 +226,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     if (!lastEntry || lastEntry.isUser || !lastEntry.isLoading) return;
 
     lastEntry.isLoading = false;
-    lastEntry.message = lastBotMessage;
+    lastEntry.message = lastBotMessage as string;
     const lastContext = lastResultData.updated_context || {};
     is_showing_last_component &&
       (chatState.vp3_last_handler_called =
@@ -212,7 +244,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         return acc;
       }, [] as BubbleParams[])
     ];
-
     chatState.rawRepliesData.push({
       messageId: lastEntry.id,
       data: lastResultData
@@ -223,8 +254,10 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   // on submit handler
   const onSubmit = (value: string) => {
+    if (value && !value.match(/^\s*$/)) {
+      setLastInputValue(value);
+    }
     setLastBotMessage("");
-    setLastInputValue(value);
     setLastUnsubmittedInput("");
   };
 
@@ -243,30 +276,34 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     setBotGreeting(p.bot_greeting || "");
   };
 
-  const chatBody = document.getElementById("coco_chat_window_body") as HTMLElement;
-  const textarea = document.getElementById("coco_chat_window_textarea") as HTMLElement;
+  const chatBody = document.getElementById(
+    "coco_chat_window_body"
+  ) as HTMLElement;
+  const textarea = document.getElementById(
+    "coco_chat_window_textarea"
+  ) as HTMLElement;
 
   // on focus handler
   const onFocus = () => {
-    if(isMobile && !isTablet && !is_fabless){      
+    if (isMobile && !isTablet && !is_fabless) {
       setHeaderHeight(() => 40);
       disableBodyScroll(chatBody);
       disableBodyScroll(textarea);
       setTimeout(() => {
         setHeight(() => `${getCurrentWindowHeight()}px`);
-      },300) 
+      }, 300);
     }
-  }
+  };
 
   // on blur handler
   const onBlur = () => {
-    if(isMobile && !isTablet && !is_fabless){
+    if (isMobile && !isTablet && !is_fabless) {
       setHeight(`${windowHeight}px`);
       setTimeout(() => {
-        setHeaderHeight(() => 56);   
-      },350)
-    } 
-  }
+        setHeaderHeight(() => 56);
+      }, 350);
+    }
+  };
 
   // create chat footer
   const footer = useFooter({
@@ -282,44 +319,46 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const header = useHeader({
     title: componentName,
     state: chatState,
-    height : headerHeight,
+    height: headerHeight,
     closeChat: toggleChat,
-    isFabless : is_fabless
+    isFabless: is_fabless
   });
 
   return (
-    <> 
+    <>
       <div
         className={
           isChatOpen ? classes.chatWindowOpen : classes.chatWindowClosed
         }
         style={
-          !is_fabless ?  {
-                    // style with Fab
-                    position: "fixed",
-                    bottom: isMobile && !isTablet ? 0 : theme.spacing(8),
-                    right: isMobile && !isTablet ? 0 : theme.spacing(5),
-                    height: isChatOpen ? height : "0px",
-                    width: isChatOpen ? width : "0px",
-                    transition: "all 0.3s",
-                    maxHeight:windowHeight,
-                    overflow: "hidden"
-                  } : {
-                    // style without Fab
-                    position: isMobile  ? "relative" : "fixed",
-                    bottom: isMobile && !isTablet ? 0 : theme.spacing(8),
-                    right: isMobile && !isTablet ? 0 : theme.spacing(5),
-                    height: height,
-                    width: width,
-                    maxHeight: windowHeight,
-                    overflow: "hidden"
-                  }
-             }
+          !is_fabless
+            ? {
+                // style with Fab
+                position: "fixed",
+                bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
+                right: isMobile && !isTablet ? 0 : theme.spacing(5),
+                height: isChatOpen ? height : "0px",
+                width: isChatOpen ? width : "0px",
+                transition: "all 0.3s",
+                maxHeight: windowHeight,
+                overflow: "hidden"
+              }
+            : {
+                // style without Fab
+                position: isMobile ? "relative" : "fixed",
+                bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
+                right: isMobile && !isTablet ? 0 : theme.spacing(5),
+                height: height,
+                width: width,
+                maxHeight: windowHeight,
+                overflow: "hidden"
+              }
+        }
       >
         <ChatWindow
           {...{
             title: componentName,
-            header:header,
+            header: header,
             bubbleExtraParams: chatState,
             bubble: CoCoBubble,
             content,
@@ -338,9 +377,9 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
           onClick={toggleChat}
           style={{ display: isShowFab ? "flex" : "none" }}
         >
-          <ChatIcon/>
+          <ChatIcon />
         </Fab>
       )}
-   </>
+    </>
   );
 };

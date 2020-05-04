@@ -69,8 +69,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const [componentName, setComponentName] = useState(
     p.name || "CoCoHub Demo Bot"
   );
-  const [is_open_on_start] = useState(p.is_open_on_start === "true");
-  const [is_fabless] = useState(p.is_fabless === "true");
+  const [is_open_on_start] = useState(p.is_open_on_start);
+  const [is_fabless] = useState(p.is_fabless);
   const [botGreeting, setBotGreeting] = useState(
     p.bot_greeting || "Type anything to get started!"
   );
@@ -273,7 +273,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     setLastBotMessage("");
     setLastInputValue("");
     setLastUnsubmittedInput("");
-    setBotGreeting(p.bot_greeting || "");
   };
 
   const chatBody = document.getElementById(
@@ -321,11 +320,12 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     state: chatState,
     height: headerHeight,
     closeChat: toggleChat,
-    isFabless: is_fabless
+    isFabless: is_fabless as boolean
   });
 
   return (
     <>
+      {console.log(p.is_open_on_start, p.bot_greeting)}
       <div
         className={
           isChatOpen ? classes.chatWindowOpen : classes.chatWindowClosed

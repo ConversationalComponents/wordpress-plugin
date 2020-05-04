@@ -5,7 +5,7 @@ class CoCoBotSettings {
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'coco_bot_settings_add_plugin_page' ) );
-		add_action( 'admin_init', array( $this, 'coco_bot_settings_page_init' ) );
+		add_action( 'admin_init', array( $this, 'coco_bot_settings_page_init' ) );		
 	}
 
 	public function coco_bot_settings_add_plugin_page() {
@@ -19,7 +19,6 @@ class CoCoBotSettings {
 	}
 	public function coco_bot_settings_create_admin_page() {
 		$this->coco_bot_settings_options = get_option( 'coco_bot_settings_option_name' ); ?>
-
 		<div class="wrap">
 			<h2>CoCoHub Chatbot Settings</h2>
 			<p>Use shortcode: <code>[cocobot]</code> to add the chat-window to your page</p>
@@ -75,22 +74,6 @@ class CoCoBotSettings {
 		);
 
 		add_settings_field(
-			'isfabless_3', // id
-			'Is Fabless', // title
-			array( $this, 'isfabless_3_callback' ), // callback
-			'coco-bot-settings-admin', // page
-			'coco_bot_settings_setting_section' // section
-		);
-
-		add_settings_field(
-			'defaultopen_6', // id
-			'Chat-window is open by default', // title
-			array( $this, 'defaultopen_6_callback' ), // callback
-			'coco-bot-settings-admin', // page
-			'coco_bot_settings_setting_section' // section
-		);
-
-		add_settings_field(
 			'height_4', // id
 			'Height', // title
 			array( $this, 'height_4_callback' ), // callback
@@ -102,6 +85,22 @@ class CoCoBotSettings {
 			'width_5', // id
 			'Width', // title
 			array( $this, 'width_5_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
+			'isfabless_3', // id
+			'Is Fabless', // title
+			array( $this, 'isfabless_3_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
+			'defaultopen_6', // id
+			'Chat-window is open by default', // title
+			array( $this, 'defaultopen_6_callback' ), // callback
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section
 		);
@@ -122,7 +121,10 @@ class CoCoBotSettings {
 		}
 
 		if ( isset( $input['isfabless_3'] ) ) {
-			$sanitary_values['isfabless_3'] = sanitize_text_field( $input['isfabless_3'] );
+			$sanitary_values['isfabless_3'] =  true;	
+		} else {
+			$sanitary_values['isfabless_3'] = false;
+
 		}
 
 		if ( isset( $input['height_4'] ) ) {
@@ -134,7 +136,9 @@ class CoCoBotSettings {
 		}
 
 		if ( isset( $input['defaultopen_6'] ) ) {
-			$sanitary_values['defaultopen_6'] = sanitize_text_field( $input['defaultopen_6'] );
+			$sanitary_values['defaultopen_6'] = true;
+		} else {
+			$sanitary_values['defaultopen_6'] = false;
 		}
 
 		return $sanitary_values;
@@ -165,10 +169,10 @@ class CoCoBotSettings {
 		);
 	}
 
-	public function isfabless_3_callback() {		 
+	public function isfabless_3_callback() {	
 		printf(
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="%s"><span> true / false',
-			$default = esc_attr( $this->coco_bot_settings_options['isfabless_3']) ? esc_attr( $this->coco_bot_settings_options['isfabless_3']) : "false"
+			'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="0"' .  checked(1,  esc_attr ($this->coco_bot_settings_options['isfabless_3'] ), false ).'/>',
+			 
 		);
 	}
 
@@ -189,15 +193,17 @@ class CoCoBotSettings {
 	public function defaultopen_6_callback() {
 		printf(
 
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="%s"><span> true / false',
-			$deafult = esc_attr( $this->coco_bot_settings_options['defaultopen_6']) ? esc_attr( $this->coco_bot_settings_options['defaultopen_6']) : "true"
+			'<input class="regular-text" type="checkbox" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="0"'.  checked( 1, esc_attr( $this->coco_bot_settings_options['defaultopen_6']), false ).'/>',
 			
 		);
+	
 	}
 
 }
-if ( is_admin() )
+if ( is_admin() ) {
 	$coco_bot_settings = new CoCoBotSettings();
+}
+
 
 /*
  * Retrieve this value with:

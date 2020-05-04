@@ -5,8 +5,8 @@ export type CoCoChatWindowParams = {
   is_not_showing_last_component?: string;
   human_id_or_url: string;
   bot_greeting?: string;
-  is_fabless?: "false" | "true";
-  is_open_on_start?: "false" | "true";
+  is_fabless?: boolean;
+  is_open_on_start?: boolean;
   height?: number;
   width?: number;
   input_parameters?: {

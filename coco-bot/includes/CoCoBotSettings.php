@@ -120,11 +120,12 @@ class CoCoBotSettings {
 			$sanitary_values['botgreeting_2'] = sanitize_text_field( $input['botgreeting_2'] );
 		}
 
-		if ( isset( $input['isfabless_3'] ) ) {
-			$sanitary_values['isfabless_3'] =  true;	
+		if ( isset( $input['isfabless_3'] )) {	
+			if( $input['isfabless_3'] == 1) {
+				$sanitary_values['isfabless_3'] = true;
+			}	
 		} else {
 			$sanitary_values['isfabless_3'] = false;
-
 		}
 
 		if ( isset( $input['height_4'] ) ) {
@@ -136,7 +137,9 @@ class CoCoBotSettings {
 		}
 
 		if ( isset( $input['defaultopen_6'] ) ) {
-			$sanitary_values['defaultopen_6'] = true;
+			if( $input['defaultopen_6']  == 1) {
+				$sanitary_values['defaultopen_6'] = true;
+			}
 		} else {
 			$sanitary_values['defaultopen_6'] = false;
 		}
@@ -169,11 +172,12 @@ class CoCoBotSettings {
 		);
 	}
 
-	public function isfabless_3_callback() {	
-		printf(
-			'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="0"' .  checked(1,  esc_attr ($this->coco_bot_settings_options['isfabless_3'] ), false ).'/>',
-			 
-		);
+	public function isfabless_3_callback() {
+        $is_checked =  esc_attr( $this->coco_bot_settings_options['isfabless_3']) == 1 ? 1 : 0;
+
+		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
+
+		echo $html;
 	}
 
 	public function height_4_callback() {
@@ -191,12 +195,12 @@ class CoCoBotSettings {
 	}
 
 	public function defaultopen_6_callback() {
-		printf(
+		$is_checked =  esc_attr( $this->coco_bot_settings_options['defaultopen_6']) == 1 ? 1 : 0;
 
-			'<input class="regular-text" type="checkbox" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="0"'.  checked( 1, esc_attr( $this->coco_bot_settings_options['defaultopen_6']), false ).'/>',
+		$html = '<input class="regular-text" type="checkbox" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="1"'.  checked( 1, esc_attr( $this->coco_bot_settings_options['defaultopen_6']), false ).'/>';
 			
-		);
-	
+		echo $html;
+		
 	}
 
 }

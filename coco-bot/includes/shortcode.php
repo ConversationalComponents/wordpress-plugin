@@ -11,10 +11,10 @@ add_shortcode( 'cocobot', function ( $atts ) {
 	$params       = ( ! empty( $coco_bot['name_0'] ) ) ? 'name="'.$coco_bot['name_0'].'"' : 'name="CoCoHub Demo Bot"';
 	$params       .= ( ! empty( $coco_bot['humanidorurl_1'] ) ) ? 'human_id_or_url="'.$coco_bot['humanidorurl_1'].'"' : 'human_id_or_url="coco_bot_vp3"';
 	$params       .= ( ! empty( $coco_bot['botgreeting_2'] ) ) ? 'bot_greeting="'.$coco_bot['botgreeting_2'].'"' : 'bot_greeting="Hello"';
-	$params       .= ( ! empty( $coco_bot['isfabless_3'] ) ) ? 'is_fabless="'.$coco_bot['isfabless_3'].'"' : 'is_fabless="false"';
+	$params       .= ( ! empty( $coco_bot['isfabless_3'] ) ) ? 'is_fabless="'.$coco_bot['isfabless_3'].'"' : 'is_fabless=""';
 	$params       .= ( ! empty( $coco_bot['height_4'] ) ) ? 'height="'.$coco_bot['height_4'].'"' : 'height="500"';
 	$params       .= ( ! empty( $coco_bot['width_5'] ) ) ? 'width="'.$coco_bot['width_5'].'"' : 'width="300"';
-	$params       .= ( ! empty( $coco_bot['defaultopen_6'] ) ) ? 'is_open_on_start="'.$coco_bot['defaultopen_6'].'"' : 'is_open_on_start="true"';
+	$params       .= ( ! empty( $coco_bot['defaultopen_6'] ) ) ? 'is_open_on_start="'.$coco_bot['defaultopen_6'].'"' : 'is_open_on_start=""';
 
 	return '<div id="cocobot" ' . $params . '></div>';
 } );

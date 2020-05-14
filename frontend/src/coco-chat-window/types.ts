@@ -1,10 +1,12 @@
+import { MessageContent } from "@conversationalcomponents/chat-window/types";
+
 export type CoCoChatWindowParams = {
   name: string;
   is_not_showing_last_component?: string;
   human_id_or_url: string;
   bot_greeting?: string;
-  is_fabless?: "false" | "true";
-  is_open_on_start?: "false" | "true";
+  is_fabless?: boolean;
+  is_open_on_start?: boolean;
   height?: number;
   width?: number;
   input_parameters?: {
@@ -25,7 +27,8 @@ export type BubbleParams = {
 
 export type CocoResponse = {
   action_name?: string;
-  response: string;
+  response?: string;
+  responses: MessageContent[] | string;
   component_done: boolean;
   component_failed: boolean;
   updated_context: { [key: string]: any };

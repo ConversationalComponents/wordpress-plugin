@@ -71,8 +71,11 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   );
   const [is_open_on_start] = useState(p.is_open_on_start);
   const [is_fabless] = useState(p.is_fabless);
-  const [botGreeting, setBotGreeting] = useState(
-    p.bot_greeting || "Type anything to get started!"
+  const [botGreeting, setBotGreeting] = useState<MessageContent | null>(
+    { text: p.bot_greeting as string, image: "" } || {
+      text: "Type anything to get started!",
+      image: ""
+    }
   );
   // deafult settings
 
@@ -170,9 +173,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     p.input_parameters
   ]);
   useEffect(() => setComponentName(p.name), [p.name]);
-  useEffect(() => {
-    setBotGreeting(p.bot_greeting || "Type anything to get started!");
-  }, [p.bot_greeting]);
 
   useUserTyping(
     content,
@@ -184,7 +184,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const isBotDoneTyping = useBotTyping(
     content,
     setContent,
-    (lastInputValue as MessageContent[] | string) || botGreeting
+    (lastInputValue as MessageContent[]) || botGreeting
   );
 
   const [serverReply, setServerReply] = useServerReply(
@@ -197,9 +197,9 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     if (botGreeting && isBotDoneTyping) {
       setServerReply({
         action_name: "greeting",
-        response: botGreeting,
+        response: botGreeting.text as string,
         component_done: false,
-        responses: [],
+        responses: [botGreeting],
         component_failed: false,
         updated_context: {},
         confidence: 1,
@@ -211,7 +211,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   useEffect(() => {
     if (isBotDoneTyping && serverReply) {
-      setBotGreeting("");
+      setBotGreeting(null);
       setLastBotMessage(serverReply.responses || " ");
       setLastResultData({ ...serverReply });
       setLastInputValue("");
@@ -325,7 +325,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   return (
     <>
-      {console.log(p.is_open_on_start, p.bot_greeting)}
       <div
         className={
           isChatOpen ? classes.chatWindowOpen : classes.chatWindowClosed

@@ -71,8 +71,11 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   );
   const [is_open_on_start] = useState(p.is_open_on_start);
   const [is_fabless] = useState(p.is_fabless);
-  const [botGreeting, setBotGreeting] = useState(
-    p.bot_greeting || "Type anything to get started!"
+  const [botGreeting, setBotGreeting] = useState<MessageContent | null>(
+    { text: p.bot_greeting as string, image: "" } || {
+      text: "Type anything to get started!",
+      image: ""
+    }
   );
   // deafult settings
 
@@ -181,7 +184,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const isBotDoneTyping = useBotTyping(
     content,
     setContent,
-    (lastInputValue as MessageContent[] | string) || botGreeting
+    (lastInputValue as MessageContent[]) || botGreeting
   );
 
   const [serverReply, setServerReply] = useServerReply(
@@ -194,9 +197,9 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     if (botGreeting && isBotDoneTyping) {
       setServerReply({
         action_name: "greeting",
-        response: botGreeting,
+        response: botGreeting.text as string,
         component_done: false,
-        responses: botGreeting,
+        responses: [botGreeting],
         component_failed: false,
         updated_context: {},
         confidence: 1,
@@ -208,7 +211,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   useEffect(() => {
     if (isBotDoneTyping && serverReply) {
-      setBotGreeting("");
+      setBotGreeting(null);
       setLastBotMessage(serverReply.responses || " ");
       setLastResultData({ ...serverReply });
       setLastInputValue("");

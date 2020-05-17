@@ -28,7 +28,7 @@ export type BubbleParams = {
 export type CocoResponse = {
   action_name?: string;
   response?: string;
-  responses: MessageContent[] | string;
+  responses: MessageContent[];
   component_done: boolean;
   component_failed: boolean;
   updated_context: { [key: string]: any };

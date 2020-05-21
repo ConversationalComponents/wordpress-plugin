@@ -3,14 +3,14 @@ Contributors: cbuskilla
 Tags: cocohub, chatbots, chat-window, conversational components
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: MIT
 
 Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 
 == Description ==
 
-CoCoHub builder let you drag and drop components to build your bot.
+With CoCoHub builder you can build your bot with components using drag and drop.
 
 CoCoHub is an invaluable complementary tool for chatbot developers, offering pre-built, customizable & tested conversational components which enhance bot capabilities and eliminate the need for writing and maintaining AI conversation boilerplates or low-level conversation logic. 
 Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
@@ -35,6 +35,12 @@ Under the plugin settings set your bot name and set your bot component_url from 
 Use the shortcode [cocobot] to add it to your page
 
 == Changelog ==
+
+= 1.1.0 =
+*Release Date - 21st May, 2020*
+
+* Updated settings page
+* Link to visual builder
 
 = 1.0.0 =
 *Release Date - 9th March, 2020*

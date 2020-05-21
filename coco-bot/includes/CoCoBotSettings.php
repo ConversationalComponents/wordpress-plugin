@@ -23,6 +23,7 @@ class CoCoBotSettings {
 			<h2>CoCoHub Chatbot Settings</h2>
 			<p>Use shortcode: <code>[cocobot]</code> to add the chat-window to your page</p>
 			<p>Get a chatbot url(component_id) for your bot at <a href="https://cocohub.ai" target="_blank">cocohub.ai</a> </p>
+			<p>Check out our tutorial to building and connecting your bot <a href="https://docs.cocohub.ai/tutorials/wp_cocobot" target="_blank">here</a></p>
 			<?php settings_errors(); ?>
 
 			<form method="post" action="options.php">

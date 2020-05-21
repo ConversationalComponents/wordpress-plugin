@@ -6,7 +6,7 @@
 Plugin Name: CoCoHub
 Plugin URI: https://cocohub.ai/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
 Description: The first repository for chatbot conversational components. Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
-Version: 1.1.0
+Version: 1.1.1
 Author: CoCoHub.ai
 Author URI: https://cocohub.ai/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
 License: MIT

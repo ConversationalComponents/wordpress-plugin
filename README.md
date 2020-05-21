@@ -4,7 +4,7 @@
 ```bash
 ./build.sh
 ```
-This will create coco-bot.zip file. This is the built plugin, upload it to a wordpress installation.
+This will create cocohub.zip file. This is the built plugin, upload it to a wordpress installation.
 
 Use with the shortcode [cocobot]
 

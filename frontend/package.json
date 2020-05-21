@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/wp-content/plugins/coco-bot/build",
+  "homepage": "/wp-content/plugins/cocohub/build",
   "dependencies": {
     "@conversationalcomponents/chat-window": "^1.5.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",

@@ -3,7 +3,7 @@ cd frontend
 npm ci
 npm run build
 cd ..
-rm -rf coco-bot/build
-mv frontend/build coco-bot/build
-if [ -f coco-bot.zip ]; then rm coco-bot.zip; fi
-zip -r coco-bot.zip coco-bot/*
+rm -rf cocohub/build
+mv frontend/build cocohub/build
+if [ -f cocohub.zip ]; then rm cocohub.zip; fi
+zip -r cocohub.zip cocohub/*

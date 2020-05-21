@@ -34,6 +34,8 @@ Under the plugin settings set your bot name and set your bot component_url from 
 
 Use the shortcode [cocobot] to add it to your page
 
+To get more in depth instructions follow the tutorial here: https://docs.cocohub.ai/tutorials/wp_cocobot
+
 == Changelog ==
 
 = 1.1.0 =

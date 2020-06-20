@@ -71,11 +71,18 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   );
   const [is_open_on_start] = useState(p.is_open_on_start);
   const [is_fabless] = useState(p.is_fabless);
+
+  const [headerHeight, setHeaderHeight] = useState<number>(
+    isMobile ? 56 : p.header_height || 70
+  );
+
   const [botGreeting, setBotGreeting] = useState<MessageContent | null>(
-    { text: p.bot_greeting as string, image: "" } || {
-      text: "Type anything to get started!",
-      image: ""
-    }
+    p.bot_greeting
+      ? { text: p.bot_greeting as string, image: "" }
+      : {
+          text: "Type anything to get started!",
+          image: ""
+        }
   );
   // deafult settings
 
@@ -91,7 +98,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const [replyDetails, setReplyDetails] = useState<Object | undefined>(
     undefined
   );
-  const [headerHeight, setHeaderHeight] = useState<number>(56);
   const [windowYPosition, setWindowYPosition] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
 
@@ -212,6 +218,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   useEffect(() => {
     if (isBotDoneTyping && serverReply) {
       setBotGreeting(null);
+      setLastBotMessage(serverReply.responses as MessageContent[]);
       setLastBotMessage(serverReply.responses || " ");
       setLastResultData({ ...serverReply });
       setLastInputValue("");
@@ -285,7 +292,6 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   // on focus handler
   const onFocus = () => {
     if (isMobile && !isTablet && !is_fabless) {
-      setHeaderHeight(() => 40);
       disableBodyScroll(chatBody);
       disableBodyScroll(textarea);
       setTimeout(() => {
@@ -297,10 +303,9 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   // on blur handler
   const onBlur = () => {
     if (isMobile && !isTablet && !is_fabless) {
-      setHeight(`${windowHeight}px`);
       setTimeout(() => {
-        setHeaderHeight(() => 56);
-      }, 350);
+        setHeight(`${windowHeight}px`);
+      }, 300);
     }
   };
 
@@ -316,9 +321,9 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
 
   // create chat header
   const header = useHeader({
+    height: headerHeight,
     title: componentName,
     state: chatState,
-    height: headerHeight,
     closeChat: toggleChat,
     isFabless: is_fabless as boolean
   });

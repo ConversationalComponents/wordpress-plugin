@@ -8,7 +8,8 @@ export type CoCoChatWindowParams = {
   is_fabless?: boolean;
   is_open_on_start?: boolean;
   height?: number;
-  width?: number;
+  width?: number | undefined;
+  header_height?: number;
   input_parameters?: {
     type: ComponentPropertyType;
     value: string | number | Date;

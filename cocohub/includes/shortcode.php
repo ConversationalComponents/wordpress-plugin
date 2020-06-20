@@ -8,7 +8,7 @@ add_shortcode( 'cocobot', function ( $atts ) {
 	$args         = shortcode_atts( $default_atts, $atts );
 
 	$coco_bot     = get_option( 'coco_bot_settings_option_name' );
-	$params       = ( ! empty( $coco_bot['name_0'] ) ) ? 'name="'.$coco_bot['name_0'].'"' : 'name="CoCoHub Demo Bot"';
+	$params       = ( ! empty( $coco_bot['name_0'] ) ) ? 'name="'.$coco_bot['name_0'].'"' : 'name="CoCoHub"';
 	$params       .= ( ! empty( $coco_bot['humanidorurl_1'] ) ) ? 'human_id_or_url="'.$coco_bot['humanidorurl_1'].'"' : 'human_id_or_url="coco_bot_vp3"';
 	$params       .= ( ! empty( $coco_bot['botgreeting_2'] ) ) ? 'bot_greeting="'.$coco_bot['botgreeting_2'].'"' : 'bot_greeting="Hello"';
 	$params       .= ( ! empty( $coco_bot['isfabless_3'] ) ) ? 'is_fabless="'.$coco_bot['isfabless_3'].'"' : 'is_fabless=""';

@@ -9,7 +9,7 @@ export type FooterStatefulParams = {
   onFocus: () => void;
   onBlur: () => void;
   disabled: boolean;
-  actionButton?:JSX.Element
+  actionButton?: JSX.Element;
 };
 
 export const FooterStateful = (p: FooterStatefulParams) => {
@@ -17,20 +17,19 @@ export const FooterStateful = (p: FooterStatefulParams) => {
   useEffect(() => {
     setDisabled(p.disabled);
   }, [p.disabled]);
- 
-    return (
-      <FooterInput
-        maxRows={1}
-        maxHeight={110}
-        minHeight={56}
-        onChange={p.onChange}
-        onSubmit={p.onSubmit}
-        onFocus={p.onFocus}
-        onBlur={p.onBlur}
-        actionButton={p.actionButton}
-        inputPlaceholder="Type the message..."
-        disabled={!!disabled}
-      />
-    );
-    
+
+  return (
+    <FooterInput
+      maxRows={1}
+      maxHeight={110}
+      minHeight={56}
+      onChange={p.onChange}
+      onSubmit={p.onSubmit}
+      onFocus={p.onFocus}
+      onBlur={p.onBlur}
+      actionButton={p.actionButton}
+      inputPlaceholder="Type the message..."
+      disabled={!!disabled}
+    />
+  );
 };

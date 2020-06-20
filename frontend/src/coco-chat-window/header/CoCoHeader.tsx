@@ -7,7 +7,7 @@ export type CoCoHeaderParams = {
     vp3_last_handler_called: string;
   };
   closeChat: () => void;
-  isFabless : boolean
+  isFabless: boolean;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between",
     width: "100%",
     zIndex: 1000,
-    position : "relative"
+    position: "relative"
   },
   titleWrapper: {
     display: "flex",
@@ -70,17 +70,19 @@ export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
   }, [p.title]);
 
   return (
-    <div className={classes.headerWrapper} style={{height:`${p.height}px`}}>
+    <div className={classes.headerWrapper} style={{ height: `${p.height}px` }}>
       <div className={classes.titleWrapper}>
         <Typography style={{ fontSize: "18px" }}>{title}</Typography>
       </div>
-      {!p.isFabless ? 
-      <div className={classes.closeButtonWrapper}>
-        <div className={classes.closebutton} onClick={p.closeChat}>
-          <strong>&mdash;</strong>
+      {!p.isFabless ? (
+        <div className={classes.closeButtonWrapper}>
+          <div className={classes.closebutton} onClick={p.closeChat}>
+            <strong>&mdash;</strong>
+          </div>
         </div>
-      </div> : ""
-     }
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@ export function useFooter(p: FooterStatefulParams) {
 
   useEffect(() => {
     setFooter(<FooterStateful {...p} />);
-  }, [p.disabled,]);
+  }, [p.disabled]);
 
   return footer;
 }

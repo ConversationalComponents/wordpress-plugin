@@ -367,6 +367,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
             bubble: CoCoBubble,
             content,
             footer,
+            isRtl: !!is_rtl,
           }}
         />
       </div>

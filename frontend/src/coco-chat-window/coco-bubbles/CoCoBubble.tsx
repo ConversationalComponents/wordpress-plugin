@@ -9,6 +9,7 @@ export const CoCoBubble = (p: ChatBubbleParams) => {
     <ChatBubble
       {...{
         entry: p.entry,
+        isRtl: p.isRtl,
       }}
     />
   );

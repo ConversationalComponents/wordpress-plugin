@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { HeaderParams } from "@conversationalcomponents/chat-window/types";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
@@ -8,6 +8,7 @@ export type CoCoHeaderParams = {
   };
   closeChat: () => void;
   isFabless: boolean;
+  isRtl?: boolean;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,20 +21,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between",
     width: "100%",
     zIndex: 1000,
-    position: "relative"
+    position: "relative",
   },
   titleWrapper: {
     display: "flex",
     alignItems: "center",
     paddingLeft: "8px",
-    height: "100%"
+    paddingRight: "8px",
+    height: "100%",
   },
   switchesWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     height: "100%",
-    paddingRight: "0.5rem"
+    paddingRight: "0.5rem",
   },
   closeButtonWrapper: {
     width: "50px",
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: "white"
+    color: "white",
   },
 
   closebutton: {
@@ -56,27 +58,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     fontSize: "0.6rem",
     fontWeight: "bold",
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 }));
 
-export const CoCoHeader = (p: HeaderParams & CoCoHeaderParams) => {
+export const CoCoHeader: React.FC<HeaderParams & CoCoHeaderParams> = ({
+  title,
+  height,
+  isFabless,
+  closeChat,
+  isRtl,
+}) => {
   const classes = useStyles();
 
-  const [title, setTitle] = useState(p.title);
-
-  useEffect(() => {
-    setTitle(p.title);
-  }, [p.title]);
-
   return (
-    <div className={classes.headerWrapper} style={{ height: `${p.height}px` }}>
+    <div
+      className={classes.headerWrapper}
+      style={{
+        height: `${height}px`,
+        direction: `${isRtl ? "rtl" : "ltr"}` as "rtl" | "ltr",
+      }}
+    >
       <div className={classes.titleWrapper}>
         <Typography style={{ fontSize: "18px" }}>{title}</Typography>
       </div>
-      {!p.isFabless ? (
+      {!isFabless ? (
         <div className={classes.closeButtonWrapper}>
-          <div className={classes.closebutton} onClick={p.closeChat}>
+          <div className={classes.closebutton} onClick={closeChat}>
             <strong>&mdash;</strong>
           </div>
         </div>

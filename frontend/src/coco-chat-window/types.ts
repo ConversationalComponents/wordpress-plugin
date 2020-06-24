@@ -6,6 +6,7 @@ export type CoCoChatWindowParams = {
   human_id_or_url: string;
   bot_greeting?: string;
   is_fabless?: boolean;
+  is_rtl?: boolean;
   is_open_on_start?: boolean;
   height?: number;
   width?: number;
@@ -48,5 +49,5 @@ export type ComponentProperty = {
 enum ComponentPropertyType {
   "text" = "text",
   "number" = "number",
-  "date" = "date"
+  "date" = "date",
 }

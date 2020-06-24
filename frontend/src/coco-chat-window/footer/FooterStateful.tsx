@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { autorun } from "mobx";
 import { FooterInput } from "@conversationalcomponents/chat-window";
 
 export type FooterStatefulParams = {
@@ -10,26 +9,31 @@ export type FooterStatefulParams = {
   onBlur: () => void;
   disabled: boolean;
   actionButton?: JSX.Element;
+  isRtl?: boolean;
 };
 
-export const FooterStateful = (p: FooterStatefulParams) => {
-  const [disabled, setDisabled] = useState(p.disabled);
-  useEffect(() => {
-    setDisabled(p.disabled);
-  }, [p.disabled]);
-
+export const FooterStateful: React.FC<FooterStatefulParams> = ({
+  onChange,
+  onSubmit,
+  onFocus,
+  onBlur,
+  actionButton,
+  disabled,
+  isRtl,
+}) => {
   return (
     <FooterInput
       maxRows={1}
       maxHeight={110}
       minHeight={56}
-      onChange={p.onChange}
-      onSubmit={p.onSubmit}
-      onFocus={p.onFocus}
-      onBlur={p.onBlur}
-      actionButton={p.actionButton}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      actionButton={actionButton}
       inputPlaceholder="Type the message..."
       disabled={!!disabled}
+      isRtl={isRtl}
     />
   );
 };

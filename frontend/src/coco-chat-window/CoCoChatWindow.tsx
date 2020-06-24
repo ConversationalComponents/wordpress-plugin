@@ -9,19 +9,19 @@ import { resetSession } from "../utils/chatComm";
 import {
   ChatWindow,
   useUserTyping,
-  useBotTyping
+  useBotTyping,
 } from "@conversationalcomponents/chat-window";
 import {
   ChatEntry,
-  MessageContent
+  MessageContent,
 } from "@conversationalcomponents/chat-window/types";
 
 import { Fab, makeStyles, Theme, useTheme } from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { isMobile, isTablet } from "react-device-detect";
-import { useFooter } from "./hooks/useFooter";
-import { useHeader } from "./hooks/useHeader";
+import { FooterStateful } from "./footer/FooterStateful";
+import { CoCoHeader } from "./header/CoCoHeader";
 
 const useStyles = makeStyles((theme: Theme) => ({
   chatFab: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: isMobile ? theme.spacing(2) : theme.spacing(6),
     zIndex: 10,
     fontSize: "24px",
-    transform: isMobile ? "scale(1)" : "scale(1.5)"
+    transform: isMobile ? "scale(1)" : "scale(1.5)",
   },
 
   chatWindowOpen: {
@@ -39,42 +39,43 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: "hidden",
     boxShadow: "0 0 5px 2px rgba(0,0,0,0.3)",
     borderRadius: "10px",
-    zIndex: 9999
+    zIndex: 9999,
   },
 
   chatWindowClosed: {
     height: "0%",
     transition: "all 0.3s",
-    overflow: "hidden"
-  }
+    overflow: "hidden",
+  },
 }));
 
-export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
+export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
+  is_rtl,
+  human_id_or_url: componentId = "coco_bot_vp3",
+  input_parameters: inputParams = [],
+  name: componentName = "CoCoHub Demo Bot",
+  is_open_on_start,
+  is_fabless,
+  source_language_code,
+  ...rest
+}) => {
   const classes = useStyles();
   const theme = useTheme();
 
   // deafult settings
   const [height, setHeight] = useState<string>(
-    isMobile && !p.is_fabless
+    isMobile && !is_fabless
       ? `${window.innerHeight}px`
-      : `${p.height ? p.height : 500}px`
+      : `${rest.height ? rest.height : 500}px`
   );
   const [width, setWidth] = useState<string>(
-    isMobile ? "100%" : `${p.width ? p.width : 300}px`
+    isMobile ? "100%" : `${rest.width ? rest.width : 300}px`
   );
-  const [componentId, setComponentId] = useState(
-    p.human_id_or_url || "coco_bot_vp3"
-  );
-  const [inputParams, setInputParams] = useState(p.input_parameters || []);
-  const [componentName, setComponentName] = useState(
-    p.name || "CoCoHub Demo Bot"
-  );
-  const [is_open_on_start] = useState(p.is_open_on_start);
-  const [is_fabless] = useState(p.is_fabless);
+
   const [botGreeting, setBotGreeting] = useState<MessageContent | null>(
-    { text: p.bot_greeting as string, image: "" } || {
+    { text: rest.bot_greeting as string, image: "" } || {
       text: "Type anything to get started!",
-      image: ""
+      image: "",
     }
   );
   // deafult settings
@@ -100,14 +101,14 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   );
   const [isShowFab, setIsShowFab] = useState(is_fabless ? false : !isChatOpen);
   const [is_showing_last_component, setIs_showing_last_component] = useState(
-    !p.is_not_showing_last_component ||
-      p.is_not_showing_last_component === "false"
+    !rest.is_not_showing_last_component ||
+      rest.is_not_showing_last_component === "false"
   );
 
   const fabRef = useRef<HTMLButtonElement | null>(null);
 
   const showDetails = (id: string) => {
-    const entry = chatState.rawRepliesData.find(rrd => rrd.messageId === id);
+    const entry = chatState.rawRepliesData.find((rrd) => rrd.messageId === id);
     if (!entry) return;
     setReplyDetails(entry.data);
   };
@@ -142,7 +143,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
       params: [] as BubbleParams[],
       rawRepliesData: [] as { messageId: string; data: Object }[],
       showDetails,
-      vp3_last_handler_called: ""
+      vp3_last_handler_called: "",
     })
   );
 
@@ -161,18 +162,13 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   useEffect(
     () =>
       setIs_showing_last_component(
-        !p.is_not_showing_last_component ||
-          p.is_not_showing_last_component === "false"
+        !rest.is_not_showing_last_component ||
+          rest.is_not_showing_last_component === "false"
       ),
-    [p.is_not_showing_last_component]
+    [rest.is_not_showing_last_component]
   );
 
-  useEffect(() => setComponentId(p.human_id_or_url), [p.human_id_or_url]);
   useEffect(() => setIsShowFab(is_fabless ? false : !isChatOpen), [isChatOpen]);
-  useEffect(() => setInputParams(p.input_parameters || []), [
-    p.input_parameters
-  ]);
-  useEffect(() => setComponentName(p.name), [p.name]);
 
   useUserTyping(
     content,
@@ -190,7 +186,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
   const [serverReply, setServerReply] = useServerReply(
     componentId,
     inputParams || [],
-    lastInputValue as string
+    lastInputValue as string,
+    source_language_code
   );
 
   useEffect(() => {
@@ -204,7 +201,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
         updated_context: {},
         confidence: 1,
         idontknow: false,
-        raw_resp: {}
+        raw_resp: {},
       });
     }
   }, [botGreeting, isBotDoneTyping]);
@@ -239,14 +236,14 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
           name: cur,
           value: lastContext[cur],
           id: uuid(),
-          messageId: lastEntry.id
+          messageId: lastEntry.id,
         });
         return acc;
-      }, [] as BubbleParams[])
+      }, [] as BubbleParams[]),
     ];
     chatState.rawRepliesData.push({
       messageId: lastEntry.id,
-      data: lastResultData
+      data: lastResultData,
     });
   }, [lastBotMessage, content, lastResultData, is_showing_last_component]);
 
@@ -304,24 +301,32 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
     }
   };
 
-  // create chat footer
-  const footer = useFooter({
-    onChange,
-    onReset,
-    onSubmit,
-    onFocus,
-    onBlur,
-    disabled: !isBotDoneTyping
-  });
+  const footer = (
+    <FooterStateful
+      {...{
+        onChange,
+        onReset,
+        onSubmit,
+        onFocus,
+        onBlur,
+        disabled: !isBotDoneTyping,
+        isRtl: !!is_rtl,
+      }}
+    />
+  );
 
-  // create chat header
-  const header = useHeader({
-    title: componentName,
-    state: chatState,
-    height: headerHeight,
-    closeChat: toggleChat,
-    isFabless: is_fabless as boolean
-  });
+  const header = (
+    <CoCoHeader
+      {...{
+        title: componentName,
+        state: chatState,
+        height: headerHeight,
+        closeChat: toggleChat,
+        isFabless: !!is_fabless,
+        isRtl: !!is_rtl,
+      }}
+    />
+  );
 
   return (
     <>
@@ -340,7 +345,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
                 width: isChatOpen ? width : "0px",
                 transition: "all 0.3s",
                 maxHeight: windowHeight,
-                overflow: "hidden"
+                overflow: "hidden",
               }
             : {
                 // style without Fab
@@ -350,7 +355,7 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
                 height: height,
                 width: width,
                 maxHeight: windowHeight,
-                overflow: "hidden"
+                overflow: "hidden",
               }
         }
       >
@@ -361,7 +366,8 @@ export const CoCoChatWindow = (p: CoCoChatWindowParams) => {
             bubbleExtraParams: chatState,
             bubble: CoCoBubble,
             content,
-            footer
+            footer,
+            isRtl: !!is_rtl,
           }}
         />
       </div>

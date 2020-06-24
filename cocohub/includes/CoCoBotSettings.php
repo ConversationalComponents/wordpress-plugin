@@ -105,12 +105,34 @@ class CoCoBotSettings {
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section
 		);
+
+		
+		add_settings_field(
+			'isrtl_3', // id
+			'Is RTL', // title
+			array( $this, 'isrtl_3_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
+			'source_language_code_7', // id
+			'Source language code (en, he, ab, etc)', // title
+			array( $this, 'source_language_code_7_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
 	}
 
 	public function coco_bot_settings_sanitize($input) {
 		$sanitary_values = array();
 		if ( isset( $input['name_0'] ) ) {
 			$sanitary_values['name_0'] = sanitize_text_field( $input['name_0'] );
+		} 
+
+		if ( isset( $input['source_language_code_7'] ) ) {
+			$sanitary_values['source_language_code_7'] = sanitize_text_field( $input['source_language_code_7'] );
 		} 
 
 		if ( isset( $input['humanidorurl_1'] ) ) {
@@ -127,6 +149,15 @@ class CoCoBotSettings {
 			}	
 		} else {
 			$sanitary_values['isfabless_3'] = false;
+		}
+
+
+		if ( isset( $input['isrtl_3'] )) {	
+			if( $input['isrtl_3'] == 1) {
+				$sanitary_values['isrtl_3'] = true;
+			}	
+		} else {
+			$sanitary_values['isrtl_3'] = false;
 		}
 
 		if ( isset( $input['height_4'] ) ) {
@@ -158,6 +189,13 @@ class CoCoBotSettings {
 			 $default = esc_attr( $this->coco_bot_settings_options['name_0']) ? esc_attr( $this->coco_bot_settings_options['name_0']) : 'CoCoHub Demo Bot'
 		);
 	}
+	
+	public function source_language_code_7_callback() {
+		printf(
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[source_language_code_7]" id="source_language_code_7" value="%s">',
+			 $default = esc_attr( $this->coco_bot_settings_options['source_language_code_7']) ? esc_attr( $this->coco_bot_settings_options['source_language_code_7']) : ''
+		);
+	}
 
 	public function humanidorurl_1_callback() {
 		printf(
@@ -177,6 +215,15 @@ class CoCoBotSettings {
         $is_checked =  esc_attr( $this->coco_bot_settings_options['isfabless_3']) == 1 ? 1 : 0;
 
 		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
+
+		echo $html;
+	}
+
+
+	public function isrtl_3_callback() {
+        $is_checked =  esc_attr( $this->coco_bot_settings_options['isrtl_3']) == 1 ? 1 : 0;
+
+		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isrtl_3]" id="isrtl_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
 
 		echo $html;
 	}
@@ -214,9 +261,11 @@ if ( is_admin() ) {
  * Retrieve this value with:
  * $coco_bot_settings_options = get_option( 'coco_bot_settings_option_name' ); // Array of All Options
  * $name_0 = $coco_bot_settings_options['name_0']; // Name
+ * $source_language_code_7 = $coco_bot_settings_options['source_language_code_7']; // language code
  * $humanidorurl_1 = $coco_bot_settings_options['humanidorurl_1']; // HumanIdOrUrl
  * $botgreeting_2 = $coco_bot_settings_options['botgreeting_2']; // BotGreeting
  * $isfabless_3 = $coco_bot_settings_options['isfabless_3']; // IsFabless
+ * $isrtl_3 = $coco_bot_settings_options['isrtl_3']; // IsRtl
  * $height_4 = $coco_bot_settings_options['height_4']; // Height
  * $width_5 = $coco_bot_settings_options['width_5']; // Width
  */

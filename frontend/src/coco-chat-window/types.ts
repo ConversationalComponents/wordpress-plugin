@@ -5,6 +5,7 @@ export type CoCoChatWindowParams = {
   is_not_showing_last_component?: string;
   human_id_or_url: string;
   bot_greeting?: string;
+  source_language_code?: string;
   is_fabless?: boolean;
   is_rtl?: boolean;
   is_open_on_start?: boolean;

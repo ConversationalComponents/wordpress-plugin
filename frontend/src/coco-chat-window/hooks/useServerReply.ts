@@ -6,20 +6,23 @@ const request = async (
   humanIdOrUrl: string,
   inputParams: ComponentProperty[],
   userInput: string,
-  setServerReply: (reply: CocoResponse) => void
+  setServerReply: (reply: CocoResponse) => void,
+  source_language_code?: string
 ) => {
-  const r: CocoResponse = await sendMessage(
-    humanIdOrUrl,
-    userInput,
-    inputParams && inputParams.length > 0 ? inputParams : []
-  );
+  const r: CocoResponse = await sendMessage({
+    componentIdOrUrl: humanIdOrUrl,
+    message: userInput,
+    inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
+    source_language_code,
+  });
   setServerReply(r);
 };
 
 export const useServerReply = (
   humanIdOrUrl: string,
   inputParams: ComponentProperty[],
-  userInput: string
+  userInput: string,
+  source_language_code?: string
 ): [
   CocoResponse | undefined,
   React.Dispatch<React.SetStateAction<CocoResponse | undefined>>
@@ -31,7 +34,13 @@ export const useServerReply = (
       setServerReply(undefined);
       return;
     }
-    request(humanIdOrUrl, inputParams, userInput, setServerReply);
+    request(
+      humanIdOrUrl,
+      inputParams,
+      userInput,
+      setServerReply,
+      source_language_code
+    );
   }, [humanIdOrUrl, userInput]);
 
   return [serverReply, setServerReply];

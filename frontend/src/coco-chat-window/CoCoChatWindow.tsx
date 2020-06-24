@@ -56,6 +56,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   name: componentName = "CoCoHub Demo Bot",
   is_open_on_start,
   is_fabless,
+  source_language_code,
   ...rest
 }) => {
   const classes = useStyles();
@@ -185,7 +186,8 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   const [serverReply, setServerReply] = useServerReply(
     componentId,
     inputParams || [],
-    lastInputValue as string
+    lastInputValue as string,
+    source_language_code
   );
 
   useEffect(() => {

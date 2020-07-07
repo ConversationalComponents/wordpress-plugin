@@ -2,6 +2,8 @@ import { MessageContent } from "@conversationalcomponents/chat-window/types";
 
 export type CoCoChatWindowParams = {
   name: string;
+  fab_right?: number;
+  fab_bottom?: number;
   is_not_showing_last_component?: string;
   human_id_or_url: string;
   bot_greeting?: string;

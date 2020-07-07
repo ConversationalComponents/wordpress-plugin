@@ -17,6 +17,8 @@ add_shortcode( 'cocobot', function ( $atts ) {
 	$params       .= ( ! empty( $coco_bot['height_4'] ) ) ? 'height="'.$coco_bot['height_4'].'"' : 'height="500"';
 	$params       .= ( ! empty( $coco_bot['width_5'] ) ) ? 'width="'.$coco_bot['width_5'].'"' : 'width="300"';
 	$params       .= ( ! empty( $coco_bot['defaultopen_6'] ) ) ? 'is_open_on_start="'.$coco_bot['defaultopen_6'].'"' : 'is_open_on_start=""';
+	$params       .= ( ! empty( $coco_bot['fab_right_field_id'] ) ) ? 'fab_right="'.$coco_bot['fab_right_field_id'].'"' : 'fab_right=""';
+	$params       .= ( ! empty( $coco_bot['fab_bottom_field_id'] ) ) ? 'fab_bottom="'.$coco_bot['fab_bottom_field_id'].'"' : 'fab_bottom=""';
 
 	return '<div id="cocobot" ' . $params . '></div>';
 } );

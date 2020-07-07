@@ -123,6 +123,23 @@ class CoCoBotSettings {
 			'coco_bot_settings_setting_section' // section
 		);
 
+		add_settings_field(
+			'fab_right_field_id', // id
+			'Fab Right Side Distance', // title
+			array( $this, 'fab_right_field_id_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
+			'fab_bottom_field_id', // id
+			'Fab Bottom Distance', // title
+			array( $this, 'fab_bottom_field_id_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+
 	}
 
 	public function coco_bot_settings_sanitize($input) {
@@ -166,6 +183,14 @@ class CoCoBotSettings {
 
 		if ( isset( $input['width_5'] ) ) {
 			$sanitary_values['width_5'] = sanitize_text_field( $input['width_5'] );
+		}
+
+		if ( isset( $input['fab_right_field_id'] ) ) {
+			$sanitary_values['fab_right_field_id'] = sanitize_text_field( $input['fab_right_field_id'] );
+		}
+
+		if ( isset( $input['fab_bottom_field_id'] ) ) {
+			$sanitary_values['fab_bottom_field_id'] = sanitize_text_field( $input['fab_bottom_field_id'] );
 		}
 
 		if ( isset( $input['defaultopen_6'] ) ) {
@@ -251,6 +276,20 @@ class CoCoBotSettings {
 		
 	}
 
+	public function fab_bottom_field_id_callback() {
+		printf(
+			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[fab_bottom_field_id]" id="fab_bottom_field_id" value="%u">',
+			$default = esc_attr( $this->coco_bot_settings_options['fab_bottom_field_id'])  ? esc_attr( $this->coco_bot_settings_options['fab_bottom_field_id']) : '20'
+		);
+	}
+	
+	public function fab_right_field_id_callback() {
+		printf(
+			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[fab_right_field_id]" id="fab_right_field_id" value="%u">',
+			$default = esc_attr( $this->coco_bot_settings_options['fab_right_field_id'])  ? esc_attr( $this->coco_bot_settings_options['fab_right_field_id']) : '20'
+		);
+	}
+	
 }
 if ( is_admin() ) {
 	$coco_bot_settings = new CoCoBotSettings();
@@ -268,4 +307,6 @@ if ( is_admin() ) {
  * $isrtl_3 = $coco_bot_settings_options['isrtl_3']; // IsRtl
  * $height_4 = $coco_bot_settings_options['height_4']; // Height
  * $width_5 = $coco_bot_settings_options['width_5']; // Width
+ * $fab_right = $coco_bot_settings_options['fab_right_field_id']; // right offset for fab
+ * $fab_bottom = $coco_bot_settings_options['fab_bottom_field_id']; // bottom offset for fab
  */

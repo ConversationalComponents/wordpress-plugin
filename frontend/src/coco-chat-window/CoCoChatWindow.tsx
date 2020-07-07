@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
+  fab_right,
+  fab_bottom,
   is_rtl,
   human_id_or_url: componentId = "coco_bot_vp3",
   input_parameters: inputParams = [],
@@ -380,7 +382,18 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
           color={!isChatOpen ? "primary" : "default"}
           className={classes.chatFab}
           onClick={toggleChat}
-          style={{ display: isShowFab ? "flex" : "none" }}
+          style={{
+            position: "fixed",
+            display: isShowFab ? "flex" : "none",
+            right:
+              !isMobile && typeof fab_right !== "undefined"
+                ? `${fab_right}px`
+                : "",
+            bottom:
+              !isMobile && typeof fab_bottom !== "undefined"
+                ? `${fab_bottom}px`
+                : "",
+          }}
         >
           <ChatIcon />
         </Fab>

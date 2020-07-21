@@ -211,33 +211,33 @@ class CoCoBotSettings {
 	public function name_0_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[name_0]" id="name_0" value="%s" required>',
-			 $default = esc_attr( $this->coco_bot_settings_options['name_0']) ? esc_attr( $this->coco_bot_settings_options['name_0']) : 'CoCoHub Demo Bot'
+			 $default = esc_attr( $this->coco_bot_settings_options['name_0'] ?? 'Lead Generator Bot') 
 		);
 	}
 	
 	public function source_language_code_7_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[source_language_code_7]" id="source_language_code_7" value="%s">',
-			 $default = esc_attr( $this->coco_bot_settings_options['source_language_code_7']) ? esc_attr( $this->coco_bot_settings_options['source_language_code_7']) : ''
+			 $default = esc_attr( $this->coco_bot_settings_options['source_language_code_7'] ?? '')
 		);
 	}
 
 	public function humanidorurl_1_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[humanidorurl_1]" id="humanidorurl_1" value="%s" required>',
-			$default = esc_attr( $this->coco_bot_settings_options['humanidorurl_1'])  ? esc_attr( $this->coco_bot_settings_options['humanidorurl_1'])  : 'coco_bot_vp3'
+			$default = esc_attr( $this->coco_bot_settings_options['humanidorurl_1'] ?? 'coco_bot_vp3')
 		);
 	}
 
 	public function botgreeting_2_callback() {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[botgreeting_2]" id="botgreeting_2" value="%s">',
-			$default = esc_attr( $this->coco_bot_settings_options['botgreeting_2']) ? esc_attr( $this->coco_bot_settings_options['botgreeting_2'])  : 'Hello'
+			$default = esc_attr( $this->coco_bot_settings_options['botgreeting_2'] ?? 'Hello')
 		);
 	}
 
 	public function isfabless_3_callback() {
-        $is_checked =  esc_attr( $this->coco_bot_settings_options['isfabless_3']) == 1 ? 1 : 0;
+        $is_checked =  esc_attr( $this->coco_bot_settings_options['isfabless_3'] ?? 0) == 1 ? 1 : 0;
 
 		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isfabless_3]" id="isfabless_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
 
@@ -246,7 +246,7 @@ class CoCoBotSettings {
 
 
 	public function isrtl_3_callback() {
-        $is_checked =  esc_attr( $this->coco_bot_settings_options['isrtl_3']) == 1 ? 1 : 0;
+        $is_checked =  esc_attr( $this->coco_bot_settings_options['isrtl_3'] ?? 0) == 1 ? 1 : 0;
 
 		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isrtl_3]" id="isrtl_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
 
@@ -256,21 +256,21 @@ class CoCoBotSettings {
 	public function height_4_callback() {
 		printf(
 			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[height_4]" id="height_4" value="%u">',
-			$default = esc_attr( $this->coco_bot_settings_options['height_4'])  ? esc_attr( $this->coco_bot_settings_options['height_4'])  : 500
+			$default = esc_attr( $this->coco_bot_settings_options['height_4'] ?? 500)
 		);
 	}
 
 	public function width_5_callback() {
 		printf(
 			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[width_5]" id="width_5" value="%u">',
-			$default = esc_attr( $this->coco_bot_settings_options['width_5'])  ? esc_attr( $this->coco_bot_settings_options['width_5']) : 300
+			$default = esc_attr( $this->coco_bot_settings_options['width_5'] ?? 300)
 		);
 	}
 
 	public function defaultopen_6_callback() {
-		$is_checked =  esc_attr( $this->coco_bot_settings_options['defaultopen_6']) == 1 ? 1 : 0;
+		$is_checked =  esc_attr( $this->coco_bot_settings_options['defaultopen_6'] ?? 0) == 1 ? 1 : 0;
 
-		$html = '<input class="regular-text" type="checkbox" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="1"'.  checked( 1, esc_attr( $this->coco_bot_settings_options['defaultopen_6']), false ).'/>';
+		$html = '<input class="regular-text" type="checkbox" name="coco_bot_settings_option_name[defaultopen_6]" id="defaultopen_6" value="1"'.  checked( 1, esc_attr( $this->coco_bot_settings_options['defaultopen_6'] ?? false), false ).'/>';
 			
 		echo $html;
 		
@@ -279,14 +279,14 @@ class CoCoBotSettings {
 	public function fab_bottom_field_id_callback() {
 		printf(
 			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[fab_bottom_field_id]" id="fab_bottom_field_id" value="%u">',
-			$default = esc_attr( $this->coco_bot_settings_options['fab_bottom_field_id'])  ? esc_attr( $this->coco_bot_settings_options['fab_bottom_field_id']) : '20'
+			$default = esc_attr( $this->coco_bot_settings_options['fab_bottom_field_id'] ?? '20')
 		);
 	}
 	
 	public function fab_right_field_id_callback() {
 		printf(
 			'<input class="regular-text" type="number" name="coco_bot_settings_option_name[fab_right_field_id]" id="fab_right_field_id" value="%u">',
-			$default = esc_attr( $this->coco_bot_settings_options['fab_right_field_id'])  ? esc_attr( $this->coco_bot_settings_options['fab_right_field_id']) : '20'
+			$default = esc_attr( $this->coco_bot_settings_options['fab_right_field_id'] ?? '20')
 		);
 	}
 	

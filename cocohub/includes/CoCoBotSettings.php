@@ -125,7 +125,7 @@ class CoCoBotSettings {
 
 		add_settings_field(
 			'user_own_email_field', // id
-			'Email to send results to', // title
+			'Bot owner email', // title
 			array( $this, 'user_own_email_field_callback' ), // callback
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section

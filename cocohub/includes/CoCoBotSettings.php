@@ -124,6 +124,14 @@ class CoCoBotSettings {
 		);
 
 		add_settings_field(
+			'user_own_email_field', // id
+			'Bot owner email', // title
+			array( $this, 'user_own_email_field_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'fab_right_field_id', // id
 			'Fab Right Side Distance', // title
 			array( $this, 'fab_right_field_id_callback' ), // callback
@@ -150,6 +158,10 @@ class CoCoBotSettings {
 
 		if ( isset( $input['source_language_code_7'] ) ) {
 			$sanitary_values['source_language_code_7'] = sanitize_text_field( $input['source_language_code_7'] );
+		} 
+
+		if ( isset( $input['user_own_email_field'] ) ) {
+			$sanitary_values['user_own_email_field'] = sanitize_text_field( $input['user_own_email_field'] );
 		} 
 
 		if ( isset( $input['humanidorurl_1'] ) ) {
@@ -219,6 +231,13 @@ class CoCoBotSettings {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[source_language_code_7]" id="source_language_code_7" value="%s">',
 			 $default = esc_attr( $this->coco_bot_settings_options['source_language_code_7'] ?? '')
+		);
+	}
+
+	public function user_own_email_field_callback() {
+		printf(
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[user_own_email_field]" id="user_own_email_field" value="%s">',
+			 $default = esc_attr( $this->coco_bot_settings_options['user_own_email_field'] ?? '')
 		);
 	}
 
@@ -301,6 +320,7 @@ if ( is_admin() ) {
  * $coco_bot_settings_options = get_option( 'coco_bot_settings_option_name' ); // Array of All Options
  * $name_0 = $coco_bot_settings_options['name_0']; // Name
  * $source_language_code_7 = $coco_bot_settings_options['source_language_code_7']; // language code
+ * $user_own_email_field = $coco_bot_settings_options['user_own_email_field']; // email to send results to
  * $humanidorurl_1 = $coco_bot_settings_options['humanidorurl_1']; // HumanIdOrUrl
  * $botgreeting_2 = $coco_bot_settings_options['botgreeting_2']; // BotGreeting
  * $isfabless_3 = $coco_bot_settings_options['isfabless_3']; // IsFabless

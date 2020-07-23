@@ -14,14 +14,16 @@ export const sendMessage: (p: {
   componentIdOrUrl: string;
   message: string;
   inputParameters: ComponentProperty[];
-  newSessionId?: string | undefined;
-  source_language_code?: string | undefined;
+  newSessionId?: string;
+  source_language_code?: string;
+  user_email?: string;
 }) => Promise<any> = async ({
   componentIdOrUrl,
   message,
   inputParameters,
   newSessionId,
   source_language_code,
+  user_email,
 }) => {
   const headers = new Headers({ "api-key": apiKey });
   if (newSessionId) {
@@ -42,11 +44,14 @@ export const sendMessage: (p: {
           source_language_code,
           user_input: message,
           flatten_context: true,
-          context: inputParameters.reduce((acc, cur) => {
-            // @ts-ignore
-            acc[cur.name] = cur.value;
-            return acc;
-          }, {}),
+          context: {
+            owner: { email: user_email },
+            ...inputParameters.reduce((acc, cur) => {
+              // @ts-ignore
+              acc[cur.name] = cur.value;
+              return acc;
+            }, {}),
+          },
         }),
       }
     );

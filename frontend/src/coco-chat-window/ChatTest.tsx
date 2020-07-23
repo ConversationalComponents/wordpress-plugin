@@ -11,7 +11,7 @@ export const ChatTest = (p: { humanId: string }) => {
         width: "100%",
         height: "100%",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
       <div
@@ -20,12 +20,12 @@ export const ChatTest = (p: { humanId: string }) => {
           width: "420px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <CoCoChatWindow
           human_id_or_url={componentId}
-          name={componentId}
+          bot_name={componentId}
           bot_greeting="Hi, I'll be your bot today"
         />
       </div>

@@ -53,9 +53,10 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   fab_right,
   fab_bottom,
   is_rtl,
+  user_email = "",
   human_id_or_url: componentId = "coco_bot_vp3",
   input_parameters: inputParams = [],
-  name: componentName = "CoCoHub Demo Bot",
+  bot_name: componentName = "CoCoHub Demo Bot",
   is_open_on_start,
   is_fabless,
   source_language_code,
@@ -189,7 +190,8 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     componentId,
     inputParams || [],
     lastInputValue as string,
-    source_language_code
+    source_language_code,
+    user_email
   );
 
   useEffect(() => {

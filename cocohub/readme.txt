@@ -2,8 +2,8 @@
 Contributors: cbuskilla
 Tags: cocohub, chatbots, chat-window, conversational components
 Requires at least: 4.0
-Tested up to: 5.3
-Stable tag: 1.1.6
+Tested up to: 5.4
+Stable tag: 1.1.7
 License: MIT
 
 Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.

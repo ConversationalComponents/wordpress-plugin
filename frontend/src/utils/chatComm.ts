@@ -14,6 +14,7 @@ export const sendMessage: (p: {
   componentIdOrUrl: string;
   message: string;
   inputParameters: ComponentProperty[];
+  componentName: string;
   newSessionId?: string;
   source_language_code?: string;
   user_email?: string;
@@ -22,6 +23,7 @@ export const sendMessage: (p: {
   message,
   inputParameters,
   newSessionId,
+  componentName,
   source_language_code,
   user_email,
 }) => {
@@ -45,6 +47,7 @@ export const sendMessage: (p: {
           user_input: message,
           flatten_context: true,
           context: {
+            bot_name: componentName,
             owner: { email: user_email },
             ...inputParameters.reduce((acc, cur) => {
               // @ts-ignore

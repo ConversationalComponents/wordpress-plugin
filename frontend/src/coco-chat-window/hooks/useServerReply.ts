@@ -7,12 +7,14 @@ const request = async (
   inputParams: ComponentProperty[],
   userInput: string,
   setServerReply: (reply: CocoResponse) => void,
+  componentName: string,
   source_language_code?: string,
   user_email?: string
 ) => {
   const r: CocoResponse = await sendMessage({
     componentIdOrUrl: humanIdOrUrl,
     message: userInput,
+    componentName,
     inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
     source_language_code,
     user_email,
@@ -24,6 +26,7 @@ export const useServerReply = (
   humanIdOrUrl: string,
   inputParams: ComponentProperty[],
   userInput: string,
+  componentName: string,
   source_language_code?: string,
   user_email?: string
 ): [
@@ -42,6 +45,7 @@ export const useServerReply = (
       inputParams,
       userInput,
       setServerReply,
+      componentName,
       source_language_code,
       user_email
     );

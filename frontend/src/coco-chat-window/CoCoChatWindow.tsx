@@ -190,6 +190,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     componentId,
     inputParams || [],
     lastInputValue as string,
+    componentName,
     source_language_code,
     user_email
   );

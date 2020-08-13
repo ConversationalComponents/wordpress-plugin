@@ -8,7 +8,7 @@
 
 This will create cocohub.zip file. This is the built plugin, upload it to a wordpress installation.
 
-Use with the shortcode [cocobot]
+Use with the shortcode [cocobot] or [cocobot component=componentid]
 
 ##### ChatWindow API:
 

@@ -21,7 +21,7 @@ class CoCoBotSettings {
 		$this->coco_bot_settings_options = get_option( 'coco_bot_settings_option_name' ); ?>
 		<div class="wrap">
 			<h2>CoCoHub Chatbot Settings</h2>
-			<p>Use shortcode: <code>[cocobot]</code> to add the chat-window to your page</p>
+			<p>Use shortcode: <code>[cocobot]</code> or <code>[cocobot component=componentid]</code> to add the chat-window to your page</p>
 			<p>Get a chatbot url(component_id) for your bot at <a href="https://cocohub.ai" target="_blank">cocohub.ai</a> </p>
 			<p>Check out our tutorial to building and connecting your bot <a href="https://docs.cocohub.ai/tutorials/wp_cocobot" target="_blank">here</a></p>
 			<?php settings_errors(); ?>

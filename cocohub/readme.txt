@@ -3,7 +3,7 @@ Contributors: cbuskilla
 Tags: cocohub, chatbots, chat-window, conversational components
 Requires at least: 4.0
 Tested up to: 5.4
-Stable tag: 1.1.8
+Stable tag: 1.2.0
 License: MIT
 
 Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
@@ -37,6 +37,13 @@ Use the shortcode [cocobot] to add it to your page
 To get more in depth instructions follow the tutorial here: https://docs.cocohub.ai/tutorials/wp_cocobot
 
 == Changelog ==
+
+= 1.2.0 =
+*Release Date - 6th October, 2020*
+
+* retry for failed messages
+* adjustable fab side
+* blocking input between messages
 
 = 1.1.6 =
 *Release Date - 23rd July, 2020*

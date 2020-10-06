@@ -16,7 +16,14 @@ import {
   MessageContent,
 } from "@conversationalcomponents/chat-window/types";
 
-import { Fab, makeStyles, Theme, useTheme } from "@material-ui/core";
+import {
+  Button,
+  Fab,
+  makeStyles,
+  Theme,
+  Typography,
+  useTheme,
+} from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { isMobile, isTablet } from "react-device-detect";
@@ -52,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   fab_right,
   fab_bottom,
+  is_window_on_left = false,
   is_rtl,
   user_email = "",
   human_id_or_url: componentId = "coco_bot_vp3",
@@ -84,6 +92,8 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   // deafult settings
 
   const [content, setContent] = useState<ChatEntry[]>([]);
+  const [isAwaitingReply, setIsAwaitingReply] = useState(false);
+  const [isLastError, setIsLastError] = useState(false);
   const [lastInputValue, setLastInputValue] = useState<
     MessageContent[] | string
   >();
@@ -186,7 +196,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     (lastInputValue as MessageContent[]) || botGreeting
   );
 
-  const [serverReply, setServerReply] = useServerReply(
+  const [serverReply, setServerReply, resend] = useServerReply(
     componentId,
     inputParams || [],
     lastInputValue as string,
@@ -194,6 +204,10 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     source_language_code,
     user_email
   );
+
+  useEffect(() => {
+    setIsAwaitingReply(false);
+  }, [serverReply]);
 
   useEffect(() => {
     if (botGreeting && isBotDoneTyping) {
@@ -214,6 +228,13 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   useEffect(() => {
     if (isBotDoneTyping && serverReply) {
       setBotGreeting(null);
+
+      // @ts-ignore
+      const isError = !!serverReply.error;
+
+      setIsLastError(isError);
+      if (isError) return;
+
       setLastBotMessage(serverReply.responses || " ");
       setLastResultData({ ...serverReply });
       setLastInputValue("");
@@ -258,6 +279,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   const onSubmit = (value: string) => {
     if (value && !value.match(/^\s*$/)) {
       setLastInputValue(value);
+      setIsAwaitingReply(true);
     }
     setLastBotMessage("");
     setLastUnsubmittedInput("");
@@ -306,7 +328,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     }
   };
 
-  const footer = (
+  const footer = !isLastError ? (
     <FooterStateful
       {...{
         onChange,
@@ -314,10 +336,19 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
         onSubmit,
         onFocus,
         onBlur,
-        disabled: !isBotDoneTyping,
+        disabled: !isBotDoneTyping || isAwaitingReply,
         isRtl: !!is_rtl,
       }}
     />
+  ) : (
+    <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+      <Typography align="center" variant="caption">
+        could not reach bot
+      </Typography>
+      <Button fullWidth variant="contained" onClick={resend}>
+        click to resend
+      </Button>
+    </div>
   );
 
   const header = (
@@ -333,6 +364,46 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     />
   );
 
+  // is_window_on_left
+
+  const posStyle = is_window_on_left
+    ? {
+        left: isMobile && !isTablet ? 0 : theme.spacing(5),
+      }
+    : {
+        right: isMobile && !isTablet ? 0 : theme.spacing(5),
+      };
+
+  const baseStyle = {
+    transition: "all 0.3s",
+    maxHeight: windowHeight,
+    overflow: "hidden",
+    bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
+    ...posStyle,
+  };
+
+  const fabStylePos = is_window_on_left
+    ? {
+        left:
+          !isMobile && typeof fab_right !== "undefined"
+            ? `${fab_right}px`
+            : "0px",
+      }
+    : {
+        right:
+          !isMobile && typeof fab_right !== "undefined"
+            ? `${fab_right}px`
+            : "0px",
+      };
+
+  const fabStyle = {
+    position: "fixed",
+    display: isShowFab ? "flex" : "none",
+    bottom:
+      !isMobile && typeof fab_bottom !== "undefined" ? `${fab_bottom}px` : "",
+    ...fabStylePos,
+  } as React.CSSProperties;
+
   return (
     <>
       <div
@@ -344,23 +415,16 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
             ? {
                 // style with Fab
                 position: "fixed",
-                bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
-                right: isMobile && !isTablet ? 0 : theme.spacing(5),
                 height: isChatOpen ? height : "0px",
                 width: isChatOpen ? width : "0px",
-                transition: "all 0.3s",
-                maxHeight: windowHeight,
-                overflow: "hidden",
+                ...baseStyle,
               }
             : {
                 // style without Fab
                 position: isMobile ? "relative" : "fixed",
-                bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
-                right: isMobile && !isTablet ? 0 : theme.spacing(5),
                 height: height,
                 width: width,
-                maxHeight: windowHeight,
-                overflow: "hidden",
+                ...baseStyle,
               }
         }
       >
@@ -385,18 +449,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
           color={!isChatOpen ? "primary" : "default"}
           className={classes.chatFab}
           onClick={toggleChat}
-          style={{
-            position: "fixed",
-            display: isShowFab ? "flex" : "none",
-            right:
-              !isMobile && typeof fab_right !== "undefined"
-                ? `${fab_right}px`
-                : "",
-            bottom:
-              !isMobile && typeof fab_bottom !== "undefined"
-                ? `${fab_bottom}px`
-                : "",
-          }}
+          style={fabStyle}
         >
           <ChatIcon />
         </Fab>

@@ -84,6 +84,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   // deafult settings
 
   const [content, setContent] = useState<ChatEntry[]>([]);
+  const [isAwaitingReply, setIsAwaitingReply] = useState(false);
   const [lastInputValue, setLastInputValue] = useState<
     MessageContent[] | string
   >();
@@ -196,6 +197,10 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   );
 
   useEffect(() => {
+    setIsAwaitingReply(false);
+  }, [serverReply]);
+
+  useEffect(() => {
     if (botGreeting && isBotDoneTyping) {
       setServerReply({
         action_name: "greeting",
@@ -258,6 +263,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   const onSubmit = (value: string) => {
     if (value && !value.match(/^\s*$/)) {
       setLastInputValue(value);
+      setIsAwaitingReply(true);
     }
     setLastBotMessage("");
     setLastUnsubmittedInput("");
@@ -314,7 +320,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
         onSubmit,
         onFocus,
         onBlur,
-        disabled: !isBotDoneTyping,
+        disabled: !isBotDoneTyping || isAwaitingReply,
         isRtl: !!is_rtl,
       }}
     />

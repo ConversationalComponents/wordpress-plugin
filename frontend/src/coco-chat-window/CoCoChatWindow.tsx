@@ -16,7 +16,14 @@ import {
   MessageContent,
 } from "@conversationalcomponents/chat-window/types";
 
-import { Fab, makeStyles, Theme, useTheme } from "@material-ui/core";
+import {
+  Button,
+  Fab,
+  makeStyles,
+  Theme,
+  Typography,
+  useTheme,
+} from "@material-ui/core";
 import { ChatIcon } from "./ChatIcon";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { isMobile, isTablet } from "react-device-detect";
@@ -85,6 +92,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
 
   const [content, setContent] = useState<ChatEntry[]>([]);
   const [isAwaitingReply, setIsAwaitingReply] = useState(false);
+  const [isLastError, setIsLastError] = useState(false);
   const [lastInputValue, setLastInputValue] = useState<
     MessageContent[] | string
   >();
@@ -187,7 +195,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     (lastInputValue as MessageContent[]) || botGreeting
   );
 
-  const [serverReply, setServerReply] = useServerReply(
+  const [serverReply, setServerReply, resend] = useServerReply(
     componentId,
     inputParams || [],
     lastInputValue as string,
@@ -219,6 +227,13 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   useEffect(() => {
     if (isBotDoneTyping && serverReply) {
       setBotGreeting(null);
+
+      // @ts-ignore
+      const isError = !!serverReply.error;
+
+      setIsLastError(isError);
+      if (isError) return;
+
       setLastBotMessage(serverReply.responses || " ");
       setLastResultData({ ...serverReply });
       setLastInputValue("");
@@ -312,7 +327,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     }
   };
 
-  const footer = (
+  const footer = !isLastError ? (
     <FooterStateful
       {...{
         onChange,
@@ -324,6 +339,15 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
         isRtl: !!is_rtl,
       }}
     />
+  ) : (
+    <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+      <Typography align="center" variant="caption">
+        could not reach bot
+      </Typography>
+      <Button fullWidth variant="contained" onClick={resend}>
+        click to resend
+      </Button>
+    </div>
   );
 
   const header = (

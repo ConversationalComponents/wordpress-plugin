@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { autorun } from "mobx";
-import { BubbleParams } from "../types";
+import React from "react";
 import { ChatBubbleParams } from "@conversationalcomponents/chat-window/types";
 import { ChatBubble } from "@conversationalcomponents/chat-window";
 

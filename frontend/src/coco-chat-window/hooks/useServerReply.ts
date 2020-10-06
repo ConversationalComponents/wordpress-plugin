@@ -31,9 +31,22 @@ export const useServerReply = (
   user_email?: string
 ): [
   CocoResponse | undefined,
-  React.Dispatch<React.SetStateAction<CocoResponse | undefined>>
+  React.Dispatch<React.SetStateAction<CocoResponse | undefined>>,
+  () => void
 ] => {
   const [serverReply, setServerReply] = useState<CocoResponse>();
+
+  const resend = () => {
+    request(
+      humanIdOrUrl,
+      inputParams,
+      userInput,
+      setServerReply,
+      componentName,
+      source_language_code,
+      user_email
+    );
+  };
 
   useEffect(() => {
     if (!userInput) {
@@ -51,5 +64,5 @@ export const useServerReply = (
     );
   }, [humanIdOrUrl, userInput]);
 
-  return [serverReply, setServerReply];
+  return [serverReply, setServerReply, resend];
 };

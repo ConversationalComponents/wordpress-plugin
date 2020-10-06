@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   fab_right,
   fab_bottom,
+  is_window_on_left = false,
   is_rtl,
   user_email = "",
   human_id_or_url: componentId = "coco_bot_vp3",
@@ -363,6 +364,46 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     />
   );
 
+  // is_window_on_left
+
+  const posStyle = is_window_on_left
+    ? {
+        left: isMobile && !isTablet ? 0 : theme.spacing(5),
+      }
+    : {
+        right: isMobile && !isTablet ? 0 : theme.spacing(5),
+      };
+
+  const baseStyle = {
+    transition: "all 0.3s",
+    maxHeight: windowHeight,
+    overflow: "hidden",
+    bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
+    ...posStyle,
+  };
+
+  const fabStylePos = is_window_on_left
+    ? {
+        left:
+          !isMobile && typeof fab_right !== "undefined"
+            ? `${fab_right}px`
+            : "0px",
+      }
+    : {
+        right:
+          !isMobile && typeof fab_right !== "undefined"
+            ? `${fab_right}px`
+            : "0px",
+      };
+
+  const fabStyle = {
+    position: "fixed",
+    display: isShowFab ? "flex" : "none",
+    bottom:
+      !isMobile && typeof fab_bottom !== "undefined" ? `${fab_bottom}px` : "",
+    ...fabStylePos,
+  } as React.CSSProperties;
+
   return (
     <>
       <div
@@ -374,23 +415,16 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
             ? {
                 // style with Fab
                 position: "fixed",
-                bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
-                right: isMobile && !isTablet ? 0 : theme.spacing(5),
                 height: isChatOpen ? height : "0px",
                 width: isChatOpen ? width : "0px",
-                transition: "all 0.3s",
-                maxHeight: windowHeight,
-                overflow: "hidden",
+                ...baseStyle,
               }
             : {
                 // style without Fab
                 position: isMobile ? "relative" : "fixed",
-                bottom: isMobile && !isTablet ? 0 : theme.spacing(6),
-                right: isMobile && !isTablet ? 0 : theme.spacing(5),
                 height: height,
                 width: width,
-                maxHeight: windowHeight,
-                overflow: "hidden",
+                ...baseStyle,
               }
         }
       >
@@ -415,18 +449,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
           color={!isChatOpen ? "primary" : "default"}
           className={classes.chatFab}
           onClick={toggleChat}
-          style={{
-            position: "fixed",
-            display: isShowFab ? "flex" : "none",
-            right:
-              !isMobile && typeof fab_right !== "undefined"
-                ? `${fab_right}px`
-                : "",
-            bottom:
-              !isMobile && typeof fab_bottom !== "undefined"
-                ? `${fab_bottom}px`
-                : "",
-          }}
+          style={fabStyle}
         >
           <ChatIcon />
         </Fab>

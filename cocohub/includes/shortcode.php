@@ -20,6 +20,7 @@ add_shortcode( 'cocobot', function ( $atts ) {
 	$params       .= ( ! empty( $coco_bot['botgreeting_2'] ) ) ? 'bot_greeting="'.$coco_bot['botgreeting_2'].'"' : 'bot_greeting="Hello"';
 	$params       .= ( ! empty( $coco_bot['isfabless_3'] ) ) ? 'is_fabless="'.$coco_bot['isfabless_3'].'"' : 'is_fabless=""';
 	$params       .= ( ! empty( $coco_bot['isrtl_3'] ) ) ? 'is_rtl="'.$coco_bot['isrtl_3'].'"' : 'is_rtl=""';
+	$params       .= ( ! empty( $coco_bot['is_window_on_left_3'] ) ) ? 'is_window_on_left="'.$coco_bot['is_window_on_left_3'].'"' : 'is_window_on_left=""';
 	$params       .= ( ! empty( $coco_bot['height_4'] ) ) ? 'height="'.$coco_bot['height_4'].'"' : 'height="500"';
 	$params       .= ( ! empty( $coco_bot['width_5'] ) ) ? 'width="'.$coco_bot['width_5'].'"' : 'width="300"';
 	$params       .= ( ! empty( $coco_bot['defaultopen_6'] ) ) ? 'is_open_on_start="'.$coco_bot['defaultopen_6'].'"' : 'is_open_on_start=""';

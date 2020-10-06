@@ -116,6 +116,14 @@ class CoCoBotSettings {
 		);
 
 		add_settings_field(
+			'is_window_on_left_3', // id
+			'Is window on left side', // title
+			array( $this, 'is_window_on_left_3_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'source_language_code_7', // id
 			'Source language code (en, he, ab, etc)', // title
 			array( $this, 'source_language_code_7_callback' ), // callback
@@ -180,13 +188,20 @@ class CoCoBotSettings {
 			$sanitary_values['isfabless_3'] = false;
 		}
 
-
 		if ( isset( $input['isrtl_3'] )) {	
 			if( $input['isrtl_3'] == 1) {
 				$sanitary_values['isrtl_3'] = true;
 			}	
 		} else {
 			$sanitary_values['isrtl_3'] = false;
+		}
+
+		if ( isset( $input['is_window_on_left_3'] )) {	
+			if( $input['is_window_on_left_3'] == 1) {
+				$sanitary_values['is_window_on_left_3'] = true;
+			}	
+		} else {
+			$sanitary_values['is_window_on_left_3'] = false;
 		}
 
 		if ( isset( $input['height_4'] ) ) {
@@ -263,11 +278,18 @@ class CoCoBotSettings {
 		echo $html;
 	}
 
-
 	public function isrtl_3_callback() {
         $is_checked =  esc_attr( $this->coco_bot_settings_options['isrtl_3'] ?? 0) == 1 ? 1 : 0;
 
 		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[isrtl_3]" id="isrtl_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
+
+		echo $html;
+	}
+
+	public function is_window_on_left_3_callback() {
+        $is_checked =  esc_attr( $this->coco_bot_settings_options['is_window_on_left_3'] ?? 0) == 1 ? 1 : 0;
+
+		$html =	'<input type="checkbox" class="regular-text" type="checko" name="coco_bot_settings_option_name[is_window_on_left_3]" id="is_window_on_left_3" value="1"' .  checked(1,  $is_checked , false ).'/>';
 
 		echo $html;
 	}

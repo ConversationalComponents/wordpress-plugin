@@ -2,7 +2,7 @@ import { randomString } from "./randomString";
 import { ComponentProperty } from "../coco-chat-window/types";
 
 const apiKey = "master_key";
-const url = "https://marketplace.conversationalcomponents.com";
+const url = "https://cocohub.ai";
 
 let sessionId = randomString(8);
 

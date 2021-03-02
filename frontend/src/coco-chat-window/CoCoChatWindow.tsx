@@ -1,34 +1,34 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
 import { BubbleParams, CoCoChatWindowParams } from "./types";
-import { observable } from "mobx";
-import { CoCoBubble } from "./coco-bubbles/CoCoBubble";
-import { uuid } from "../utils/uuid";
-import { ReplyDetailsDialog } from "./ReplyDetailsDialog";
-import { useServerReply } from "./hooks/useServerReply";
-import { resetSession } from "../utils/chatComm";
 import {
-  ChatWindow,
-  useUserTyping,
-  useBotTyping,
-} from "@conversationalcomponents/chat-window";
+  Button,
+  Fab,
+  Theme,
+  Typography,
+  makeStyles,
+  useTheme,
+} from "@material-ui/core";
 import {
   ChatEntry,
   MessageContent,
 } from "@conversationalcomponents/chat-window/types";
-
 import {
-  Button,
-  Fab,
-  makeStyles,
-  Theme,
-  Typography,
-  useTheme,
-} from "@material-ui/core";
-import { ChatIcon } from "./ChatIcon";
-import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
+  ChatWindow,
+  useBotTyping,
+  useUserTyping,
+} from "@conversationalcomponents/chat-window";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 import { isMobile, isTablet } from "react-device-detect";
-import { FooterStateful } from "./footer/FooterStateful";
+
+import { ChatIcon } from "./ChatIcon";
+import { CoCoBubble } from "./coco-bubbles/CoCoBubble";
 import { CoCoHeader } from "./header/CoCoHeader";
+import { FooterStateful } from "./footer/FooterStateful";
+import { ReplyDetailsDialog } from "./ReplyDetailsDialog";
+import { observable } from "mobx";
+import { resetSession } from "../utils/chatComm";
+import { useServerReply } from "./hooks/useServerReply";
+import { uuid } from "../utils/uuid";
 
 const useStyles = makeStyles((theme: Theme) => ({
   chatFab: {

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { ComponentProperty, CocoResponse } from "../types";
+import { CocoResponse, ComponentProperty } from "../types";
+import React, { useEffect, useState } from "react";
+
 import { sendMessage } from "../../utils/chatComm";
 
 const request = async (

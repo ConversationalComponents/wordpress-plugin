@@ -11,7 +11,7 @@ export const resetSession = () => {
 };
 
 export const sendMessage: (p: {
-  componentIdOrUrl: string;
+  channel_id: string;
   message: string;
   inputParameters: ComponentProperty[];
   componentName: string;
@@ -19,11 +19,10 @@ export const sendMessage: (p: {
   source_language_code?: string;
   user_email?: string;
 }) => Promise<any> = async ({
-  componentIdOrUrl,
+  channel_id,
   message,
   inputParameters,
   newSessionId,
-  componentName,
   source_language_code,
   user_email,
 }) => {
@@ -32,28 +31,25 @@ export const sendMessage: (p: {
     sessionId = newSessionId;
   }
   try {
-    const isUrl =
-      componentIdOrUrl.startsWith("http:") ||
-      componentIdOrUrl.startsWith("https:");
     const reply = await fetch(
-      isUrl
-        ? `${componentIdOrUrl}/${sessionId}`
-        : url + `/api/exchange/${componentIdOrUrl}/${sessionId}`,
+      `https://cocohub.ai/v2/bot/channel/sync_exchange`,
       {
         method: "POST",
         headers,
         body: JSON.stringify({
-          source_language_code,
-          user_input: message,
-          flatten_context: true,
-          context: {
-            bot_name: componentName,
-            owner: { email: user_email },
-            ...inputParameters.reduce((acc, cur) => {
-              // @ts-ignore
-              acc[cur.name] = cur.value;
-              return acc;
-            }, {}),
+          message_id: randomString(8),
+          created_at: new Date().toISOString(),
+          author_id: user_email,
+          recipient: {
+            channel_name: "cocohub",
+            room_id: channel_id,
+          },
+          sender: {
+            channel_name: "wordpress",
+            room_id: sessionId,
+          },
+          payload: {
+            text: message,
           },
         }),
       }

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { sendMessage } from "../../utils/chatComm";
 
 const request = async (
-  humanIdOrUrl: string,
+  channel_id: string,
   inputParams: ComponentProperty[],
   userInput: string,
   setServerReply: (reply: CocoResponse) => void,
@@ -13,7 +13,7 @@ const request = async (
   user_email?: string
 ) => {
   const r: CocoResponse = await sendMessage({
-    componentIdOrUrl: humanIdOrUrl,
+    channelId: channel_id,
     message: userInput,
     componentName,
     inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
@@ -24,7 +24,7 @@ const request = async (
 };
 
 export const useServerReply = (
-  humanIdOrUrl: string,
+  channel_id: string,
   inputParams: ComponentProperty[],
   userInput: string,
   componentName: string,
@@ -39,7 +39,7 @@ export const useServerReply = (
 
   const resend = () => {
     request(
-      humanIdOrUrl,
+      channel_id,
       inputParams,
       userInput,
       setServerReply,
@@ -55,7 +55,7 @@ export const useServerReply = (
       return;
     }
     request(
-      humanIdOrUrl,
+      channel_id,
       inputParams,
       userInput,
       setServerReply,
@@ -63,7 +63,7 @@ export const useServerReply = (
       source_language_code,
       user_email
     );
-  }, [humanIdOrUrl, userInput]);
+  }, [channel_id, userInput]);
 
   return [serverReply, setServerReply, resend];
 };

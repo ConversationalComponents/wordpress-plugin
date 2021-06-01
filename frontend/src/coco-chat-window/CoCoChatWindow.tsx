@@ -194,7 +194,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   );
 
   const [serverReply, setServerReply, resend] = useServerReply(
-    componentId,
+    channel_id,
     inputParams || [],
     lastInputValue as string,
     componentName,

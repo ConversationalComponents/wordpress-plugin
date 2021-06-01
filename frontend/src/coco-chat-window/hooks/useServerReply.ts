@@ -13,7 +13,7 @@ const request = async (
   user_email?: string
 ) => {
   const r: CocoResponse = await sendMessage({
-    channelId: channel_id,
+    channel_id: channel_id,
     message: userInput,
     componentName,
     inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],

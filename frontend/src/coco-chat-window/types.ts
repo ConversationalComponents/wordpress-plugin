@@ -6,6 +6,7 @@ export type CoCoChatWindowParams = {
   fab_bottom?: number;
   is_window_on_left?: boolean;
   is_not_showing_last_component?: string;
+  human_id_or_url?: string;
   channel_id: string;
   bot_greeting?: string;
   user_email?: string;

@@ -49,11 +49,19 @@ class CoCoBotSettings {
 			array( $this, 'coco_bot_settings_section_info' ), // callback
 			'coco-bot-settings-admin' // page
 		);
-
+		
 		add_settings_field(
 			'name_0', // id
 			'Name (required)', // title
 			array( $this, 'name_0_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+		add_settings_field(
+			'human_id_or_url', // id
+			'component_id or url (required)', // title
+			array( $this, 'human_id_or_url_callback' ), // callback
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section
 		);
@@ -166,11 +174,14 @@ class CoCoBotSettings {
 
 		if ( isset( $input['source_language_code_7'] ) ) {
 			$sanitary_values['source_language_code_7'] = sanitize_text_field( $input['source_language_code_7'] );
-		} 
+		}
 
 		if ( isset( $input['user_own_email_field'] ) ) {
 			$sanitary_values['user_own_email_field'] = sanitize_text_field( $input['user_own_email_field'] );
 		} 
+		
+		if ( isset( $input['human_id_or_url'] ) ) {
+			$sanitary_values['human_id_or_url'] = sanitize_text_field( $input['human_id_or_url'] );
 
 		if ( isset( $input['channel_id'] ) ) {
 			$sanitary_values['channel_id'] = sanitize_text_field( $input['channel_id'] );
@@ -253,6 +264,13 @@ class CoCoBotSettings {
 		printf(
 			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[user_own_email_field]" id="user_own_email_field" value="%s">',
 			 $default = esc_attr( $this->coco_bot_settings_options['user_own_email_field'] ?? '')
+		);
+	}
+
+	public function human_id_or_url_callback() {
+			printf(
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[human_id_or_url]" id="human_id_or_url" value="%s" required>',
+			 $default = esc_attr( $this->coco_bot_settings_options['human_id_or_url'] ?? 'coco_bot_vp3')
 		);
 	}
 
@@ -343,6 +361,7 @@ if ( is_admin() ) {
  * $name_0 = $coco_bot_settings_options['name_0']; // Name
  * $source_language_code_7 = $coco_bot_settings_options['source_language_code_7']; // language code
  * $user_own_email_field = $coco_bot_settings_options['user_own_email_field']; // email to send results to
+ * $human_id_or_url = $coco_bot_settings_options['human_id_or_url']; // HumanIdOrUrl
  * $channel_id = $coco_bot_settings_options['channel_id']; // HumanIdOrUrl
  * $botgreeting_2 = $coco_bot_settings_options['botgreeting_2']; // BotGreeting
  * $isfabless_3 = $coco_bot_settings_options['isfabless_3']; // IsFabless

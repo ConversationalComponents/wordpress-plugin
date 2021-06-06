@@ -269,7 +269,7 @@ class CoCoBotSettings {
 
 	public function human_id_or_url_callback() {
 			printf(
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[human_id_or_url]" id="human_id_or_url" value="%s" required>',
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[human_id_or_url]" id="human_id_or_url" value="%s" disabled>',
 			 $default = esc_attr( $this->coco_bot_settings_options['human_id_or_url'] ?? 'coco_bot_vp3')
 		);
 	}

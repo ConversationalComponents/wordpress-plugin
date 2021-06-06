@@ -22,6 +22,7 @@ const request = async (
       source_language_code,
       user_email,
     });
+    setServerReply(r);
   } else {
     const r: CocoResponse = await sendMessage({
       channel_id: channel_id,
@@ -29,9 +30,8 @@ const request = async (
       componentName,
       user_email,
     });
+    setServerReply(r);
   }
-
-  setServerReply(r);
 };
 
 export const useServerReply = (

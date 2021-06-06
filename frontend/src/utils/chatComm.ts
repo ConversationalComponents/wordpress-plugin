@@ -1,5 +1,5 @@
 import { randomString } from "./randomString";
-import { ComponentProperty } from "../coco-chat-window/types";
+import { CocoResponse, ComponentProperty } from "../coco-chat-window/types";
 
 const apiKey = "master_key";
 const url = "https://cocohub.ai";
@@ -11,19 +11,15 @@ export const resetSession = () => {
 };
 
 export const sendMessage: (p: {
-  channel_id: string;
   message: string;
-  inputParameters: ComponentProperty[];
   componentName: string;
+  channel_id?: string;
   newSessionId?: string;
-  source_language_code?: string;
   user_email?: string;
-}) => Promise<any> = async ({
+}) => Promise<CocoResponse> = async ({
   channel_id,
   message,
-  inputParameters,
   newSessionId,
-  source_language_code,
   user_email,
 }) => {
   const headers = new Headers({ "api-key": apiKey });
@@ -63,14 +59,14 @@ export const sendMessage: (p: {
 };
 
 export const sendMessageComponent: (p: {
-  componentIdOrUrl: string;
   message: string;
   inputParameters: ComponentProperty[];
   componentName: string;
+  componentIdOrUrl?: string;
   newSessionId?: string;
   source_language_code?: string;
   user_email?: string;
-}) => Promise<any> = async ({
+}) => Promise<CocoResponse> = async ({
   componentIdOrUrl,
   message,
   inputParameters,
@@ -85,8 +81,8 @@ export const sendMessageComponent: (p: {
   }
   try {
     const isUrl =
-      componentIdOrUrl.startsWith("http:") ||
-      componentIdOrUrl.startsWith("https:");
+      componentIdOrUrl?.startsWith("http:") ||
+      componentIdOrUrl?.startsWith("https:");
     const reply = await fetch(
       isUrl
         ? `${componentIdOrUrl}/${sessionId}`

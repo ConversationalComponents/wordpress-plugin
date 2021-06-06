@@ -23,14 +23,13 @@ const request = async (
       user_email,
     });
   } else {
+    const r: CocoResponse = await sendMessage({
+      channel_id: channel_id,
+      message: userInput,
+      componentName,
+      user_email,
+    });
   }
-
-  const r: CocoResponse = await sendMessage({
-    channel_id: channel_id,
-    message: userInput,
-    componentName,
-    user_email,
-  });
 
   setServerReply(r);
 };

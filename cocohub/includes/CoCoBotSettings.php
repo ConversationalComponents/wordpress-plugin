@@ -60,7 +60,7 @@ class CoCoBotSettings {
 
 		add_settings_field(
 			'human_id_or_url', // id
-			'component_id or url (required)', // title
+			'component_id or url', // title
 			array( $this, 'human_id_or_url_callback' ), // callback
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section
@@ -68,7 +68,7 @@ class CoCoBotSettings {
 
 		add_settings_field(
 			'channel_id', // id
-			'component_id or url (required)', // title
+			'Channel ID (required)', // title
 			array( $this, 'channel_id_callback' ), // callback
 			'coco-bot-settings-admin', // page
 			'coco_bot_settings_setting_section' // section

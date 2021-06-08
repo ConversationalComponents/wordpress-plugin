@@ -182,6 +182,7 @@ class CoCoBotSettings {
 		
 		if ( isset( $input['human_id_or_url'] ) ) {
 			$sanitary_values['human_id_or_url'] = sanitize_text_field( $input['human_id_or_url'] );
+		}
 
 		if ( isset( $input['channel_id'] ) ) {
 			$sanitary_values['channel_id'] = sanitize_text_field( $input['channel_id'] );
@@ -240,9 +241,11 @@ class CoCoBotSettings {
 		}
 
 		return $sanitary_values;
-	}}
+	}
 
-	public function coco_bot_settings_section_info() {}
+	public function coco_bot_settings_section_info() {
+	
+	}
 
 	public function name_0_callback() {
 		printf(

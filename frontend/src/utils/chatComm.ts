@@ -45,7 +45,7 @@ export const sendMessage: (p: {
             room_id: channel_id,
           },
           sender: {
-            channel_name: "alexa",
+            channel_name: "wordpress",
             room_id: sessionId,
           },
           payload: {

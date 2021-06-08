@@ -255,7 +255,7 @@ class CoCoBotSettings {
 	
 	public function source_language_code_7_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[source_language_code_7]" id="source_language_code_7" disabled value="%s">',
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[source_language_code_7]" id="source_language_code_7" value="%s" disabled>',
 			 $default = esc_attr( $this->coco_bot_settings_options['source_language_code_7'] ?? '')
 		);
 	}

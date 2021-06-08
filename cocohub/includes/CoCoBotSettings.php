@@ -240,11 +240,9 @@ class CoCoBotSettings {
 		}
 
 		return $sanitary_values;
-	}
+	}}
 
-	public function coco_bot_settings_section_info() {
-
-	}
+	public function coco_bot_settings_section_info() {}
 
 	public function name_0_callback() {
 		printf(

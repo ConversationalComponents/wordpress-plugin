@@ -1,4 +1,4 @@
-import { CocoResponse, ComponentProperty } from "../types";
+import { CocoResponse, CoCoSyncMessage, ComponentProperty } from "../types";
 import React, { useEffect, useState } from "react";
 
 import { sendMessage, sendMessageComponent } from "../../utils/chatComm";
@@ -24,13 +24,22 @@ const request = async (
     });
     setServerReply(r);
   } else {
-    const r: CocoResponse = await sendMessage({
+    const r: CoCoSyncMessage[] = await sendMessage({
       channel_id: channel_id,
       message: userInput,
       componentName,
       user_email,
     });
-    setServerReply(r);
+
+    setServerReply({
+      responses: r.map((message) => message.payload),
+      component_done: false,
+      component_failed: false,
+      confidence: 1.0,
+      updated_context: {},
+      raw_resp: {},
+      idontknow: false,
+    });
   }
 };
 

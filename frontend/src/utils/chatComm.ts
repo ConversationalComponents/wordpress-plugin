@@ -1,5 +1,9 @@
 import { randomString } from "./randomString";
-import { CocoResponse, ComponentProperty } from "../coco-chat-window/types";
+import {
+  CocoResponse,
+  CoCoSyncMessage,
+  ComponentProperty,
+} from "../coco-chat-window/types";
 
 const apiKey = "master_key";
 const url = "https://cocohub.ai";
@@ -16,7 +20,7 @@ export const sendMessage: (p: {
   channel_id?: string;
   newSessionId?: string;
   user_email?: string;
-}) => Promise<CocoResponse> = async ({
+}) => Promise<CoCoSyncMessage[]> = async ({
   channel_id,
   message,
   newSessionId,
@@ -35,13 +39,13 @@ export const sendMessage: (p: {
         body: JSON.stringify({
           message_id: randomString(8),
           created_at: new Date().toISOString(),
-          author_id: user_email,
+          author_id: user_email || sessionId,
           recipient: {
             channel_name: "cocohub",
             room_id: channel_id,
           },
           sender: {
-            channel_name: "wordpress",
+            channel_name: "alexa",
             room_id: sessionId,
           },
           payload: {

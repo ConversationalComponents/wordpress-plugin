@@ -44,6 +44,17 @@ export type CocoResponse = {
   raw_resp: { [key: string]: any };
 };
 
+export type CoCoSyncMessage = {
+  payload: MessageContent;
+  created_at: string;
+  author_id: string;
+  sender: { channel_name: string; room_id: string };
+  recipient: {
+    channel_name: string;
+    room_id: string;
+  };
+};
+
 export type ComponentProperty = {
   type: ComponentPropertyType;
   value: string | number | Date;

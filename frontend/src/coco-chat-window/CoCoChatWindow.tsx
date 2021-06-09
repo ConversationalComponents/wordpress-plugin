@@ -63,6 +63,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   is_rtl,
   user_email = "",
   channel_id = "",
+  human_id_or_url: componentId = "",
   input_parameters: inputParams = [],
   bot_name: componentName = "CoCoHub Demo Bot",
   is_open_on_start,
@@ -198,6 +199,7 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
     inputParams || [],
     lastInputValue as string,
     componentName,
+    componentId,
     source_language_code,
     user_email
   );

@@ -15,12 +15,13 @@ const request = async (
 ) => {
   if (humanIdOrUrl) {
     const r: CocoResponse = await sendMessageComponent({
-      componentIdOrUrl: humanIdOrUrl,
       message: userInput,
-      componentName,
       inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
-      source_language_code,
-      user_email,
+      componentName,
+      componentIdOrUrl: humanIdOrUrl,
+      newSessionId: "",
+      source_language_code: source_language_code || "",
+      user_email: user_email || "",
     });
     setServerReply(r);
   } else {

@@ -19,17 +19,15 @@ const request = async (
       inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
       componentName,
       componentIdOrUrl: humanIdOrUrl,
-      newSessionId: "",
       source_language_code: source_language_code || "",
       user_email: user_email || "",
     });
     setServerReply(r);
   } else {
     const r: CoCoSyncMessage[] = await sendMessage({
-      channel_id: channel_id,
+      channel_id: channel_id || "",
       message: userInput,
-      componentName,
-      user_email,
+      user_email: user_email || "",
     });
 
     setServerReply({

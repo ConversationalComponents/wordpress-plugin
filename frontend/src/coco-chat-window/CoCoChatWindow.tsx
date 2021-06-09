@@ -62,7 +62,8 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   is_window_on_left = false,
   is_rtl,
   user_email = "",
-  human_id_or_url: componentId = "coco_bot_vp3",
+  channel_id = "",
+  human_id_or_url: componentId = "",
   input_parameters: inputParams = [],
   bot_name: componentName = "CoCoHub Demo Bot",
   is_open_on_start,
@@ -94,17 +95,14 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   const [content, setContent] = useState<ChatEntry[]>([]);
   const [isAwaitingReply, setIsAwaitingReply] = useState(false);
   const [isLastError, setIsLastError] = useState(false);
-  const [lastInputValue, setLastInputValue] = useState<
-    MessageContent[] | string
-  >();
+  const [lastInputValue, setLastInputValue] =
+    useState<MessageContent[] | string>();
   const [lastUnsubmittedInput, setLastUnsubmittedInput] = useState("");
-  const [lastBotMessage, setLastBotMessage] = useState<
-    MessageContent[] | string
-  >();
+  const [lastBotMessage, setLastBotMessage] =
+    useState<MessageContent[] | string>();
   const [lastResultData, setLastResultData] = useState<any>({});
-  const [replyDetails, setReplyDetails] = useState<Object | undefined>(
-    undefined
-  );
+  const [replyDetails, setReplyDetails] =
+    useState<Object | undefined>(undefined);
   const [headerHeight, setHeaderHeight] = useState<number>(56);
   const [windowYPosition, setWindowYPosition] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
@@ -197,10 +195,11 @@ export const CoCoChatWindow: React.FC<CoCoChatWindowParams> = ({
   );
 
   const [serverReply, setServerReply, resend] = useServerReply(
-    componentId,
+    channel_id,
     inputParams || [],
     lastInputValue as string,
     componentName,
+    componentId,
     source_language_code,
     user_email
   );

@@ -6,7 +6,8 @@ export type CoCoChatWindowParams = {
   fab_bottom?: number;
   is_window_on_left?: boolean;
   is_not_showing_last_component?: string;
-  human_id_or_url: string;
+  human_id_or_url?: string;
+  channel_id: string;
   bot_greeting?: string;
   user_email?: string;
   source_language_code?: string;
@@ -41,6 +42,17 @@ export type CocoResponse = {
   confidence: number;
   idontknow: boolean;
   raw_resp: { [key: string]: any };
+};
+
+export type CoCoSyncMessage = {
+  payload: MessageContent;
+  created_at: string;
+  author_id: string;
+  sender: { channel_name: string; room_id: string };
+  recipient: {
+    channel_name: string;
+    room_id: string;
+  };
 };
 
 export type ComponentProperty = {

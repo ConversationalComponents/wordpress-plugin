@@ -1,33 +1,53 @@
-import { CocoResponse, ComponentProperty } from "../types";
+import { CocoResponse, CoCoSyncMessage, ComponentProperty } from "../types";
 import React, { useEffect, useState } from "react";
 
-import { sendMessage } from "../../utils/chatComm";
+import { sendMessage, sendMessageComponent } from "../../utils/chatComm";
 
 const request = async (
-  humanIdOrUrl: string,
   inputParams: ComponentProperty[],
   userInput: string,
   setServerReply: (reply: CocoResponse) => void,
   componentName: string,
+  channel_id?: string,
+  humanIdOrUrl?: string,
   source_language_code?: string,
   user_email?: string
 ) => {
-  const r: CocoResponse = await sendMessage({
-    componentIdOrUrl: humanIdOrUrl,
-    message: userInput,
-    componentName,
-    inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
-    source_language_code,
-    user_email,
-  });
-  setServerReply(r);
+  if (humanIdOrUrl) {
+    const r: CocoResponse = await sendMessageComponent({
+      message: userInput,
+      inputParameters: inputParams && inputParams.length > 0 ? inputParams : [],
+      componentName,
+      componentIdOrUrl: humanIdOrUrl,
+      source_language_code: source_language_code || "",
+      user_email: user_email || "",
+    });
+    setServerReply(r);
+  } else {
+    const r: CoCoSyncMessage[] = await sendMessage({
+      channel_id: channel_id || "",
+      message: userInput,
+      user_email: user_email || "",
+    });
+
+    setServerReply({
+      responses: r.map((message) => message.payload),
+      component_done: false,
+      component_failed: false,
+      confidence: 1.0,
+      updated_context: {},
+      raw_resp: {},
+      idontknow: false,
+    });
+  }
 };
 
 export const useServerReply = (
-  humanIdOrUrl: string,
+  channel_id: string,
   inputParams: ComponentProperty[],
   userInput: string,
   componentName: string,
+  humanIdOrUrl?: string,
   source_language_code?: string,
   user_email?: string
 ): [
@@ -39,11 +59,12 @@ export const useServerReply = (
 
   const resend = () => {
     request(
-      humanIdOrUrl,
       inputParams,
       userInput,
       setServerReply,
       componentName,
+      channel_id,
+      humanIdOrUrl,
       source_language_code,
       user_email
     );
@@ -55,15 +76,16 @@ export const useServerReply = (
       return;
     }
     request(
-      humanIdOrUrl,
       inputParams,
       userInput,
       setServerReply,
       componentName,
+      channel_id,
+      humanIdOrUrl,
       source_language_code,
       user_email
     );
-  }, [humanIdOrUrl, userInput]);
+  }, [channel_id, userInput]);
 
   return [serverReply, setServerReply, resend];
 };

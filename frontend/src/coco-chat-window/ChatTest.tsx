@@ -24,7 +24,7 @@ export const ChatTest = (p: { humanId: string }) => {
         }}
       >
         <CoCoChatWindow
-          human_id_or_url={componentId}
+          channel_id={componentId}
           bot_name={componentId}
           bot_greeting="Hi, I'll be your bot today"
         />

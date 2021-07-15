@@ -1,22 +1,23 @@
-import { randomString } from "./randomString";
 import {
-  CocoResponse,
   CoCoSyncMessage,
+  CocoResponse,
   ComponentProperty,
 } from "../coco-chat-window/types";
+
+import { randomString } from "./randomString";
 
 const apiKey = "master_key";
 const url = "https://cocohub.ai";
 
-let sessionId = randomString(8);
+export let sessionId = randomString(8);
 
 export const resetSession = () => {
   sessionId = randomString(8);
+  return sessionId;
 };
 
 export const sendMessage: (p: {
   message: string;
-  componentName: string;
   channel_id?: string;
   newSessionId?: string;
   user_email?: string;
@@ -65,7 +66,7 @@ export const sendMessage: (p: {
 export const sendMessageComponent: (p: {
   message: string;
   inputParameters: ComponentProperty[];
-  componentName: string;
+  bot_name: string;
   componentIdOrUrl?: string;
   newSessionId?: string;
   source_language_code?: string;
@@ -75,7 +76,7 @@ export const sendMessageComponent: (p: {
   message,
   inputParameters,
   newSessionId,
-  componentName,
+  bot_name,
   source_language_code,
   user_email,
 }) => {
@@ -99,7 +100,7 @@ export const sendMessageComponent: (p: {
           user_input: message,
           flatten_context: true,
           context: {
-            bot_name: componentName,
+            bot_name,
             owner: { email: user_email },
             ...inputParameters.reduce((acc, cur) => {
               // @ts-ignore

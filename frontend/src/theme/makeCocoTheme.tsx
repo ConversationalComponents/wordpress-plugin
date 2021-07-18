@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
-declare module "@material-ui/core/styles/createMuiTheme" {
+declare module "@material-ui/core/styles/createTheme" {
   interface Theme {
     appbar: {
       height: number;
@@ -57,7 +57,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
 }
 
 export const makeCocoTheme = (isDark: boolean = false) =>
-  createMuiTheme({
+  createTheme({
     // @ts-ignore
     transition: "all 0.2s ease",
     transitionSlow: "all 0.4s ease-out",
@@ -95,7 +95,7 @@ export const makeCocoTheme = (isDark: boolean = false) =>
           good: "#17B19B",
         },
         gradient: {
-          main: "linear-gradient(to right, #2195F3 0.19%, #161326 198.16%)",
+          main: "linear-gradient(113.3deg, #2195F3 0%, #1056AE 110.59%)",
           secondary: "linear-gradient(to right, #2195F3, #7D43F8 )",
           alt: "linear-gradient(to right, #B88EFC -13.2%, #7D43F8 27.1%, #4621B2 93.47%)",
         },

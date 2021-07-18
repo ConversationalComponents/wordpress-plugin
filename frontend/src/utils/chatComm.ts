@@ -2,7 +2,7 @@ import {
   CoCoSyncMessage,
   CocoResponse,
   ComponentProperty,
-} from "../coco-chat-window/types";
+} from "../chat-window/types";
 
 import { randomString } from "./randomString";
 

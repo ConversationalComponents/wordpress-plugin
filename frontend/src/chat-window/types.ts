@@ -1,19 +1,56 @@
-import { MessageContent } from "@conversationalcomponents/chat-window/types";
+export type ChatParams = {
+  ownAvatar?: string;
+  otherAvatar?: string;
+  greeting?: string;
+  selectedBubbleId?: string;
+  hoverBubbleId?: string;
+  chat: ChatEntry[];
+};
 
-export type CoCoChatWindowParams = {
-  bot_name: string;
+export type ChatEntry = {
+  id: string;
+  text: string;
+  isOwn: boolean;
+  isLoading: boolean;
+  data?: any;
+};
+
+export declare type MessageContent = {
+  text: string;
+  image?: string | File;
+  conversation_end?: boolean;
+};
+
+export declare type HeaderParams = {
+  title: string;
+  extraContent?: JSX.Element;
+  height: number | string;
+};
+
+export declare type ChatBubbleParams = {
+  isRtl?: boolean;
+  entry: ChatEntry;
+  endElement?: JSX.Element;
+  bubbleExtraParams?: any;
+};
+
+export type FabParams = {
   fab_right?: number;
   fab_bottom?: number;
+  is_fabless?: boolean;
   is_window_on_left?: boolean;
+  is_open_on_start?: boolean;
+};
+
+export type CoCoChatWindowParams = FabParams & {
+  bot_name: string;
   is_not_showing_last_component?: string;
   human_id_or_url?: string;
   channel_id: string;
   bot_greeting?: string;
   user_email?: string;
   source_language_code?: string;
-  is_fabless?: boolean;
   is_rtl?: boolean;
-  is_open_on_start?: boolean;
   height?: number;
   width?: number;
   input_parameters?: {

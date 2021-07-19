@@ -25,7 +25,11 @@ const useStyles = makeStyles((theme) => {
     },
     button: {
       color: (header: HeaderParams) =>
-        header.buttonsColor || theme.custom.palette.d.alt,
+        `${header.buttonsColor || theme.custom.palette.d.alt} !important`,
+      backgroundColor: "transparent !important",
+      "&:focus": {
+        outline: "0px !important",
+      },
     },
     toggleButton: {
       color: (header: HeaderParams) =>

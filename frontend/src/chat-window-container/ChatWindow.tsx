@@ -40,17 +40,17 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       overflow: "hidden",
-      height: ({ height = 600 }: StyleParams) => height,
-      width: ({ width = 300 }: StyleParams) => width,
+      height: ({ height = 600 }: StyleParams) => `${height}px`,
+      width: ({ width = 300 }: StyleParams) => `${width}px`,
     },
     open: {
-      height: ({ height = 600 }: StyleParams) => height,
-      width: ({ width = 300 }: StyleParams) => width,
+      height: ({ height = 600 }: StyleParams) => `${height}px`,
+      width: ({ width = 300 }: StyleParams) => `${width}px`,
       opacity: 1,
     },
     closed: {
-      height: 0,
-      width: 0,
+      height: "0px",
+      width: "0px",
       opacity: 0,
     },
   };

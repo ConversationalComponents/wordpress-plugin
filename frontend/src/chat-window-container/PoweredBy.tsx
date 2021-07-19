@@ -5,14 +5,15 @@ import powered_by from "./assets/powered_by.png";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      height: theme.spacing(2),
-      position: "absolute",
-      bottom: "0px",
-      left: "0px",
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+      height: `${theme.spacing(2)}px !important`,
+      position: "absolute  !important" as "absolute",
+      bottom: "0px !important",
+      left: "0px  !important",
+      width: "100%  !important",
+      display: "flex  !important",
+      justifyContent: "center  !important",
+      alignItems: "center  !important",
+      background: `transparent !important`,
     },
     img: { height: theme.spacing(1.5) },
   };

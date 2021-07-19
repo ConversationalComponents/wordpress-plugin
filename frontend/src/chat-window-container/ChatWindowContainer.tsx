@@ -17,7 +17,17 @@ export const ChatWindowContainer: React.FC<CoCoChatWindowParams> = (params) => {
   const toggleIsOpen = () => setIsOpen((open) => !open);
 
   return (
-    <>
+    <div
+      style={{
+        position: "fixed",
+        pointerEvents: "none",
+        left: "0px",
+        top: "0px",
+        width: "100vw",
+        height: "100vh",
+        zIndex: 1000,
+      }}
+    >
       {is_fabless ? null : (
         <ChatFab
           {...{
@@ -37,6 +47,6 @@ export const ChatWindowContainer: React.FC<CoCoChatWindowParams> = (params) => {
           isOpen,
         }}
       />
-    </>
+    </div>
   );
 };

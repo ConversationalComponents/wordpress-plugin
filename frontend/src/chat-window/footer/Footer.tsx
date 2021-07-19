@@ -10,9 +10,10 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       background: theme.custom.palette.d.alt,
       borderRadius: theme.spacing(0, 0, 3, 3),
+      marginBottom: `${theme.spacing(2)}px !important`,
     },
     active: {
-      color: theme.custom.palette.a.main,
+      color: `${theme.custom.palette.a.main} !important`,
       transition: theme.transitions.create("color", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -26,21 +27,30 @@ const useStyles = makeStyles((theme) => {
       }),
     },
     text: {
-      border: "0px",
-      padding: theme.spacing(2, 4, 0, 1),
+      border: "0px solid white !important",
+      color: `${theme.custom.palette.e.main} !important`,
+      padding: `${theme.spacing(2, 4, 0, 1)} !important`,
       opacity: ({ disabled }: { isRtl: boolean; disabled: boolean }) =>
         disabled ? 0.5 : 1,
       direction: ({ isRtl }: { isRtl: boolean; disabled: boolean }) =>
         isRtl ? "rtl" : "ltr",
-      borderRadius: theme.spacing(0, 0, 3, 3),
-      width: "100%",
-      fontFamily: "Montserrat",
+      borderRadius: `${theme.spacing(0, 0, 3, 3)} !important`,
+      width: "100%  !important",
+      lineHeight: "1rem !important",
+      fontFamily: "Montserrat !important",
+      margin: "0px !important",
       scrollbarWidth: "thin" as "thin",
-      outline: "none" as "none",
-      overflow: "auto" as "auto",
-      resize: "none" as "none",
+      outline: "none !important" as "none",
+      overflow: "auto !important" as "auto",
+      resize: "none !important" as "none",
       "&:disabled": {
-        background: "#fff",
+        background: "#fff !important",
+      },
+    },
+    button: {
+      backgroundColor: "transparent !important",
+      "&:focus": {
+        outline: "0px !important",
       },
     },
   };
@@ -140,7 +150,7 @@ export const Footer: React.FC<{
       />
       <IconButton
         disabled={!!disabled}
-        className={clsx({
+        className={clsx(classes.button, {
           [classes.inactive]: disabled,
           [classes.active]: !disabled,
         })}

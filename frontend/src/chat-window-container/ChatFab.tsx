@@ -7,6 +7,7 @@ import clsx from "clsx";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      pointerEvents: "all",
       position: "absolute",
       overflow: "hidden",
       transition: theme.transitions.create("all"),

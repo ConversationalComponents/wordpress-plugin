@@ -8,9 +8,7 @@ import { useBotDetails } from "../chat-window/hooks/useBotDetails";
 export const ChatWindowContainer: React.FC<CoCoChatWindowParams> = (params) => {
   const { is_open_on_start, is_fabless } = params;
 
-  const [isOpen, setIsOpen] = useState(
-    !!(is_open_on_start || is_fabless || true)
-  );
+  const [isOpen, setIsOpen] = useState(!!(is_open_on_start || is_fabless));
 
   const { avatar, name } = useBotDetails(params);
 

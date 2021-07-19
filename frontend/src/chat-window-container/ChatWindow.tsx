@@ -22,26 +22,28 @@ const useStyles = makeStyles((theme) => {
   return {
     container: {
       boxShadow: theme.shadows[6],
-      background: theme.custom.palette.gradient.main,
+      background: `${theme.custom.palette.gradient.main} !important`,
       borderRadius: theme.spacing(3),
       pointerEvents: "all",
       position: "absolute",
       transition: theme.transitions.create("all"),
       bottom: ({ fab_bottom = theme.spacing(2) }: StyleParams) =>
-        `${fab_bottom}px`,
+        `${fab_bottom}px  !important`,
       right: ({
         fab_right = theme.spacing(2),
         is_window_on_left,
-      }: StyleParams) => (is_window_on_left ? `` : `${fab_right}px`),
+      }: StyleParams) => (is_window_on_left ? `` : `${fab_right}px !important`),
       overflow: "hidden",
-      paddingBottom: theme.spacing(2),
+      paddingBottom: `${theme.spacing(2)} !important`,
     },
     innerContainer: {
-      display: "flex",
-      flexDirection: "column",
+      display: "flex !important" as "flex",
+      flexDirection: "column !important" as "column",
       overflow: "hidden",
-      height: ({ height = 600 }: StyleParams) => `${height}px`,
-      width: ({ width = 300 }: StyleParams) => `${width}px`,
+      height: ({ height = 600 }: StyleParams) => `${height}px !important`,
+      width: ({ width = 300 }: StyleParams) => `${width}px !important`,
+      top: "0px",
+      left: "0px",
     },
     open: {
       height: ({ height = 600 }: StyleParams) => `${height}px`,

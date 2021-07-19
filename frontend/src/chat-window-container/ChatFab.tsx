@@ -12,10 +12,15 @@ const useStyles = makeStyles((theme) => {
       overflow: "hidden",
       transition: theme.transitions.create("all"),
       left: (p: FabParams) =>
-        p.is_window_on_left ? p.fab_right || theme.spacing(3) : "",
+        p.is_window_on_left
+          ? `${p.fab_right || theme.spacing(3)}px !important`
+          : "",
       right: (p: FabParams) =>
-        !p.is_window_on_left ? p.fab_right || theme.spacing(3) : "",
-      bottom: (p: FabParams) => p.fab_bottom || theme.spacing(3),
+        !p.is_window_on_left
+          ? `${p.fab_right || theme.spacing(3)}px !important`
+          : "",
+      bottom: (p: FabParams) =>
+        `${p.fab_bottom || theme.spacing(3)}px !important`,
       borderRadius: theme.spacing(6, 6, 0, 6),
     },
     open: {

@@ -27,7 +27,10 @@ export const sendMessage: (p: {
   newSessionId,
   user_email,
 }) => {
-  const headers = new Headers({ "api-key": apiKey });
+  const headers = new Headers({
+    "api-key": apiKey,
+    "Content-Type": "application/json",
+  });
   if (newSessionId) {
     sessionId = newSessionId;
   }
@@ -80,7 +83,10 @@ export const sendMessageComponent: (p: {
   source_language_code,
   user_email,
 }) => {
-  const headers = new Headers({ "api-key": apiKey });
+  const headers = new Headers({
+    "api-key": apiKey,
+    "Content-Type": "application/json",
+  });
   if (newSessionId) {
     sessionId = newSessionId;
   }

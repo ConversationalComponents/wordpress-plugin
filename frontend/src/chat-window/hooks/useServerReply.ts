@@ -6,7 +6,7 @@ import { useCallback } from "react";
 type RequestParams = {
   bot_name: string;
   channel_id?: string;
-  humanIdOrUrl?: string;
+  human_id_or_url?: string;
   source_language_code?: string;
   user_email?: string;
   userInput: string;
@@ -15,17 +15,17 @@ type RequestParams = {
 const request = async ({
   bot_name,
   channel_id,
-  humanIdOrUrl,
+  human_id_or_url,
   source_language_code,
   user_email,
   userInput,
 }: RequestParams) => {
-  if (humanIdOrUrl) {
+  if (human_id_or_url) {
     const r: CocoResponse = await sendMessageComponent({
       message: userInput,
       inputParameters: [],
       bot_name,
-      componentIdOrUrl: humanIdOrUrl,
+      componentIdOrUrl: human_id_or_url,
       source_language_code: source_language_code || "",
       user_email: user_email || "",
     });
@@ -52,7 +52,7 @@ const request = async ({
 export type ServerReplyParams = {
   channel_id: string;
   bot_name: string;
-  humanIdOrUrl?: string;
+  human_id_or_url?: string;
   source_language_code?: string;
   user_email?: string;
 };
@@ -60,7 +60,7 @@ export type ServerReplyParams = {
 export const useServerReply = ({
   channel_id,
   bot_name,
-  humanIdOrUrl,
+  human_id_or_url,
   source_language_code,
   user_email,
 }: ServerReplyParams) => {
@@ -69,7 +69,7 @@ export const useServerReply = ({
       userInput,
       bot_name,
       channel_id,
-      humanIdOrUrl,
+      human_id_or_url,
       source_language_code,
       user_email,
     });

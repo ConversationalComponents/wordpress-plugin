@@ -7,7 +7,6 @@ import { PoweredBy } from "./PoweredBy";
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core";
-import { useBotDetails } from "../chat-window/hooks/useBotDetails";
 import { useCocoChat } from "../chat-window/hooks/useCocoChat";
 
 type StyleParams = {
@@ -33,6 +32,11 @@ const useStyles = makeStyles((theme) => {
         fab_right = theme.spacing(2),
         is_window_on_left,
       }: StyleParams) => (is_window_on_left ? `` : `${fab_right}px !important`),
+      left: ({
+        fab_right = theme.spacing(2),
+        is_window_on_left,
+      }: StyleParams) =>
+        !is_window_on_left ? `` : `${fab_right}px !important`,
       overflow: "hidden",
       paddingBottom: `${theme.spacing(2)} !important`,
     },
@@ -102,6 +106,7 @@ export const ChatWindow: React.FC<
             onSubmit,
             result: { done: isFinished, success: true },
             reset,
+            ...params,
           }}
         />
         <PoweredBy />

@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme) => {
       border: "0px solid white !important",
       color: `${theme.custom.palette.e.main} !important`,
       padding: `${theme.spacing(2, 4, 0, 1)} !important`,
-      opacity: ({ disabled }: { isRtl: boolean; disabled: boolean }) =>
+      opacity: ({ disabled }: { is_rtl: boolean; disabled: boolean }) =>
         disabled ? 0.5 : 1,
-      direction: ({ isRtl }: { isRtl: boolean; disabled: boolean }) =>
-        isRtl ? "rtl" : "ltr",
+      direction: ({ is_rtl }: { is_rtl: boolean; disabled: boolean }) =>
+        is_rtl ? "rtl" : "ltr",
       borderRadius: `${theme.spacing(0, 0, 3, 3)} !important`,
       width: "100%  !important",
       lineHeight: "1rem !important",
@@ -70,7 +70,7 @@ export const Footer: React.FC<{
   sessionId: string;
   onSubmit: (v: string) => void;
   onInput?: (v: string) => void;
-  isRtl?: boolean;
+  is_rtl?: boolean;
   disabled?: boolean;
   isFinished?: boolean;
   isFailed?: boolean;
@@ -83,11 +83,11 @@ export const Footer: React.FC<{
   onSubmit,
   result,
   onInput = (v: string) => {},
-  isRtl = false,
+  is_rtl = false,
   disabled = false,
   convoEndMessage,
 }) => {
-  const classes = useStyles({ isRtl, disabled });
+  const classes = useStyles({ is_rtl, disabled });
 
   const [value, setValue] = useState("");
   const textRef = useRef<HTMLTextAreaElement | null>(null);

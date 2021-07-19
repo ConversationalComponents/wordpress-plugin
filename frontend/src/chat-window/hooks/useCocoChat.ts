@@ -39,7 +39,8 @@ export const useCocoChat = ({
       .then((r) => {
         r.responses.forEach((response) => {
           onBotEntryComplete(response.text || "", {});
-          if (response.conversation_end) setIsFinished(true);
+          if (r.component_done || response.conversation_end)
+            setIsFinished(true);
         });
         setIsDisabled(false);
       })

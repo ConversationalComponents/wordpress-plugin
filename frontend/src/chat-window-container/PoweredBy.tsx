@@ -5,7 +5,7 @@ import powered_by from "./assets/powered_by.png";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      height: `${theme.spacing(2)}px !important`,
+      height: `${theme.spacing(3)}px !important`,
       position: "absolute  !important" as "absolute",
       bottom: "0px !important",
       left: "0px  !important",

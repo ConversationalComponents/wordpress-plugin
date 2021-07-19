@@ -29,7 +29,14 @@ const useStyles = makeStyles((theme) => {
       overflow: "hidden",
       position: "relative",
     },
-    image: { height: "120%", position: "absolute", left: "-10%", top: "0px" },
+    image: {
+      height: "120%",
+      position: "absolute",
+      left: "-10%",
+      top: "0px",
+      maxWidth: "10000% !important",
+      maxHeight: "10000% !important",
+    },
   };
 });
 

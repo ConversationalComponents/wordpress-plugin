@@ -15,5 +15,15 @@ if (target) {
     acc[cur] = value;
     return acc;
   }, {} as { [key: string]: string | boolean }) as unknown as CoCoChatWindowParams;
+
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute(
+    "href",
+    "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap"
+  );
+  document.head.appendChild(link);
+
   ReactDOM.render(<App {...params} />, target);
 }

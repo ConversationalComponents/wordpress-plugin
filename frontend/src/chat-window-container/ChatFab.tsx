@@ -47,7 +47,14 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "center",
       alignItems: "center",
     },
-    image: { height: "120%", position: "absolute", left: "-10%", top: "0px" },
+    image: {
+      height: "120% !important",
+      position: "absolute",
+      left: "-10%",
+      top: "0px",
+      maxWidth: "10000% !important",
+      maxHeight: "10000% !important",
+    },
   };
 });
 

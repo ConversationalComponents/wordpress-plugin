@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => {
       }: StyleParams) =>
         !is_window_on_left ? `` : `${fab_right}px !important`,
       overflow: "hidden",
-      paddingBottom: `${theme.spacing(2)} !important`,
+      paddingBottom: `${theme.spacing(3)} !important`,
     },
     innerContainer: {
       display: "flex !important" as "flex",

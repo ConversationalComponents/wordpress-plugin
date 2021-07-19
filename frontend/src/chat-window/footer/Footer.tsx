@@ -7,10 +7,10 @@ import clsx from "clsx";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      marginBottom: `${theme.spacing(3)}px !important`,
       display: "flex",
       background: theme.custom.palette.d.alt,
       borderRadius: theme.spacing(0, 0, 3, 3),
-      marginBottom: `${theme.spacing(2)}px !important`,
     },
     active: {
       color: `${theme.custom.palette.a.main} !important`,

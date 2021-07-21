@@ -1,40 +1,99 @@
+import {
+  CoCoSyncMessage,
+  CocoResponse,
+  ComponentProperty,
+} from "../chat-window/types";
+
 import { randomString } from "./randomString";
-import { ComponentProperty } from "../coco-chat-window/types";
 
 const apiKey = "master_key";
 const url = "https://cocohub.ai";
 
-let sessionId = randomString(8);
+export let sessionId = randomString(8);
 
 export const resetSession = () => {
   sessionId = randomString(8);
+  return sessionId;
 };
 
 export const sendMessage: (p: {
-  componentIdOrUrl: string;
+  message: string;
+  channel_id?: string;
+  newSessionId?: string;
+  user_email?: string;
+}) => Promise<CoCoSyncMessage[]> = async ({
+  channel_id,
+  message,
+  newSessionId,
+  user_email,
+}) => {
+  const headers = new Headers({
+    "api-key": apiKey,
+    "Content-Type": "application/json",
+  });
+  if (newSessionId) {
+    sessionId = newSessionId;
+  }
+  try {
+    const reply = await fetch(
+      `https://cocohub.ai/v2/bot/channel/sync_exchange`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          message_id: randomString(8),
+          created_at: new Date().toISOString(),
+          author_id: user_email || sessionId,
+          recipient: {
+            channel_name: "cocohub",
+            room_id: channel_id,
+          },
+          sender: {
+            channel_name: "wordpress",
+            room_id: sessionId,
+          },
+          payload: {
+            text: message,
+          },
+        }),
+      }
+    );
+    const json = await reply.json();
+    return json;
+  } catch (e) {
+    console.error(e);
+    return { error: e };
+  }
+};
+
+export const sendMessageComponent: (p: {
   message: string;
   inputParameters: ComponentProperty[];
-  componentName: string;
+  bot_name: string;
+  componentIdOrUrl?: string;
   newSessionId?: string;
   source_language_code?: string;
   user_email?: string;
-}) => Promise<any> = async ({
+}) => Promise<CocoResponse> = async ({
   componentIdOrUrl,
   message,
   inputParameters,
   newSessionId,
-  componentName,
+  bot_name,
   source_language_code,
   user_email,
 }) => {
-  const headers = new Headers({ "api-key": apiKey });
+  const headers = new Headers({
+    "api-key": apiKey,
+    "Content-Type": "application/json",
+  });
   if (newSessionId) {
     sessionId = newSessionId;
   }
   try {
     const isUrl =
-      componentIdOrUrl.startsWith("http:") ||
-      componentIdOrUrl.startsWith("https:");
+      componentIdOrUrl?.startsWith("http:") ||
+      componentIdOrUrl?.startsWith("https:");
     const reply = await fetch(
       isUrl
         ? `${componentIdOrUrl}/${sessionId}`
@@ -47,7 +106,7 @@ export const sendMessage: (p: {
           user_input: message,
           flatten_context: true,
           context: {
-            bot_name: componentName,
+            bot_name,
             owner: { email: user_email },
             ...inputParameters.reduce((acc, cur) => {
               // @ts-ignore

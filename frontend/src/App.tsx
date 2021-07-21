@@ -1,13 +1,18 @@
+import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
+
+import { ChatWindowContainer } from "./chat-window-container/ChatWindowContainer";
+import { CoCoChatWindowParams } from "./chat-window/types";
 import React from "react";
-import { CoCoChatWindow } from "./coco-chat-window/CoCoChatWindow";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
-import { CoCoChatWindowParams } from "./coco-chat-window/types";
+import { makeCocoTheme } from "./theme/makeCocoTheme";
 
 export const App = (p: CoCoChatWindowParams) => {
   return (
-    <MuiThemeProvider theme={createMuiTheme()}>
-      <CoCoChatWindow {...p} />
-    </MuiThemeProvider>
+    <div>
+      <CssBaseline />
+      <MuiThemeProvider theme={makeCocoTheme()}>
+        <ChatWindowContainer {...p} />
+      </MuiThemeProvider>
+    </div>
   );
 };
 

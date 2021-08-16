@@ -1,5 +1,6 @@
 import { Typography, makeStyles } from "@material-ui/core";
 
+import { CoCoChatWindowParams } from "../types";
 import React from "react";
 
 const useStyles = makeStyles((theme) => {
@@ -17,7 +18,10 @@ const useStyles = makeStyles((theme) => {
     },
     text: {
       fontWeight: 600,
-      color: theme.custom.palette.d.alt,
+      color: (params: CoCoChatWindowParams) =>
+        params.palette?.headerFontColor
+          ? params.palette.headerFontColor
+          : theme.custom.palette.d.alt,
     },
     imageContainer: {
       margin: theme.spacing(1),
@@ -45,9 +49,9 @@ export type HeaderParams = { buttonsColor?: string };
 export const Header: React.FC<{
   name: string;
   avatar: string;
-  header?: HeaderParams;
-}> = ({ name, avatar, header = { buttonsColor: undefined }, children }) => {
-  const classes = useStyles();
+  params: CoCoChatWindowParams;
+}> = ({ name, avatar, params, children }) => {
+  const classes = useStyles(params);
   return (
     <div className={classes.container}>
       <div className={classes.vCenter}>

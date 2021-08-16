@@ -12,9 +12,15 @@ if (target) {
     if (value === "true" || value === "false") {
       value = value === "true" ? true : false;
     }
+    if (typeof value === "string" && cur === "palette") {
+      try {
+        const v = JSON.parse(value);
+        value = v;
+      } catch (e) {}
+    }
     acc[cur] = value;
     return acc;
-  }, {} as { [key: string]: string | boolean }) as unknown as CoCoChatWindowParams;
+  }, {} as { [key: string]: string | boolean | Object }) as unknown as CoCoChatWindowParams;
 
   var link = document.createElement("link");
   link.setAttribute("rel", "stylesheet");

@@ -42,25 +42,45 @@ export type FabParams = {
   is_open_on_start?: boolean;
 };
 
-export type CoCoChatWindowParams = FabParams & {
-  bot_name: string;
-  is_not_showing_last_component?: string;
-  human_id_or_url?: string;
-  channel_id: string;
-  bot_greeting?: string;
-  user_email?: string;
-  source_language_code?: string;
-  is_rtl?: boolean;
-  height?: number;
-  width?: number;
-  input_parameters?: {
-    type: ComponentPropertyType;
-    value: string | number | Date;
-    name: string;
-    description: string;
-    id: string;
-  }[];
+export type Palette = {
+  fabBackground?: string;
+  windowBackground?: string;
+  headerFontColor?: string;
+  headerButtonsColor?: string;
+  userBubble?: string;
+  userBubbleFontColor?: string;
+  botBubble?: string;
+  botBubbleFontColor?: string;
+  chatBackground?: string;
+  footerBackground?: string;
+  footerFontColor?: string;
+  footerButton?: string;
 };
+
+export type ColorParams = {
+  palette?: Palette;
+};
+
+export type CoCoChatWindowParams = ColorParams &
+  FabParams & {
+    bot_name: string;
+    is_not_showing_last_component?: string;
+    human_id_or_url?: string;
+    channel_id: string;
+    bot_greeting?: string;
+    user_email?: string;
+    source_language_code?: string;
+    is_rtl?: boolean;
+    height?: number;
+    width?: number;
+    input_parameters?: {
+      type: ComponentPropertyType;
+      value: string | number | Date;
+      name: string;
+      description: string;
+      id: string;
+    }[];
+  };
 
 export type BubbleParams = {
   name: string;

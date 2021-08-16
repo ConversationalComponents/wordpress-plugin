@@ -1,19 +1,28 @@
 import { Button, IconButton, makeStyles } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
 
+import { Palette } from "../types";
 import SendIcon from "@material-ui/icons/Send";
 import clsx from "clsx";
+
+type StyleParams = {
+  palette?: Palette;
+  is_rtl: boolean;
+  disabled: boolean;
+};
 
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       marginBottom: `${theme.spacing(3)}px !important`,
       display: "flex",
-      background: theme.custom.palette.d.alt,
+      background: ({ palette }: StyleParams) =>
+        palette?.footerBackground || theme.custom.palette.d.alt,
       borderRadius: theme.spacing(0, 0, 3, 3),
     },
     active: {
-      color: `${theme.custom.palette.a.main} !important`,
+      color: ({ palette }: StyleParams) =>
+        `${palette?.footerButton || theme.custom.palette.a.main} !important`,
       transition: theme.transitions.create("color", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -28,12 +37,11 @@ const useStyles = makeStyles((theme) => {
     },
     text: {
       border: "0px solid white !important",
-      color: `${theme.custom.palette.e.main} !important`,
+      color: ({ palette }: StyleParams) =>
+        `${palette?.footerFontColor || theme.custom.palette.e.main} !important`,
       padding: `${theme.spacing(2, 4, 0, 1)} !important`,
-      opacity: ({ disabled }: { is_rtl: boolean; disabled: boolean }) =>
-        disabled ? 0.5 : 1,
-      direction: ({ is_rtl }: { is_rtl: boolean; disabled: boolean }) =>
-        is_rtl ? "rtl" : "ltr",
+      opacity: ({ disabled }: StyleParams) => (disabled ? 0.5 : 1),
+      direction: ({ is_rtl }: StyleParams) => (is_rtl ? "rtl" : "ltr"),
       borderRadius: `${theme.spacing(0, 0, 3, 3)} !important`,
       width: "100%  !important",
       lineHeight: "1rem !important",
@@ -43,6 +51,8 @@ const useStyles = makeStyles((theme) => {
       outline: "none !important" as "none",
       overflow: "auto !important" as "auto",
       resize: "none !important" as "none",
+      background: ({ palette }: StyleParams) =>
+        palette?.footerBackground || theme.custom.palette.d.alt,
       "&:disabled": {
         background: "#fff !important",
       },
@@ -77,7 +87,9 @@ export const Footer: React.FC<{
   result: { done: boolean; success: boolean };
   reset: () => void;
   convoEndMessage?: string;
+  palette?: Palette;
 }> = ({
+  palette,
   sessionId,
   reset,
   onSubmit,
@@ -87,7 +99,7 @@ export const Footer: React.FC<{
   disabled = false,
   convoEndMessage,
 }) => {
-  const classes = useStyles({ is_rtl, disabled });
+  const classes = useStyles({ is_rtl, disabled, palette });
 
   const [value, setValue] = useState("");
   const textRef = useRef<HTMLTextAreaElement | null>(null);

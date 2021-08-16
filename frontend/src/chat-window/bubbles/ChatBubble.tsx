@@ -1,4 +1,4 @@
-import { ChatEntry, ChatParams } from "../types";
+import { ChatEntry, ChatParams, CoCoChatWindowParams } from "../types";
 import React, { useEffect, useRef } from "react";
 import { Typography, makeStyles } from "@material-ui/core";
 
@@ -8,6 +8,7 @@ type ThemeParams = {
   isUser: boolean;
   isSelected: boolean;
   isInteractiveBubble: boolean;
+  config: CoCoChatWindowParams;
 };
 
 const useBubbleStyles = makeStyles((theme) => {
@@ -38,7 +39,9 @@ const useBubbleStyles = makeStyles((theme) => {
       border: "0px solid white",
       backgroundColor: (p: ThemeParams) =>
         `${
-          p.isUser ? theme.custom.palette.d.alt : theme.custom.palette.a.main
+          p.isUser
+            ? p.config.palette?.userBubble || theme.custom.palette.d.alt
+            : p.config.palette?.botBubble || theme.custom.palette.a.main
         }`,
       transformOrigin: (p: ThemeParams) =>
         `${p.isUser ? "bottom right" : "bottom left"}`,
@@ -46,7 +49,11 @@ const useBubbleStyles = makeStyles((theme) => {
         `${p.isUser ? "18px 18px 0px 18px" : "18px 18px 18px 0px"}`,
       color: (p: ThemeParams) =>
         `${
-          p.isUser ? theme.custom.palette.e.main : theme.custom.palette.d.main
+          p.isUser
+            ? p.config.palette?.userBubbleFontColor ||
+              theme.custom.palette.e.main
+            : p.config.palette?.botBubbleFontColor ||
+              theme.custom.palette.d.main
         }`,
       height: "fit-content",
       alignSelf: "flex-end",
@@ -64,12 +71,13 @@ const useBubbleStyles = makeStyles((theme) => {
 });
 
 export const ChatBubble: React.FC<{
+  config: CoCoChatWindowParams;
   params: ChatParams;
   entry: ChatEntry;
   onHover?: (entry: ChatEntry) => void;
   onUnhover?: (entry: ChatEntry) => void;
   onSelectToggle?: (entry: ChatEntry) => void;
-}> = ({ params, entry, onHover, onUnhover, onSelectToggle }) => {
+}> = ({ params, config, entry, onHover, onUnhover, onSelectToggle }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isSelected =
     entry.id === params.hoverBubbleId || entry.id === params.selectedBubbleId;
@@ -78,6 +86,7 @@ export const ChatBubble: React.FC<{
     isUser: entry.isOwn,
     isSelected,
     isInteractiveBubble: !!(onHover || onUnhover || onSelectToggle),
+    config,
   });
 
   useEffect(() => {

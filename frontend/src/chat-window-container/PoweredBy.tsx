@@ -5,6 +5,7 @@ import powered_by from "./assets/powered_by.png";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      background: `transparent !important`,
       height: `${theme.spacing(3)}px !important`,
       position: "absolute  !important" as "absolute",
       bottom: "0px !important",
@@ -13,7 +14,6 @@ const useStyles = makeStyles((theme) => {
       display: "flex  !important",
       justifyContent: "center  !important",
       alignItems: "center  !important",
-      background: `transparent !important`,
     },
     img: { height: theme.spacing(1.5) },
   };

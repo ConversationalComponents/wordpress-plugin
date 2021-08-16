@@ -7,7 +7,7 @@ import { makeCocoTheme } from "./theme/makeCocoTheme";
 
 export const App = (p: CoCoChatWindowParams) => {
   return (
-    <div>
+    <div style={{ background: "transparent" }}>
       <CssBaseline />
       <MuiThemeProvider theme={makeCocoTheme()}>
         <ChatWindowContainer {...p} />

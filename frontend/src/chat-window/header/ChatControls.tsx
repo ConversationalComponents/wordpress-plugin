@@ -1,5 +1,6 @@
 import { IconButton, Tooltip, makeStyles } from "@material-ui/core";
 
+import { CoCoChatWindowParams } from "../types";
 import { HeaderParams } from "./Header";
 import KeyboardArrowDownOutlinedIcon from "@material-ui/icons/KeyboardArrowDownOutlined";
 import React from "react";
@@ -24,16 +25,20 @@ const useStyles = makeStyles((theme) => {
       height: "100%",
     },
     button: {
-      color: (header: HeaderParams) =>
-        `${header.buttonsColor || theme.custom.palette.d.alt} !important`,
+      color: (params: CoCoChatWindowParams) =>
+        `${
+          params.palette?.headerButtonsColor || theme.custom.palette.d.alt
+        } !important`,
       backgroundColor: "transparent !important",
       "&:focus": {
         outline: "0px !important",
       },
     },
     toggleButton: {
-      color: (header: HeaderParams) =>
-        `${header.buttonsColor || theme.custom.palette.d.alt} !important`,
+      color: (params: CoCoChatWindowParams) =>
+        `${
+          params.palette?.headerButtonsColor || theme.custom.palette.d.alt
+        } !important`,
     },
   };
 });
@@ -41,9 +46,9 @@ const useStyles = makeStyles((theme) => {
 export const ChatControls: React.FC<{
   close?: () => void;
   reload?: () => void;
-  header?: HeaderParams;
-}> = ({ close, reload, header = { buttonsColor: undefined } }) => {
-  const classes = useStyles(header);
+  params: CoCoChatWindowParams;
+}> = ({ close, reload, params }) => {
+  const classes = useStyles(params);
 
   return (
     <div className={classes.container}>

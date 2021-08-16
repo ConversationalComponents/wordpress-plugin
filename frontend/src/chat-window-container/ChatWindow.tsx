@@ -1,6 +1,7 @@
+import { CoCoChatWindowParams, ColorParams } from "../chat-window/types";
+
 import { ChatBody } from "../chat-window/ChatBody";
 import { ChatControls } from "../chat-window/header/ChatControls";
-import { CoCoChatWindowParams } from "../chat-window/types";
 import { Footer } from "../chat-window/footer/Footer";
 import { Header } from "../chat-window/header/Header";
 import { PoweredBy } from "./PoweredBy";
@@ -15,13 +16,18 @@ type StyleParams = {
   fab_right?: number;
   fab_bottom?: number;
   is_window_on_left?: boolean;
-};
+} & ColorParams;
 
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       boxShadow: theme.shadows[6],
-      background: `${theme.custom.palette.gradient.main} !important`,
+      background: ({ palette }: StyleParams) =>
+        `${
+          palette?.windowBackground
+            ? palette.windowBackground
+            : theme.custom.palette.gradient.main
+        } !important`,
       borderRadius: theme.spacing(3),
       pointerEvents: "all",
       position: "absolute",
@@ -38,14 +44,18 @@ const useStyles = makeStyles((theme) => {
       }: StyleParams) =>
         !is_window_on_left ? `` : `${fab_right}px !important`,
       overflow: "hidden",
-      paddingBottom: `${theme.spacing(3)} !important`,
+      paddingBottom: `${theme.spacing(3)}px !important`,
     },
     innerContainer: {
+      position: "absolute",
+      zIndex: 2,
       display: "flex !important" as "flex",
       flexDirection: "column !important" as "column",
       overflow: "hidden",
-      height: ({ height = 600 }: StyleParams) => `${height}px !important`,
-      width: ({ width = 300 }: StyleParams) => `${width}px !important`,
+      height: ({ height = 600 }: StyleParams) =>
+        height ? `${height}px !important` : "100%",
+      width: ({ width = 300 }: StyleParams) =>
+        width ? `${width}px !important` : "100%",
       top: "0px",
       left: "0px",
     },
@@ -58,6 +68,16 @@ const useStyles = makeStyles((theme) => {
       height: "0px",
       width: "0px",
       opacity: 0,
+    },
+    bottomBackground: {
+      position: "absolute",
+      pointerEvents: "none",
+      bottom: "0px",
+      height: "100px",
+      width: "100%",
+      background: theme.custom.palette.gradient.main,
+      left: "0px",
+      zIndex: 1,
     },
   };
 });
@@ -87,15 +107,17 @@ export const ChatWindow: React.FC<
         [classes.closed]: !isOpen,
       })}
     >
+      <span id="bottom-background" className={classes.bottomBackground} />
       <div className={classes.innerContainer}>
-        <Header {...{ name, avatar }}>
-          <ChatControls {...{ reload: reset, close }} />
+        <Header {...{ name, avatar, params }}>
+          <ChatControls {...{ reload: reset, close, params }} />
         </Header>
         <ChatBody
           {...{
             params: {
               chat,
             },
+            config: params,
           }}
         />
         <Footer

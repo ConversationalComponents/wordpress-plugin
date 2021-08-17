@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => {
       padding: theme.spacing(1),
       paddingTop: theme.spacing(2),
       borderRadius: theme.spacing(3, 3, 0, 0),
-      borderBottom: `1px solid ${theme.custom.palette.a.main}`,
+      borderBottom: (config: CoCoChatWindowParams) =>
+        `1px solid ${config.palette?.divider || theme.custom.palette.a.main}`,
     },
   };
 });

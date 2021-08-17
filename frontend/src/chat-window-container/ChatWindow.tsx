@@ -21,7 +21,7 @@ type StyleParams = {
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      boxShadow: theme.shadows[6],
+      boxShadow: ({ is_flat }: StyleParams) => theme.shadows[is_flat ? 0 : 6],
       background: ({ palette }: StyleParams) =>
         `${
           palette?.windowBackground

@@ -55,10 +55,12 @@ export type Palette = {
   footerBackground?: string;
   footerFontColor?: string;
   footerButton?: string;
+  divider?: string;
 };
 
 export type ColorParams = {
   palette?: Palette;
+  is_flat?: boolean;
 };
 
 export type CoCoChatWindowParams = ColorParams &
@@ -80,6 +82,7 @@ export type CoCoChatWindowParams = ColorParams &
       description: string;
       id: string;
     }[];
+    is_flat?: boolean;
   };
 
 export type BubbleParams = {

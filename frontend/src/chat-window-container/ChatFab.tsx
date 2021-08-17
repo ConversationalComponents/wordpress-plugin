@@ -1,8 +1,10 @@
 import { ButtonBase, makeStyles } from "@material-ui/core";
+import { ColorParams, FabParams, Palette } from "../chat-window/types";
 
-import { FabParams } from "../chat-window/types";
 import React from "react";
 import clsx from "clsx";
+
+type FabStyleParams = FabParams & ColorParams;
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -11,25 +13,25 @@ const useStyles = makeStyles((theme) => {
       position: "absolute",
       overflow: "hidden",
       transition: theme.transitions.create("all"),
-      left: (p: FabParams) =>
+      left: (p: FabStyleParams) =>
         p.is_window_on_left
           ? `${p.fab_right || theme.spacing(3)}px !important`
           : "",
-      right: (p: FabParams) =>
+      right: (p: FabStyleParams) =>
         !p.is_window_on_left
           ? `${p.fab_right || theme.spacing(3)}px !important`
           : "",
-      bottom: (p: FabParams) =>
+      bottom: (p: FabStyleParams) =>
         `${p.fab_bottom || theme.spacing(3)}px !important`,
       borderRadius: theme.spacing(6, 6, 0, 6),
     },
     open: {
       height: theme.spacing(10),
       width: theme.spacing(10),
-      boxShadow: theme.shadows[5],
+      boxShadow: (p: FabStyleParams) => theme.shadows[p.is_flat ? 0 : 5],
       opacity: 1,
       "&:hover": {
-        boxShadow: theme.shadows[10],
+        boxShadow: (p: FabStyleParams) => theme.shadows[p.is_flat ? 0 : 10],
       },
     },
     closed: {
@@ -39,7 +41,8 @@ const useStyles = makeStyles((theme) => {
       opacity: 0,
     },
     innerContainer: {
-      background: theme.custom.palette.a.main,
+      background: ({ palette }: FabStyleParams) =>
+        palette?.fabBackground || theme.custom.palette.a.main,
       height: theme.spacing(10),
       width: theme.spacing(10),
       borderRadius: theme.spacing(6, 6, 0, 6),
@@ -58,9 +61,20 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export const ChatFab: React.FC<
-  FabParams & { isOpen: boolean; onClick: () => void; avatar: string }
-> = ({ isOpen, onClick, avatar, ...params }) => {
+type ChatFabParams = FabParams & {
+  isOpen: boolean;
+  onClick: () => void;
+  avatar: string;
+  palette?: Palette;
+  is_flat?: boolean;
+};
+
+export const ChatFab: React.FC<ChatFabParams> = ({
+  isOpen,
+  onClick,
+  avatar,
+  ...params
+}) => {
   const classes = useStyles(params);
 
   if (params.is_fabless) return null;

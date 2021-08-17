@@ -75,7 +75,10 @@ const useStyles = makeStyles((theme) => {
       bottom: "0px",
       height: "100px",
       width: "100%",
-      background: theme.custom.palette.gradient.main,
+      background: ({ palette }: StyleParams) =>
+        palette?.overridePoweredBy
+          ? "transparent"
+          : theme.custom.palette.gradient.main,
       left: "0px",
       zIndex: 1,
     },

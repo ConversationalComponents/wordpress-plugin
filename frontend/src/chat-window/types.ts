@@ -56,6 +56,7 @@ export type Palette = {
   footerFontColor?: string;
   footerButton?: string;
   divider?: string;
+  overridePoweredBy?: boolean;
 };
 
 export type ColorParams = {

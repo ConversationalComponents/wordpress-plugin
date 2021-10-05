@@ -13,6 +13,7 @@ add_shortcode( 'cocobot', function ( $atts ) {
 		
 	$coco_bot     = get_option( 'coco_bot_settings_option_name' );
 	$params = '';
+	$params       .= ( ! empty( $coco_bot['image'] ) ) ? 'image="'.$coco_bot['image'].'"' : 'image=""';
 	$params       .= ( ! empty( $coco_bot['name_0'] ) ) ? 'bot_name="'.$coco_bot['name_0'].'"' : 'bot_name="CoCoHub"';
 	$params       .= ( ! empty( $coco_bot['source_language_code_7'] ) ) ? 'source_language_code="'.$coco_bot['source_language_code_7'].'"' : 'source_language_code=""';
 	$params       .= ( ! empty( $coco_bot['user_own_email_field'] ) ) ? 'user_email="'.$coco_bot['user_own_email_field'].'"' : 'user_email=""';

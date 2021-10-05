@@ -164,10 +164,23 @@ class CoCoBotSettings {
 		);
 
 
+		add_settings_field(
+			'image', // id
+			'Custom avatar image', // title
+			array( $this, 'image_callback' ), // callback
+			'coco-bot-settings-admin', // page
+			'coco_bot_settings_setting_section' // section
+		);
+
+
 	}
 
 	public function coco_bot_settings_sanitize($input) {
 		$sanitary_values = array();
+		if ( isset( $input['image'] ) ) {
+			$sanitary_values['image'] = sanitize_text_field( $input['image'] );
+		} 
+
 		if ( isset( $input['name_0'] ) ) {
 			$sanitary_values['name_0'] = sanitize_text_field( $input['name_0'] );
 		} 
@@ -245,6 +258,13 @@ class CoCoBotSettings {
 
 	public function coco_bot_settings_section_info() {
 	
+	}
+
+	public function image_callback() {
+		printf(
+			'<input class="regular-text" type="text" name="coco_bot_settings_option_name[image]" id="image" value="%s">',
+			 $default = esc_attr( $this->coco_bot_settings_options['image'] ?? '') 
+		);
 	}
 
 	public function name_0_callback() {

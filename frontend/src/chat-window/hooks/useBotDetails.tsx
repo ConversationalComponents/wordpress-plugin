@@ -22,16 +22,18 @@ export const useBotDetails = (params: CoCoChatWindowParams) => {
           name: string;
         };
         setAvatar(
-          `https://storage.googleapis.com/coco_public/avatars/profiles/${
-            reply.avatar_id || "lali"
-          }1.png`
+          params.image ||
+            `https://storage.googleapis.com/coco_public/avatars/profiles/${
+              reply.avatar_id || "lali"
+            }1.png`
         );
         reply.name && setName(reply.name);
 
         return reply;
-      } catch (e) {
+      } catch (e: any) {
         setAvatar(
-          "https://storage.googleapis.com/coco_public/avatars/profiles/lali1.png"
+          params.image ||
+            "https://storage.googleapis.com/coco_public/avatars/profiles/lali1.png"
         );
         return e.message;
       }

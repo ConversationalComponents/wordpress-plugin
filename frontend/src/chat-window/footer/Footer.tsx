@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => {
     container: {
       marginBottom: `${theme.spacing(3)}px !important`,
       display: "flex",
+      flexDirection: ({ is_rtl }: StyleParams) =>
+        is_rtl ? "row-reverse" : "row",
       background: ({ palette }: StyleParams) =>
         palette?.footerBackground || theme.custom.palette.d.alt,
       borderRadius: theme.spacing(0, 0, 3, 3),
@@ -62,6 +64,8 @@ const useStyles = makeStyles((theme) => {
       "&:focus": {
         outline: "0px !important",
       },
+      transform: ({ is_rtl }: StyleParams) =>
+        `rotate(${is_rtl ? "180" : "0"}deg)`,
     },
   };
 });
@@ -100,6 +104,8 @@ export const Footer: React.FC<{
   convoEndMessage,
 }) => {
   const classes = useStyles({ is_rtl, disabled, palette });
+
+  console.log(`footer is_rtl is ${is_rtl}`);
 
   const [value, setValue] = useState("");
   const textRef = useRef<HTMLTextAreaElement | null>(null);

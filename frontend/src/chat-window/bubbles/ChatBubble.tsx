@@ -70,6 +70,12 @@ const useBubbleStyles = makeStyles((theme) => {
   };
 });
 
+const isUrlRegex = new RegExp(
+  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi
+);
+
+const testUrl = isUrlRegex.test.bind(isUrlRegex);
+
 export const ChatBubble: React.FC<{
   config: CoCoChatWindowParams;
   params: ChatParams;
@@ -116,7 +122,19 @@ export const ChatBubble: React.FC<{
         onMouseLeave={onUnhover && mouseOff}
         onClick={onClick}
       >
-        {entry.isLoading ? <Loading /> : <Typography>{entry.text}</Typography>}
+        {entry.isLoading ? (
+          <Loading />
+        ) : (
+          <Typography>
+            {testUrl(entry.text || "") ? (
+              <a href={entry.text} target="_blank">
+                {entry.text}
+              </a>
+            ) : (
+              entry.text
+            )}
+          </Typography>
+        )}
       </div>
     </div>
   );

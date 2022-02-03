@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => {
     container: {
       marginBottom: `${theme.spacing(3)}px !important`,
       display: "flex",
+      flexDirection: ({ is_rtl }: StyleParams) =>
+        is_rtl ? "row-reverse" : "row",
       background: ({ palette }: StyleParams) =>
         palette?.footerBackground || theme.custom.palette.d.alt,
       borderRadius: theme.spacing(0, 0, 3, 3),
@@ -62,6 +64,8 @@ const useStyles = makeStyles((theme) => {
       "&:focus": {
         outline: "0px !important",
       },
+      transform: ({ is_rtl }: StyleParams) =>
+        `rotate(${is_rtl ? "180" : "0"}deg)`,
     },
   };
 });

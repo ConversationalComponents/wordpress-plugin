@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "center  !important",
       alignItems: "center  !important",
     },
-    img: { height: theme.spacing(1.5) },
+    img: { height: `${theme.spacing(1.5)}px !important` },
   };
 });
 

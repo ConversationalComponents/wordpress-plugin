@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => {
       background: "transparent",
       display: "flex",
       height: theme.spacing(8),
+      justifyContent: "space-between",
     },
     vCenter: {
       display: "flex",
@@ -41,6 +42,9 @@ const useStyles = makeStyles((theme) => {
       maxWidth: "10000% !important",
       maxHeight: "10000% !important",
     },
+    infoContainer: {
+      display: "flex",
+    },
   };
 });
 
@@ -54,15 +58,17 @@ export const Header: React.FC<{
   const classes = useStyles(params);
   return (
     <div className={classes.container}>
-      <div className={classes.vCenter}>
-        <div className={classes.imageContainer}>
-          <img src={avatar} className={classes.image} />
+      <div className={classes.infoContainer}>
+        <div className={classes.vCenter}>
+          <div className={classes.imageContainer}>
+            <img src={avatar} className={classes.image} />
+          </div>
         </div>
-      </div>
-      <div className={classes.vCenter}>
-        <Typography className={classes.text} variant="body1">
-          {name}
-        </Typography>
+        <div className={classes.vCenter}>
+          <Typography className={classes.text} variant="body1">
+            {name}
+          </Typography>
+        </div>
       </div>
       {children}
     </div>

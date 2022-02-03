@@ -11,8 +11,6 @@ add_action( 'init', function() {
     }, 10, 2 );
   
     add_action( 'wp_enqueue_scripts', function() {
-        wp_enqueue_script( 'runtime-from-cdn', "https://storage.googleapis.com/coco_public/chatwindow/v3.3/runtime.js", array(), null, true );
-        wp_enqueue_script( 'main-from-cdn', "https://storage.googleapis.com/coco_public/chatwindow/v3.3/main.js", array(), null, true );
-        wp_enqueue_script( 'libs-from-cdn', "https://storage.googleapis.com/coco_public/chatwindow/v3.3/libs.js", array(), null, true );
+        wp_enqueue_script( 'main-from-cdn', "https://storage.googleapis.com/coco_public/chatwindow/v4/main.js", array(), null, true );
     });
   });

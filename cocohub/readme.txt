@@ -3,29 +3,26 @@ Contributors: cbuskilla
 Tags: cocohub, chatbots, chat-window, conversational components
 Requires at least: 4.0
 Tested up to: 5.8
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: MIT
 
 Create advanced chatbots and connect them to your website. Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
 
 == Description ==
 
-With CoCoHub builder you can build your bot with components using drag and drop.
+Cocohub allows you to create bots - with a human touch.
 
-CoCoHub is an invaluable complementary tool for chatbot developers, offering pre-built, customizable & tested conversational components which enhance bot capabilities and eliminate the need for writing and maintaining AI conversation boilerplates or low-level conversation logic. 
-Use existing components or create new ones using Dialogflow, MS bot framework, Rasa and more.
+Using friendly templates, drag&drop building blocks and pre-built intents (understanding what the user wants), you can create a fully functional conversational bot - in minutes.  You don't need any previous coding skills or prior knowledge.
 
-Our growing hub of shareable, modular conversational components is the first of its kind and represents a paradigm shift in how we design and interact with conversational AI.
-
-Pre-built Conversational components incorporated into your bot framework make it flexible, maintain contextual flow throughout conversations and deliver the goals you require faster.
-
-You can also customize your components or repurpose them to cut down development costs, improve the quality of conversations, and facilitate faster bot deployment.
-
-CoCoHub Wordpress plugin features:
-
-* Connect any component/bot to your website.
-* Build your bot on the popular platform you choose and add it to your website using the component interface.
-* Mix and match existing components to build your bot, customize them to give it personality.
+How do you connect a Wordpress bot to your website?
+1. First of all, log in, choose your bot's personality - appearance, voice, name and base persona.
+2. Then, choose a template - one that can be adapted or changed afterwards. This will be the bot's brain, or what it actually does.
+3. After building your bot, go to the "Text" option in the testing area on the main bot dashboard.
+4. Once it's ready, choose your plan.
+5. After choosing your plan, go to the channels, choose "Wordpress", and click "Connect", then, "Copy channel ID"
+6. After activating the plugin, go to "settings", customize the bot's dimensions, icon and other details; paste the channel ID you copied into the relevant space.
+7. Go to your website's code, write [cocobot] and save.
+8. It's ready! Start enjoying your chatbot.
 
 == Installation ==
 

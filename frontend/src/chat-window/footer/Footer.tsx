@@ -105,8 +105,6 @@ export const Footer: React.FC<{
 }) => {
   const classes = useStyles({ is_rtl, disabled, palette });
 
-  console.log(`footer is_rtl is ${is_rtl}`);
-
   const [value, setValue] = useState("");
   const textRef = useRef<HTMLTextAreaElement | null>(null);
 

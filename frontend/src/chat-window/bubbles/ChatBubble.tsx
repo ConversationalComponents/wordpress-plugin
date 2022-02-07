@@ -17,10 +17,19 @@ const useBubbleStyles = makeStyles((theme) => {
       animation: "$open 250ms linear",
       display: "flex",
       paddingBottom: theme.spacing(1),
-      justifyContent: (p: ThemeParams) =>
-        `${p.isUser ? "flex-end" : "flex-start"}`,
-      marginRight: (p: ThemeParams) => (p.isUser ? "" : theme.spacing(5)),
-      marginLeft: (p: ThemeParams) => (!p.isUser ? "" : theme.spacing(5)),
+      justifyContent: (p: ThemeParams) => {
+        return p.config.is_rtl
+          ? `${p.isUser ? "flex-start" : "flex-end"}`
+          : `${p.isUser ? "flex-end" : "flex-start"}`;
+      },
+      marginRight: (p: ThemeParams) =>
+        p.config.is_rtl
+          ? theme.spacing(p.isUser ? 5 : 0)
+          : theme.spacing(p.isUser ? 0 : 5),
+      marginLeft: (p: ThemeParams) =>
+        p.config.is_rtl
+          ? theme.spacing(p.isUser ? 0 : 5)
+          : theme.spacing(p.isUser ? 5 : 0),
     },
     bubble: {
       padding: theme.spacing(1),
@@ -44,9 +53,13 @@ const useBubbleStyles = makeStyles((theme) => {
             : p.config.palette?.botBubble || theme.custom.palette.a.main
         }`,
       transformOrigin: (p: ThemeParams) =>
-        `${p.isUser ? "bottom right" : "bottom left"}`,
+        p.config.is_rtl
+          ? `${p.isUser ? "bottom left" : "bottom right"}`
+          : `${p.isUser ? "bottom right" : "bottom left"}`,
       borderRadius: (p: ThemeParams) =>
-        `${p.isUser ? "18px 18px 0px 18px" : "18px 18px 18px 0px"}`,
+        p.config.is_rtl
+          ? `${p.isUser ? "18px 18px 18px 0px" : "18px 18px 0px 18px"}`
+          : `${p.isUser ? "18px 18px 0px 18px" : "18px 18px 18px 0px"}`,
       color: (p: ThemeParams) =>
         `${
           p.isUser

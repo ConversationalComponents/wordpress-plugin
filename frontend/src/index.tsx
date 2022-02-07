@@ -18,13 +18,6 @@ if (target) {
         value = v;
       } catch (e) {}
     }
-    if (cur === "is_rtl") {
-      if (value === "true") {
-        value = true;
-      } else if (value === "1") {
-        value = true;
-      } else value = false;
-    }
     acc[cur] = value;
     return acc;
   }, {} as { [key: string]: string | boolean | Object }) as unknown as CoCoChatWindowParams;

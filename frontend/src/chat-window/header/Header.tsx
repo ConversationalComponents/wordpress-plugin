@@ -57,14 +57,14 @@ export const Header: React.FC<{
 }> = ({ name, avatar, params, children }) => {
   const classes = useStyles(params);
   return (
-    <div className={classes.container}>
-      <div className={classes.infoContainer}>
-        <div className={classes.vCenter}>
-          <div className={classes.imageContainer}>
+    <div className={classes.container} id="header container">
+      <div className={classes.infoContainer} id="header info container">
+        <div className={classes.vCenter} id="header vCenter">
+          <div className={classes.imageContainer} id="header image container">
             <img src={avatar} className={classes.image} />
           </div>
         </div>
-        <div className={classes.vCenter}>
+        <div className={classes.vCenter} id="header text container">
           <Typography className={classes.text} variant="body1">
             {name}
           </Typography>

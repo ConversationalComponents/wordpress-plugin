@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CoCoChatWindowParams } from "../types";
 
@@ -20,7 +20,7 @@ export const useBotDetails = (params: CoCoChatWindowParams) => {
       if (!params.channel_id) return;
       try {
         const result = await fetch(
-          `https://cocohub.ai/v2/bot/channel/${params.channel_id}/bot`,
+          `https://cocohub.ai/v2/channel/${params.channel_id}/bot`,
           {
             method: "GET",
           }
